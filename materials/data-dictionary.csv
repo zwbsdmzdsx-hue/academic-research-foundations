@@ -1,0 +1,9 @@
+variable,type,unit,definition,validity
+object_id,text,none,Distinct synthetic object identifier,O01 to O20 unique
+reference_g,number,g,Assumed reference mass in teaching construction,50 in every row; not a claim of zero reference uncertainty
+measurement_a_g,number,g,Synthetic reading under teaching label A,finite numeric
+measurement_b_g,number,g,Synthetic reading under teaching label B,finite numeric
+data_status,text,none,Provenance of every row,synthetic_teaching
+abs_error_a_g,derived,g,ABS(measurement_a_g-reference_g),nonnegative
+abs_error_b_g,derived,g,ABS(measurement_b_g-reference_g),nonnegative
+difference_g,derived,g,abs_error_b_g-abs_error_a_g,negative means lower error under B

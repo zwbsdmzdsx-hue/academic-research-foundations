@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f5">
+  <meta name="description" content="從研究問題、文獻與資料，到寫作、倫理、交流與一個可復核的小型研究。">
+  <title>學術起步 | 研究訓練工作台</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f7f5;
+      --surface: #ffffff;
+      --ink: #202724;
+      --muted: #58645e;
+      --line: #d9e0dc;
+      --green: #276c58;
+      --green-soft: #e5f0e9;
+      --blue: #315e94;
+      --blue-soft: #eaf0f7;
+      --orange: #a95027;
+      --orange-soft: #f7eee8;
+      --red: #983b4c;
+      --red-soft: #f5eaed;
+      --yellow: #865d18;
+      --yellow-soft: #f5f0e1;
+      --focus: #245da0;
+      --measure: 72ch;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Aptos, "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    ::selection { background: #cae7d5; color: #173529; }
+    a { color: var(--blue); text-underline-offset: 0.16em; }
+    button, input, textarea { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    button, a, summary { touch-action: manipulation; }
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: -8rem;
+      z-index: 5;
+      padding: 0.65rem 0.9rem;
+      color: white;
+      background: var(--ink);
+    }
+    .skip-link:focus { top: 1rem; }
+    .topbar {
+      min-height: 68px;
+      padding: 0 4vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--ink);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--green);
+      position: relative;
+    }
+    .brand-mark::before, .brand-mark::after {
+      content: "";
+      position: absolute;
+      background: var(--green);
+    }
+    .brand-mark::before { width: 1px; height: 14px; left: 6px; top: 3px; }
+    .brand-mark::after { width: 10px; height: 1px; right: 2px; top: 8px; }
+    .brand-name { font-weight: 700; }
+    .brand-note { color: var(--muted); font-size: 0.82rem; }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.6rem;
+    }
+    .search-wrap {
+      min-width: min(34vw, 390px);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .search-input, .text-input {
+      width: 100%;
+      min-width: 0;
+      min-height: 42px;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #aab7b0;
+      border-radius: 4px;
+      background: white;
+      color: var(--ink);
+    }
+    .search-input::placeholder, .text-input::placeholder, textarea::placeholder { color: #56645d; opacity: 1; }
+    .action-button {
+      min-height: 42px;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: white;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .action-button:hover { border-color: #87978e; background: #f8faf8; }
+    .action-button.primary {
+      border-color: var(--green);
+      color: white;
+      background: var(--green);
+    }
+    .action-button.primary:hover { background: #1e5948; }
+    .action-button.danger { color: var(--red); }
+    .layout {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 1.4rem 4vw 4rem;
+      display: grid;
+      grid-template-columns: minmax(215px, 250px) minmax(0, 1fr);
+      gap: clamp(1.8rem, 4vw, 4.5rem);
+      align-items: start;
+    }
+    .sidebar { min-width: 0; }
+    .sidebar-heading, .overline, .eyebrow {
+      margin: 0 0 0.6rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .sidebar-heading { color: var(--ink); font-size: 0.94rem; }
+    .navigation-group { margin: 1.55rem 0 1.9rem; }
+    .navigation-label {
+      margin: 0 0 0.45rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .navigation-list { margin: 0; padding: 0; list-style: none; }
+    .module-nav-link {
+      width: 100%;
+      min-height: 42px;
+      padding: 0.42rem 0.45rem 0.42rem 0;
+      display: grid;
+      grid-template-columns: 2.1rem minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 0.45rem;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+    .module-nav-link:hover { border-bottom-color: var(--line); }
+    .module-nav-link[aria-current="page"] {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+    .module-index { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .nav-title { line-height: 1.45; overflow-wrap: anywhere; }
+    .nav-progress { color: var(--muted); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+    .sidebar-note {
+      margin-top: 1.3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+    .mobile-navigation { display: none; }
+    main { min-width: 0; }
+    .intro {
+      padding: 0.45rem 0 1.45rem;
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2, h3, p { overflow-wrap: anywhere; }
+    h1, h2, h3 { margin-top: 0; line-height: 1.24; }
+    h1, h2 {
+      font-family: Georgia, "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+      font-weight: 600;
+    }
+    h1 { max-width: 19ch; margin-bottom: 0.7rem; font-size: 2.55rem; }
+    h2 { margin-bottom: 0.55rem; font-size: 1.7rem; }
+    h3 { margin-bottom: 0.3rem; font-size: 1.05rem; }
+    .intro-copy { max-width: var(--measure); margin: 0; color: #45514b; }
+    .profile-note {
+      max-width: var(--measure);
+      margin: 1.1rem 0 0;
+      padding: 0.7rem 0 0.7rem 0.9rem;
+      border-left: 2px solid var(--green);
+      color: #35483e;
+    }
+    .progress-line {
+      height: 5px;
+      margin: 1.35rem 0 0.5rem;
+      overflow: hidden;
+      background: #dfe7e2;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--green);
+      transition: width 260ms ease-out;
+    }
+    .progress-copy {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+    .route-section { padding: 1.45rem 0 1.2rem; }
+    .route-heading { margin: 0 0 0.85rem; font-size: 0.86rem; font-weight: 700; }
+    .route-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      list-style: none;
+    }
+    .route-step {
+      --stage-color: var(--green);
+      min-width: 0;
+      min-height: 55px;
+      padding: 0.58rem 0.5rem 0.45rem 0;
+      border-top: 2px solid var(--line);
+      position: relative;
+    }
+    .route-step::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--stage-color);
+    }
+    .route-step[data-stage="取证"] { --stage-color: var(--blue); }
+    .route-step[data-stage="实作"] { --stage-color: var(--orange); }
+    .route-step[data-stage="表达"] { --stage-color: var(--red); }
+    .route-step[data-stage="走完闭环"] { --stage-color: var(--yellow); }
+    .route-step strong, .route-step span { display: block; }
+    .route-step strong { font-size: 0.85rem; }
+    .route-step span { color: var(--muted); font-size: 0.74rem; }
+    .route-step.is-done { border-top-color: var(--stage-color); }
+    .overview-tools {
+      margin: 0.25rem 0 1rem;
+      padding: 0.8rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .filter-list { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .filter-button {
+      min-height: 38px;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: #3d4942;
+      cursor: pointer;
+    }
+    .filter-button:hover { border-color: var(--line); }
+    .filter-button[aria-pressed="true"] {
+      border-color: #9db3a6;
+      background: var(--green-soft);
+      color: #174c3b;
+    }
+    .overview-meta { color: var(--muted); font-size: 0.82rem; }
+    .module-group { padding: 1.4rem 0 0.15rem; }
+    .group-heading {
+      margin: 0 0 0.4rem;
+      padding-bottom: 0.55rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .group-heading h2 { margin: 0; font-size: 1.22rem; }
+    .group-heading span { color: var(--muted); font-size: 0.78rem; }
+    .module-row {
+      padding: 1rem 0;
+      display: grid;
+      grid-template-columns: 2.5rem minmax(0, 1fr) minmax(110px, 0.25fr);
+      gap: 0.65rem 0.9rem;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+    }
+    .module-row-index { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+    .module-row-title { margin: 0; font-weight: 700; }
+    .module-row-title button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .module-row-title button:hover { color: var(--green); text-decoration: underline; text-underline-offset: 0.18em; }
+    .module-row-copy { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.88rem; }
+    .module-row-outcome { margin: 0.4rem 0 0; color: #36433b; font-size: 0.81rem; }
+    .module-row-action {
+      justify-self: end;
+      display: grid;
+      gap: 0.35rem;
+      text-align: right;
+    }
+    .module-row-action span { color: var(--muted); font-size: 0.78rem; }
+    .text-link-button {
+      min-height: 42px;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--green);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .text-link-button:hover { border-color: var(--green); }
+    .notice {
+      max-width: var(--measure);
+      margin: 1.8rem 0 0;
+      padding: 0.85rem 0.95rem;
+      background: #edf2ef;
+      color: #33413a;
+      font-size: 0.88rem;
+    }
+    .page-head {
+      padding: 0.35rem 0 1.2rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .breadcrumb {
+      margin: 0 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .breadcrumb button {
+      min-height: 36px;
+      padding: 0 0.3rem 0 0;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+      cursor: pointer;
+    }
+    .page-head p { max-width: var(--measure); margin: 0.5rem 0 0; color: #45514b; }
+    .outcome-line { margin-top: 0.85rem !important; color: var(--ink) !important; font-size: 0.87rem; }
+    .lesson-list {
+      margin: 1.35rem 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: module-lesson;
+    }
+    .lesson-row {
+      padding: 1rem 0;
+      display: grid;
+      grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+      gap: 0.7rem;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      counter-increment: module-lesson;
+    }
+    .lesson-number { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .lesson-row h3 { margin: 0; }
+    .lesson-row h3 button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font-weight: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .lesson-row h3 button:hover { color: var(--green); text-decoration: underline; text-underline-offset: 0.18em; }
+    .lesson-row p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.88rem; }
+    .lesson-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; color: var(--muted); font-size: 0.78rem; }
+    .lesson-state { align-self: center; color: var(--green); font-size: 0.82rem; white-space: nowrap; }
+    .lesson-body { padding: 1.4rem 0 0; }
+    .lesson-body h2 { margin: 2rem 0 0.75rem; font-size: 1.28rem; }
+    .lesson-body h3 { margin: 0; }
+    .lesson-goal {
+      max-width: var(--measure);
+      margin: 0.7rem 0 1rem;
+      padding: 0.65rem 0 0.65rem 0.9rem;
+      border-left: 2px solid var(--blue);
+      color: #374943;
+    }
+    .prerequisite { max-width: var(--measure); margin: 0.6rem 0 0; color: var(--muted); font-size: 0.85rem; }
+    .concept-list { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+    .concept-row {
+      padding: 0.85rem 0;
+      display: grid;
+      grid-template-columns: minmax(115px, 0.3fr) minmax(0, 1fr);
+      gap: 0.45rem 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .concept-row dt { font-weight: 700; }
+    .concept-row dd { margin: 0; color: #414e47; }
+    .concept-example { margin-top: 0.2rem; color: var(--muted); font-size: 0.87rem; }
+    .tutorial-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: tutorial-step;
+    }
+    .tutorial-step {
+      padding: 0.95rem 0;
+      display: grid;
+      grid-template-columns: 2.35rem minmax(0, 1fr);
+      gap: 0.65rem;
+      border-bottom: 1px solid var(--line);
+      counter-increment: tutorial-step;
+    }
+    .step-index {
+      width: 1.75rem;
+      height: 1.75rem;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid #97aa9e;
+      border-radius: 50%;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .tutorial-step p { max-width: var(--measure); margin: 0.3rem 0 0; color: #414e47; }
+    .example-panel {
+      max-width: var(--measure);
+      margin: 0.85rem 0 1.2rem;
+      padding: 0.95rem 1rem;
+      background: #edf3ee;
+    }
+    .example-panel h3 { margin-bottom: 0.4rem; }
+    .example-panel p { margin: 0; color: #36453c; }
+    .example-label { margin-bottom: 0.45rem !important; color: #485c50 !important; font-size: 0.77rem; font-weight: 700; }
+    .exercise-form {
+      max-width: 82ch;
+      margin: 0.35rem 0 0;
+      padding: 0 0 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .prompt { margin: 0 0 0.7rem; font-weight: 600; }
+    .template-box {
+      margin: 0.5rem 0 0.7rem;
+      padding: 0.75rem;
+      border: 1px solid var(--line);
+      background: #fafcfb;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font: inherit;
+      font-size: 0.87rem;
+      color: #39463f;
+    }
+    .form-label { display: block; margin: 0.75rem 0 0.35rem; font-weight: 600; font-size: 0.9rem; }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 0.7rem;
+      resize: vertical;
+      border: 1px solid #aab7b0;
+      border-radius: 4px;
+      background: white;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    textarea::placeholder { color: #56645d; opacity: 1; }
+    .draft-status { min-height: 1.4rem; margin: 0.35rem 0; color: var(--muted); font-size: 0.78rem; }
+    details.disclosure { max-width: 82ch; margin: 0.7rem 0; }
+    details.disclosure summary {
+      min-height: 42px;
+      padding: 0.35rem 0;
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+      cursor: pointer;
+    }
+    details.disclosure p { max-width: var(--measure); margin: 0.3rem 0 0.8rem; color: #414e47; }
+    .quiz-form { max-width: 82ch; margin: 0.4rem 0 0; }
+    .quiz-form fieldset { margin: 0; padding: 0; border: 0; }
+    .quiz-form legend { margin-bottom: 0.7rem; font-weight: 700; }
+    .quiz-option {
+      padding: 0.62rem 0;
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      align-items: start;
+      gap: 0.55rem;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+    .quiz-option input, .rubric-check input { width: 18px; height: 18px; margin: 0.22rem 0 0; accent-color: var(--green); }
+    .quiz-feedback { min-height: 1.55rem; margin: 0.55rem 0; color: var(--muted); }
+    .quiz-feedback.is-correct { color: #145c36; }
+    .quiz-feedback.is-wrong { color: #852d3f; }
+    .rubric-list { margin: 0; padding: 0; list-style: none; }
+    .rubric-check {
+      min-height: 44px;
+      padding: 0.45rem 0;
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      align-items: start;
+      gap: 0.55rem;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+    .pitfall-list { margin: 0; padding-left: 1.2rem; color: #414e47; }
+    .pitfall-list li { padding: 0.3rem 0; }
+    .resource-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .resource-row {
+      padding: 0.75rem 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.3rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .resource-row a { font-weight: 650; }
+    .resource-meta { color: var(--muted); font-size: 0.76rem; }
+    .resource-why { grid-column: 1 / -1; max-width: var(--measure); margin: 0; color: #414e47; font-size: 0.87rem; }
+    .resource-task { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 0.83rem; }
+    .lesson-actions {
+      max-width: 82ch;
+      margin: 1.4rem 0 0;
+      padding: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      border-top: 1px solid var(--line);
+    }
+    .lesson-actions .push-right { margin-left: auto; }
+    .quiet-copy { max-width: var(--measure); margin: 0; color: var(--muted); font-size: 0.84rem; }
+    .action-feedback { margin-top: 0.35rem; }
+    .storage-note { margin: 0 4vw; color: var(--red); font-size: 0.84rem; }
+    .app-footer {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 0.8rem 4vw 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--line);
+    }
+    .app-footer p { margin: 0.35rem 0; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .empty-state { padding: 1.5rem 0; color: var(--muted); }
+    @media (max-width: 900px) {
+      .topbar { padding: 0.75rem 1rem; align-items: flex-start; flex-direction: column; gap: 0.6rem; }
+      .top-actions { width: 100%; justify-content: space-between; }
+      .search-wrap { min-width: 0; flex: 1; }
+      .layout { padding: 1rem 1rem 3rem; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+      .sidebar { display: none; }
+      .mobile-navigation { display: block; margin-bottom: 0.25rem; }
+      .mobile-navigation summary { min-height: 44px; padding: 0.45rem 0; color: var(--green); font-weight: 700; cursor: pointer; }
+      .mobile-navigation .navigation-group { margin: 0.7rem 0; }
+      .mobile-navigation[open] { padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
+      .app-footer { padding-right: 1rem; padding-left: 1rem; }
+      .storage-note { margin-right: 1rem; margin-left: 1rem; }
+    }
+    @media (max-width: 560px) {
+      h1 { font-size: 1.85rem; }
+      h2 { font-size: 1.45rem; }
+      .brand-note { display: none; }
+      .top-actions { align-items: stretch; flex-direction: column; }
+      .search-wrap { width: 100%; flex: none; }
+      .top-action-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+      .top-action-row .action-button { flex: 1; }
+      .route-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.15rem 0.75rem; }
+      .module-row { grid-template-columns: 2.2rem minmax(0, 1fr); gap: 0.4rem 0.6rem; }
+      .module-row-action { grid-column: 2; justify-self: start; display: flex; align-items: center; gap: 0.7rem; text-align: left; }
+      .concept-row { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+      .lesson-row { grid-template-columns: 2.2rem minmax(0, 1fr); }
+      .lesson-state { grid-column: 2; }
+      .lesson-actions .push-right { margin-left: 0; }
+      .progress-copy { justify-content: flex-start; }
+      .progress-copy span + span::before { content: "·"; margin-right: 0.4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至课程内容</a>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="学术起步，回到学习路径">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">学术起步</span>
+      <span class="brand-note">研究训练工作台</span>
+    </a>
+    <div class="top-actions">
+      <label class="search-wrap">
+        <span class="sr-only">搜索模块、课程或概念</span>
+        <input class="search-input" id="courseSearch" type="search" placeholder="搜索课程、概念或能力" autocomplete="off">
+      </label>
+      <div class="top-action-row">
+        <button class="action-button" type="button" data-action="export">导出进度</button>
+        <button class="action-button" type="button" data-action="import">导入进度</button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+  </header>
+  <p id="storageNote" class="storage-note" hidden></p>
+  <div class="layout">
+    <aside class="sidebar" aria-label="学习路径">
+      <p class="sidebar-heading">学习路径</p>
+      <div id="desktopNavigation"></div>
+      <p class="sidebar-note">按自己的节奏学习。每课约 45–90 分钟；适合时可以跳过“按需”补习课。</p>
+      <button class="action-button danger" type="button" data-action="reset">清空本机进度</button>
+    </aside>
+    <details class="mobile-navigation">
+      <summary>打开学习路径</summary>
+      <nav id="mobileNavigationContent" aria-label="学习模块"></nav>
+    </details>
+    <main id="main"></main>
+  </div>
+  <footer class="app-footer">
+    <p>教学示范与模拟数据只用来练习分析方法；真实研究结果必须来自你亲自记录的材料。</p>
+    <p>伦理审查、作者身份、生成式 AI 使用与投稿规定，按所在机构、资助方和目标期刊的最新要求核对。</p>
+  </footer>
+  <div id="liveMessage" class="sr-only" aria-live="polite"></div>
+  <script id="course-data" type="application/json">{"modules":[{"id":"m1","title":"认识学术研究","stage":"起步","summary":"先弄清研究在解决什么问题、论文如何提出证据，以及你要练出的最小能力。毕业设计中的工程经验可以成为起点，研究方法则从这里补齐。","deliverable":"一页研究说明、证据链与个人能力清单","lessons":[{"id":"m1-l1","title":"从做成一个东西，到回答一个问题","minutes":60,"level":"必修","goal":"能把工程任务改写成可以用证据回答的研究问题，并说明结论适用范围。","prereq":["无需学术经历；准备纸笔或任意笔记工具"],"concepts":[{"term":"工程任务","plain":"重点是满足给定需求，判断通常依据规格、成本或交付。它可能包含研究，但做出成品本身不自动产生新知识。","example":"做一个能稳定飞落的纸直升机。"},{"term":"研究问题","plain":"对某个尚不清楚的关系、机制或现象提出可检查的问题，并说明怎样得到答案。","example":"在纸张与释放高度相同时，翼长改变是否影响下落时间？"},{"term":"可检验与边界","plain":"别人能按你的方法观察证据，也能指出什么结果会反驳你的解释；结论只覆盖实际研究条件。","example":"A4打印纸的结果，不能直接推广到金属转子。"}],"tutorial":[{"title":"列出你已经做过的事情","body":"写一个本科毕业设计或课程项目，只描述当时的任务、输入、步骤和验收方式。没有论文不代表没有可迁移经验：画图、查规格、排故、记录参数都能成为研究操作的基础。"},{"title":"把交付目标和知识问题分开","body":"将“做一台更好的设备”写在左边，在右边追问：更好指误差更小、速度更快，还是更省成本？选一个可以观察的结果，不同时追求所有目标。"},{"title":"写一个能失败的问题","body":"套用“在什么对象和条件下，改变什么，相比什么，会怎样影响什么”。避免只问“如何优化”。若所有可能结果都被你解释为成功，问题就还不够可检验。"},{"title":"写出最小比较","body":"为纸直升机选两种翼长，保持纸张、释放高度和计时方法相同。先写计划，不急着实验。标出还可能变化的因素，如折痕、风、释放姿态。"},{"title":"划出结论边界","body":"用两句话结束：什么证据才支持预期，什么证据会使你修改想法；即使出现差异，也先写“在本次条件下观察到”，不写成普遍定律。"}],"worked":{"title":"教学示范：一个可回答的版本","body":"原句“用AI提高实验室效率”范围过大。可改为“在同一批公开教学图像上，方法A相对简单阈值法，是否降低漏检率，同时记录处理时间？”这仍需查文献和确认数据权限；只是问题格式示范，不代表已有创新或实际结果。"},"exercise":{"prompt":"选择一个熟悉的日常或机械问题，分别写工程目标与研究问题。","template":"工程任务：\n研究对象与条件：\n改变的因素：\n比较对象：\n主要结果与单位：\n会推翻预期的结果：\n不能推广到：","hint":"不需要高科技。纸结构承重、重复测量误差、文档查找时间都可以。","exampleAnswer":"教学示范：制作纸桥；研究同纸量下两种折法的最大承重差异；比较相同跨度、逐次加同样砝码；记录克数；若结果波动大于组间差异则暂不支持某折法更强；不能推广到真实桥梁。"},"quiz":{"question":"下面哪一句最接近研究问题？","options":["做一个先进的机器人","固定光照下，背景颜色是否影响同一识别方法的误检率？","学习所有机器学习算法"],"correct":1,"explanation":"第二句给出条件、改变因素和可测结果；另外两句是任务或学习愿望，还缺少可检查的答案。"},"rubric":["能区分交付物与知识问题","写出比较对象、结果指标和适用条件","写出一种可能反驳自己预期的结果"],"pitfalls":["把“用了新工具”直接当作研究贡献","题目写得很大，却没有可执行的观察"],"resourceIds":[]},{"id":"m1-l2","title":"论文、证据与学术共同体怎样运转","minutes":60,"level":"必修","goal":"能识别常见学术材料，区分作者主张、直接证据和自己的推测。","prereq":["完成 m1-l1"],"concepts":[{"term":"主张与证据","plain":"主张是作者希望你相信的判断；证据是支持判断的观察、数据、文本或推理。两者之间还需要解释。","example":"“更稳定”是主张；相同条件下误差分布是证据。"},{"term":"原始研究与综述","plain":"原始研究报告新的分析或观察；综述整理已有研究。综述有助于入门，但涉及某个具体实验时应追到原始来源。","example":"综述说某方法有效，你仍要查被引用研究用了什么对象。"},{"term":"同行评议与版本","plain":"同行评议是他人审查研究的过程，并不保证结论永远正确。预印本、会议稿、期刊稿可能是同一工作的不同版本。","example":"同一题名出现两份文稿，先核对作者、日期、标识和修订说明。"}],"tutorial":[{"title":"拿一篇可合法访问的短文","body":"优先选与你兴趣相关、附全文的研究论文。只记录标题、作者、年份、发表渠道与链接，暂不评价刊物排名。若只有摘要，在笔记顶端写“仅读摘要”。"},{"title":"给文中句子分角色","body":"从摘要选三句，分别标记背景、方法、结果或解释。再从结果中圈出一个数字或观察，追问：它由哪张图、哪段材料或哪次分析支持？"},{"title":"画一条证据链","body":"按“问题→对象/材料→操作→观察→解释→边界”写六个短框。缺什么就写“暂未找到”，不要让语言流畅代替信息齐全。"},{"title":"检查材料身份","body":"看页面说明是否为预印本、正式发表版本、更正或撤稿通知；记录所读版本。遇到研究主张，尽量定位论文原文，避免只引用新闻转述。"},{"title":"练习有限度地相信","body":"写“作者报告了什么”“我已经看到什么”“我还不能确认什么”。若文稿经过评议，只把它作为经过审查的信息，不把刊名当作结论可靠性的替代品。"}],"worked":{"title":"教学示范：把判断拆开","body":"“方法A准确率更高”需要补上测试集、指标定义、比较方法和不确定性。若只看到摘要里的95%，你可以记“作者摘要报告95%”，不能写“已经证明适用于任何场景”。这里的95%是教学占位示例，不是实际文献结果。"},"exercise":{"prompt":"为任意一篇可访问论文写一张材料身份卡和一条证据链。","template":"材料类型/版本：\n阅读范围：\n作者主要主张：\n直接证据位置：\n从证据到主张需要的假设：\n尚未核实：","hint":"不懂公式时先看它在说明什么关系，不要假装已理解推导。","exampleAnswer":"示范：原始研究，所读版本日期已记；只读摘要与结果图1；主张为某条件下误差降低；证据位置图1；仍需核实样本、基线实现和独立测试。"},"quiz":{"question":"一篇论文经过同行评议，最合理的理解是什么？","options":["结论保证正确","说明经历了学术审查，仍需检查方法、证据和后续修正","可以跳过方法直接引用结论"],"correct":1,"explanation":"评议提高审查程度，但不会消除设计局限、错误或适用范围。"},"rubric":["记录材料类型、版本和阅读范围","为一个主张找到具体证据位置","把作者结论与个人判断分开"],"pitfalls":["读了新闻却标成读完论文","用期刊名、引用量或作者名气代替证据检查"],"resourceIds":[]},{"id":"m1-l3","title":"建立最小研究工作台与能力地图","minutes":60,"level":"必修","goal":"搭好可追溯的文件和研究日志，用实际小产出检查能力缺口。","prereq":["完成 m1-l2；有可保存文件的设备"],"concepts":[{"term":"研究日志","plain":"记录自己做了什么、依据什么、得到什么、下一步是什么；失败和改动也属于研究信息。","example":"记录一次检索使用的词，而不只存最后找到的论文。"},{"term":"可追溯性","plain":"能够从结论找到数据、处理步骤与材料版本，也能从原始材料找到对应输出。","example":"图表注明来自哪份数据、用了哪条筛选规则。"},{"term":"能力证据","plain":"用可展示的行为判断掌握程度，而不是用看过多少视频衡量。","example":"独立写出检索式和排除理由，比“学过文献检索”更具体。"}],"tutorial":[{"title":"建一个小而清楚的目录","body":"新建一个学习项目，包含 references、data/raw、data/processed、analysis、writing、logs。目录只是建议；关键是原始材料单独保存，修改后的数据另存，避免互相覆盖。"},{"title":"写一个项目说明","body":"在README写目标、数据来源、当前状态、如何找到主要文件和需要的工具。没有代码也能写；用普通文本即可，不需要先学复杂软件。"},{"title":"写第一条研究日志","body":"按“日期/问题/做法/发现/疑问/下一步”记录今天的学习。疑问要具体，例如“图2的n指人还是测量次数”，不要只写“统计不懂”。"},{"title":"做一次能力盘点","body":"列出检索、阅读、设计、数据、统计、写作、沟通七项。每项选“未试过/需示范/能照做/能独立并解释”，再附一个证据；英语、数学、编程单独按需要评估。"},{"title":"安排一轮最小学习闭环","body":"下一次学习只选一个产出，例如“一张论文卡”。先看示范，自己完成，再用验收标准检查，最后写一次修改。每周复盘能展示什么，不用把排满日程等同于进步。"}],"worked":{"title":"教学示范：一条有效日志","body":"2026-11-05：问题是如何区分误差与波动；读了教学材料并计算5次测量的均值；发现均值接近目标但单次差异大；尚不懂SD；下一步手算离差并画点图。日期和内容仅为日志格式示范，不记为你的实际完成情况。"},"exercise":{"prompt":"创建目录、项目说明和第一条日志，再选本周一个可验收产出。","template":"项目目标：\n主要文件：\n今天做了什么：\n产出链接：\n仍不理解：\n下次最小任务：\n能力等级及证据：","hint":"先用你熟悉的笔记和表格工具。若一个文件夹已足够，不为工具迁移耽误练习。","exampleAnswer":"示范：目标是能读懂并复述一篇短论文；产出为paper-card-01；目前可在示范下找到方法段；下次解释一个图的轴、单位与样本。"},"quiz":{"question":"哪项最能说明你正在形成研究能力？","options":["收藏了100个课程链接","能展示一张修订过的论文卡，并解释修订依据","同时安装了很多软件"],"correct":1,"explanation":"可展示、可解释、可修正的产出，比收藏数量更接近实际能力。"},"rubric":["原始资料与处理结果分开保存","日志包含依据、疑问和下一步","每项自评至少链接一个证据或注明未试过"],"pitfalls":["先花数天搭工具却没有学习产出","把还没试过写成自己没有能力"],"resourceIds":[]}]},{"id":"m2","title":"检索与文献管理","stage":"起步","summary":"把一个模糊兴趣变成可重复的检索过程，留下为什么纳入、为什么排除以及信息从哪里来的记录。","deliverable":"可复用检索记录、10条候选文献清单与3张完整文献卡","lessons":[{"id":"m2-l1","title":"拆关键词，做一次可重复检索","minutes":90,"level":"必修","goal":"能把问题拆成概念组，扩展同义词并记录检索过程。","prereq":["完成 m1-l1；能使用浏览器"],"concepts":[{"term":"概念组","plain":"将研究问题分成对象、方法、结果等几块，再为每块找不同表达。不是把整句题目原样贴进搜索框。","example":"纸直升机：paper helicopter；下落时间：flight time、descent time。"},{"term":"布尔检索","plain":"OR通常连接同义表达，AND通常连接不同概念；引号用于短语。平台语法可能不同，要看帮助并试验。","example":"(\"paper helicopter\" OR \"paper rotor\") AND \"flight time\"。"},{"term":"查全与查准","plain":"查全重在少漏掉相关研究，查准重在结果中相关材料多。初搜可放宽，聚焦后再收紧。","example":"结果太少先去掉一个结果词，而非立即断言没有研究。"}],"tutorial":[{"title":"先写中文问题","body":"用一行写对象、条件、方法和想观察的结果。在下面圈出二到三个必须出现的核心概念；并非每个条件都必须放入第一轮检索。"},{"title":"建立双语词表","body":"每个概念先列中文、英文和常见缩写。遇到不确定术语，查看相关论文标题和摘要的实际用词，不只依赖直译。保留替换过的词及理由。"},{"title":"先宽后窄试三轮","body":"第一轮只用最核心两组词；第二轮加入方法或场景；第三轮尝试同义词和拼写。每轮记录平台、日期、完整检索式和前几条结果相关程度。"},{"title":"检查是否误设限制","body":"如果结果太少，依次检查引号、拼写、年份、文献类型和语言限制。结果多则增加必要概念或在题名摘要字段检索。不要一次改所有条件，否则难以知道改动效果。"},{"title":"保存可重做的记录","body":"把平台名称、日期、检索式、筛选条件和导出文件写成一行记录。这里练的是探索性检索；未设计完整方案时，不把这次搜索称作系统综述。"}],"worked":{"title":"教学示范：一个可迭代的检索式","body":"兴趣“机器人操作时检测异常”可拆为robotic manipulation与anomaly detection，第二轮再加入force或tactile。只搜“智能黑灯实验室创新”容易混入宣传材料。示范检索式只是起点，不表示已执行或覆盖完整。"},"exercise":{"prompt":"为你的一个兴趣写三轮检索并保留至少5条候选记录。","template":"研究问题：\n概念A同义词：\n概念B同义词：\n平台与日期：\n第1/2/3轮检索式：\n每轮改动理由：\n候选标题与链接：","hint":"先用一个你能合法访问的学术搜索入口；换平台时重新检查语法。","exampleAnswer":"示范：先搜paper helicopter；再加descent time；若太少改用flight time，并记录两种表达得到的相关性差别。不能把未实际检索的条数填成真实结果。"},"quiz":{"question":"搜不到论文时，哪项判断最稳妥？","options":["这个题目一定没人做过","先检查术语、限制和检索平台，再扩大查找范围","立即认定具有创新性"],"correct":1,"explanation":"检索失败可能来自用词或覆盖范围，不能直接证明研究空白。"},"rubric":["至少两个概念组且各有同义词","保留三轮完整检索式和改动理由","记录平台、日期和访问范围"],"pitfalls":["把搜索不到等同于没有先例","只保存论文，不保存检索过程"],"resourceIds":[]},{"id":"m2-l2","title":"筛选文献、追溯引用与辨别来源","minutes":90,"level":"必修","goal":"形成带纳入理由的候选清单，并追踪至少一条原始证据。","prereq":["完成 m2-l1"],"concepts":[{"term":"纳入与排除标准","plain":"在深入阅读前说清什么材料能回答问题，什么只能作为背景；标准可以探索中修订，但应留理由。","example":"比较纸结构承重，排除只讨论外观设计的文章。"},{"term":"向后与向前追踪","plain":"向后看论文引用了谁，向前找谁引用这篇论文；两者用于发现相关工作，不保证结果完整。","example":"找到基础方法来源，再找后续评价和反例。"},{"term":"来源与证据层级","plain":"原始论文、综述、教材和新闻各有用途；材料能支持什么取决于内容与方法，不能简单按名称判真伪。","example":"新闻可证明有人如此报道，不能替代实验方法细节。"}],"tutorial":[{"title":"先定最小筛选规则","body":"写与你问题直接有关的对象、方法和结果三个条件，另列语言、年份等实际限制。不要只因为结果符合预期才纳入；反面结果同样有价值。"},{"title":"看题名摘要，标三种状态","body":"将候选标为纳入、排除或待定，并各写一条理由。摘要信息不足时标待定，不猜测全文。为每条记录加文献类型和是否能合法获得全文。"},{"title":"从一篇核心文献向后追","body":"查看它介绍关键方法时引用的来源，打开最接近原始研究的一条。记录“核心文献在哪一段引用它、它实际支持什么”，避免只复制参考文献表。"},{"title":"再向前找评估和修正","body":"使用学术搜索的被引入口，优先关注相似条件的后续研究、复现、批评和修正。高被引不是正确保证，最新也不自动优于旧文。"},{"title":"去重并记录证据范围","body":"按DOI、题名和作者比对重复条目；不同版本保留关系而非当成两项独立证据。完成一张清单，标出全文、仅摘要、未读和访问失败。"}],"worked":{"title":"教学示范：为什么保留反例","body":"若三篇文章报告方法A有效，一篇相同任务下失败，不能直接删掉第四篇。先核对对象、参数、评估方法是否不同；它可能帮助你找到适用边界。示例篇数是教学情境，不是实际检索结果。"},"exercise":{"prompt":"筛选10条候选文献，完成1次向后和1次向前追踪。","template":"标题/标识：\n类型/版本：\n阅读范围：\n纳入、排除或待定：\n理由：\n它支持的具体命题：\n从哪条引用线索找到：","hint":"无法访问全文是访问状态，不等于研究质量差；可寻找作者合法公开版本。","exampleAnswer":"示范：一篇同场景原始研究纳入；一篇综述作背景；一条企业宣传只保留为产品线索；一篇摘要缺少任务细节，标待定。"},"quiz":{"question":"同一研究的预印本和正式发表稿，最合理的处理是？","options":["作为两份相互独立的支持证据","核对版本关系，记录所读版本并避免重复计数","只要题名不同就算独立研究"],"correct":1,"explanation":"版本关系需要核对；同一工作的重复出现不增加独立证据数量。"},"rubric":["10条记录均有状态与理由","完成双向引用追踪并注明路径","识别至少一项版本或重复问题，未发现则注明检查方法"],"pitfalls":["只选支持预期的文章","把摘要、全文和未读材料混写成已读"],"resourceIds":[]},{"id":"m2-l3","title":"文献卡、引用与转述的基本功","minutes":90,"level":"必修","goal":"能写可追溯文献卡，准确转述并区分直接引用与自己的推理。","prereq":["完成 m2-l2；有一篇可阅读全文"],"concepts":[{"term":"文献元数据","plain":"作者、年份、题名、发表渠道、卷页或文章号、标识等用于找到材料的基本信息。导入后仍需检查。","example":"网页自动导入把机构当作者时，要回原页面校正。"},{"term":"转述与直接引用","plain":"转述用自己的结构准确表达原意，也要注明来源；逐字摘录需明确标出，并记页码或定位。","example":"换几个同义词仍接近原句，不算充分的独立转述。"},{"term":"引用支持范围","plain":"引用只支持来源真正讨论的内容，不能让一条文献替你证明更强、更广的结论。","example":"小样本单次观察，不足以支持“所有人都适用”。"}],"tutorial":[{"title":"收录并校对书目信息","body":"用文献管理工具或表格保存一条记录，检查作者、题名、年份和DOI等标识；附件写清版本。暂时不用纠结格式样式，先确保能找到原件。"},{"title":"写三层文献卡","body":"第一层记作者的问题、方法和主要发现；第二层记关键证据位置与限制；第三层写你如何使用它。把第三层标“我的判断”，避免与作者观点混在一起。"},{"title":"做一次闭卷转述","body":"选一段短文，读懂后关掉原文，用两三句写核心意思，再打开核对对象、方向、程度和限定条件。补上引用定位，不用逐词替换来伪装改写。"},{"title":"保留直接摘录的边界","body":"确需逐字记录时使用引号或引用块，紧跟页码、章节或段落定位；翻译也保留出处。草稿笔记就区分摘录与自写，避免写作时遗忘来源。"},{"title":"用一段话连接多篇资料","body":"以问题为主语，将一致与不同之处写在同段，分别放来源；最后加一句自己的解释并标出尚待验证。排版格式按目标机构要求另查，不把一种样式当普遍规范。"}],"worked":{"title":"教学示范：缩小引用的力度","body":"原文若只报告“本次10个样品中A的误差较小”，转述应保留样品范围与比较条件。写成“A是最可靠方法”扩大了证据范围。这里的10个样品是虚构教学情境。"},"exercise":{"prompt":"完成3张文献卡，并对其中一段写转述与个人评价。","template":"书目信息/版本：\n阅读范围：\n问题与方法：\n发现与证据位置：\n局限：\n准确转述：\n我的评价/与课题关系：","hint":"若无法定位页码，可用章节、图号或段落；不要编造不存在的页码。","exampleAnswer":"示范：作者在指定材料和条件下比较A、B；图2报告A的平均误差较低；但批次少。我的判断：值得测试是否跨批次保持差异，该推广尚未被本文证明。"},"quiz":{"question":"准确转述别人的观点时，是否仍需要引用？","options":["不需要，因为句子是自己写的","需要，观点与证据仍来自原来源","只有复制超过一段才需要"],"correct":1,"explanation":"表达方式改变不改变思想与证据的来源；转述仍需可追溯。"},"rubric":["3张卡均含版本、阅读范围和证据定位","转述保留原文的条件与不确定性","个人评价明确区别于作者结论"],"pitfalls":["自动导入后从不检查元数据","把文献管理软件生成格式当作内容准确的保证"],"resourceIds":[]}]},{"id":"m3","title":"读论文与批判思考","stage":"起步","summary":"从不必逐句硬读开始，逐渐看懂方法与图表，再把不同研究放进同一张证据地图。","deliverable":"一篇分层阅读笔记、两张图表解读卡与一张文献比较矩阵","lessons":[{"id":"m3-l1","title":"三遍阅读：先地图，再方法，后细节","minutes":90,"level":"必修","goal":"能根据阅读目的分配精力，并用自己的话复述论文的问题与证据。","prereq":["完成 m2-l3"],"concepts":[{"term":"分层阅读","plain":"不同轮次回答不同问题：先判断相关性，再理解证据，最后检查关键细节。不是每篇都要从头精读到尾。","example":"背景材料读摘要与结论，核心方法则必须追到方法和补充资料。"},{"term":"论文结构","plain":"引言解释为什么做，方法解释如何做，结果展示发现，讨论解释含义与局限；不同学科结构会变化。","example":"定性研究不一定按完全相同标题排版，仍可追踪问题、材料和解释。"},{"term":"阅读问题单","plain":"用固定问题驱动阅读，遇到空缺就明确标记，避免看懂句子却不知道整篇在干什么。","example":"对象是什么？比较什么？数据如何得到？结论能推广到哪里？"}],"tutorial":[{"title":"先写这次为什么读","body":"在顶部写“找背景/学方法/评价证据/找可复现任务”之一。选一篇与你问题直接相关的短论文，把阅读时间暂分为15、30、45分钟，可按难度调整。"},{"title":"第一遍建立地图","body":"读题名、摘要、各级标题、图题和结论。用五句话写问题、对象、方法、主要发现和限制；缺项写“未找到”。这一遍只判断值不值得继续。"},{"title":"第二遍追踪主证据","body":"从一个主要结论反向找到图表，再找到产生它的方法。记录样本来源、操作、比较对象、结果指标和分析方式；不熟的术语只收最影响理解的三个。"},{"title":"第三遍处理关键障碍","body":"只对影响你判断的公式、参数或补充材料精读。公式先解释符号与单位，再问输入和输出是什么。外语妨碍理解时可逐段对照翻译，并回原文核对关键限定词。"},{"title":"合上论文口头解释","body":"用两分钟向一个假想同学说明作者做了什么、凭什么这样说、你尚不信服哪里。解释不通的地方回读，不用把全文翻译完才允许自己做笔记。"}],"worked":{"title":"教学示范：把不懂写具体","body":"“方法看不懂”可改为“图3有100个点，但方法只写10个样品；点代表独立样品还是重复读数？”具体疑问能引导回读与提问。数字只是教学示意，不对应真实论文。"},"exercise":{"prompt":"对一篇论文进行三遍阅读，提交五句摘要和三个具体疑问。","template":"本次目的：\n问题：\n对象：\n方法：\n发现：\n边界：\n证据链位置：\n三个仍不懂的问题：","hint":"允许保留未理解部分，但要说清它会影响哪条判断。","exampleAnswer":"示范：本文比较两种测量流程；对象是指定材料样品；主要证据是误差图；我还需核实独立样本数、参考测量如何校准、测试是否与调参数据分开。"},"quiz":{"question":"第一次读一篇论文时，最有效的目标通常是什么？","options":["确保每个公式都能推导","建立问题、方法与证据的整体地图","逐句翻译后再看图"],"correct":1,"explanation":"先定位整体结构，才能决定哪些细节值得投入；核心论文之后仍需深入方法。"},"rubric":["五句话覆盖问题、对象、方法、发现、边界","至少一条结论追到方法和图表","疑问具体到概念、位置或判断后果"],"pitfalls":["把阅读等同于逐词翻译","精读所有边缘文献，拖延核心问题"],"resourceIds":[]},{"id":"m3-l2","title":"看懂图表，检查证据有没有撑住结论","minutes":90,"level":"必修","goal":"能解释坐标、样本、变异和比较条件，并提出有依据的质疑。","prereq":["完成 m3-l1；遇到统计词可先标疑问"],"concepts":[{"term":"图形编码","plain":"点、线、柱、颜色分别代表什么，必须由图例和方法确定；一根柱未必代表一个样本。","example":"柱可能是均值，点可能是每个独立对象，也可能只是重复读数。"},{"term":"误差条","plain":"可能表示标准差、标准误或置信区间，含义不同；必须看图注，不能仅凭长短推断显著性。","example":"同样长度的误差条，若定义不同，不能直接作同一种比较。"},{"term":"替代解释","plain":"除了作者提出的原因，是否还有条件、对象或测量差异能产生同样观察。质疑要连接具体证据。","example":"A方法更快，也可能因为测试机器更好，而非算法本身。"}],"tutorial":[{"title":"先只描述，不解释","body":"选一张核心图，读坐标名称、单位、范围、图例和样本说明。写“我看到的模式”，暂不写原因；留意坐标是否截断、对数化或不同面板使用不同范围。"},{"title":"找到每个标记代表的单位","body":"查图注中的n与方法里的样本定义。分清人、样品、实验批次、图像与重复测量，判断它们是否独立。不清楚时把问题写出来，而非从点数猜样本量。"},{"title":"核对不确定性和遗漏","body":"确认误差条定义、是否显示原始点、是否有缺失或排除数据。平均值相近不表示每个对象相同；图中未画出的条件也不能自动补成已验证。"},{"title":"检查比较是否公平","body":"看方法间是否使用相同数据、资源、评价规则与调参机会。列出一个最可能影响结论的差别，再判断论文是否控制或讨论了它。"},{"title":"写有分寸的批判","body":"按“作者主张—具体证据—可支持范围—尚存疑问”写一段。没有找到说明可写“文中未见/我未找到”，不要仅据缺乏说明断言作者造假。"}],"worked":{"title":"教学示范：一张柱状图不够说明什么","body":"教学图显示A平均耗时8秒、B为10秒。如果不知道重复次数、波动、任务难度与计时方式，只能说图展示了两个均值，不能确定差异稳定、重要或由方法导致。8与10是模拟数值。"},"exercise":{"prompt":"选两张论文图表，每张完成一份图表解读卡。","template":"图号及主张：\n轴、单位、范围：\n每个标记与n：\n误差条定义：\n主要模式：\n公平比较条件：\n一个替代解释：\n当前可支持的结论：","hint":"如果不懂某种图，先查这类图的阅读方式，再回到原图核对，不能只套教程模板。","exampleAnswer":"示范：均值较低；误差条含义待查；每个点是否独立样品待核实；暂不能判断提升稳定性，需要原始分布和重复设计。"},"quiz":{"question":"看到两组误差条重叠，可以直接认定两组没有差异吗？","options":["可以，任何误差条都如此","不可以，要先知道误差条定义、设计与分析方法","只要柱子差不多就可以"],"correct":1,"explanation":"误差条类型和比较结构影响解释，不能用视觉重叠代替适当分析。"},"rubric":["两张卡均说明轴、单位和标记含义","确认误差条定义或明确标待查","质疑指向具体条件，并写明推断边界"],"pitfalls":["把图好看或差距大当作可靠性","把方法报告不清直接升级为道德指控"],"resourceIds":[]},{"id":"m3-l3","title":"从单篇摘要，走向文献比较与研究空白","minutes":90,"level":"必修","goal":"能围绕同一个问题比较多篇研究，提出有依据且不过度声称的待研究点。","prereq":["完成 m3-l2；至少3张文献卡"],"concepts":[{"term":"综合","plain":"围绕问题比较研究之间的一致、差异及其原因，不是把三篇摘要依次拼接。","example":"同一方法在静态环境有效，在运动条件下结果不稳定。"},{"term":"研究空白","plain":"与重要问题有关、现有证据仍不足的地方；可能是条件、机制、测量、方法或解释，不等于一个词组没人用。","example":"已有平均精度证据，但跨材料批次的稳定性仍不清楚。"},{"term":"证据强弱","plain":"取决于问题与设计是否匹配、测量是否可靠、独立检验与局限等；论文数量不能直接相加成真理。","example":"十篇共用同一数据的分析，不等于十次独立验证。"}],"tutorial":[{"title":"限定一个比较问题","body":"从你的兴趣中选一个小问题，明确对象和结果。只纳入能对该问题提供信息的3到5篇材料，背景综述另放，不与原始实验混成一类。"},{"title":"建一张横向矩阵","body":"每篇占一行，列出对象、条件、数据规模及独立单位、方法、基线、指标、主要结果、限制与阅读范围。未报告或未读到的字段写清，不填想当然的答案。"},{"title":"找一致与不一致","body":"先看哪些结论在相似条件下重复出现，再看结果不同是否伴随数据、设备、评价规则或对象变化。不能把不可比的指标直接排序为谁更好。"},{"title":"把空白写成可验证句子","body":"用“现有材料支持A，但在B条件下证据不足；因此想比较C与D，观察E”写一段。把“证据不足”和“尚未检索到”区分开，保留检索覆盖限制。"},{"title":"做反向检查","body":"尝试寻找能反驳空白判断的研究或相邻领域先例。如果找到，就缩小问题或换角度。最后把判断标成“待查新候选”，由指导者和进一步检索共同核实。"}],"worked":{"title":"教学示范：从宏大口号缩到一个空白候选","body":"“机器人还有很多问题”无法指导研究。较好的候选是“已读三篇在固定光照下评估；我尚未核实照明变化对误检的影响，下一步查相邻任务先例”。这说明你目前的证据范围，不声称整个领域从未研究。"},"exercise":{"prompt":"用3到5篇文献完成比较矩阵，写一个空白候选和反向查找计划。","template":"比较问题：\n共同发现：\n主要分歧与可能原因：\n证据不足的位置：\n候选问题：\n可能推翻该空白的文献关键词：\n尚需指导者确认：","hint":"若所有论文都不是同一问题，先缩小比较范围；不必为了凑数量强行合并。","exampleAnswer":"示范：现有材料只覆盖同一批次；拟评估换批次后的误差变化；先检索cross-batch、robustness等相关表达。这个候选仍可能已有大量先例。"},"quiz":{"question":"“我没找到相关论文”最适合写成什么？","options":["该领域从未有人研究","在已记录的检索范围内尚未找到，需要继续查新","证明题目足够创新"],"correct":1,"explanation":"对检索范围诚实，才能把个人知识缺口与领域证据缺口区分。"},"rubric":["矩阵覆盖至少3篇且字段可比较","综合段包含一致、差异与条件","空白候选有依据、反向检查和范围限定"],"pitfalls":["把自己的不理解当作学术界未知","只说现有方法不好，却不给具体比较条件"],"resourceIds":[]}]},{"id":"m4","title":"研究问题与研究设计","stage":"取证","summary":"把兴趣缩到可回答的问题，选择与问题相配的定量、定性或工程评估路径，并明确对象、采样、混杂因素和结论边界。","deliverable":"一页研究设计草案，包含问题、对象、操作、采样、分析计划与限制","lessons":[{"id":"m4-l1","title":"把宽泛兴趣缩成研究问题","minutes":90,"level":"必修","goal":"能把一个宽泛主题缩成在现有时间、权限和技能条件下可回答的问题，并说明暂时不研究什么。","prereq":["完成 m3 文献比较；尚无研究经历也可从教学例子起步"],"concepts":[{"term":"范围","plain":"研究对象、条件、时间、结果和任务的边界；范围越清楚，越容易判断所需证据与资源。","example":"把“提升机器人能力”缩为“桌面任务中，握持力阈值是否预测一次抓取滑移”。"},{"term":"可行性","plain":"问题不仅有意思，还要能取得合法材料、操作变量、测量结果并在可用期限内分析。","example":"若没有设备日志权限，依赖内部日志的问题目前不可行。"},{"term":"问题与方法匹配","plain":"问“发生什么”可用描述性观察；问“为何如此”可能需要更丰富材料；问“是否造成改变”需要能支持因果比较的设计。","example":"访谈适合探索使用者如何理解提示，不单独证明提示缩短了完成时间。"}],"tutorial":[{"title":"把兴趣拆成五个槽位","body":"写出对象、场景或条件、可能的改变、比较对象、结果指标。可以暂时空一格，但不要把“AI”“机器人”“效率”直接当成可测对象或结果。"},{"title":"找现成证据和未知点","body":"用 m2 的检索记录找三至五篇相关资料。逐篇记它测了什么、对象是什么、在哪些条件下做的；将自己的未知标为“个人待查”，不要立刻称作领域空白。"},{"title":"列资源和权限","body":"把必要的设备、数据、软件、参与者、审批和指导支持逐项列出。标成“已确认”“可申请”“未知”。人的数据、内部企业数据或实验室数据须先核实许可和伦理要求。"},{"title":"设计最小可答版本","body":"暂时只选一个主要因素和一个主要结果，设计一个能提供证据的最小比较。例如纸直升机翼长两种、释放高度相同、测下落时间。先做桌面推演，不把模拟例子当结果。"},{"title":"做停止与缩小判断","body":"问如果关键资源拿不到，问题能否缩成文献分析、公开材料分析或工程台架评估？写清停止条件与备选路径。最后请指导者评估工作量和学术价值。"}],"worked":{"title":"教学示范：把目标缩为可检查问题","body":"“让液体机器人更可靠”可缩成“在固定任务与给定器材下，在线称重读数是否能发现预先设定的漏加情况？”还需核实传感器精度、独立参考测量、安全和权限。该句仅演示问题结构，不表示设备已存在、问题新颖或已获实际结果。"},"exercise":{"prompt":"用五槽位为一个感兴趣主题写两个版本，并判断哪个现阶段可答。","template":"主题：\n版本A：\n版本B：\n对象/条件/改变/比较/结果：\n必要资源与权限：\n当前未知：\n一周内可做的准备：\n缩小或停止条件：","hint":"先选择能查文献、看材料或做离线模拟的题目，不需要假定已经拥有实验室。","exampleAnswer":"教学示范：兴趣为测量准确度；问题改为在电子表格给出的模拟称量记录中，规则X是否识别被植入的漏记录；暂不声称对应真实仪器性能。模拟数据只用于试程序。"},"quiz":{"question":"哪项最适合当作可行性检查？","options":["确认数据合法权限、测量手段、时间与指导条件","题目听起来很新","计划做得越复杂越可靠"],"correct":0,"explanation":"研究必须能取得和检查相应证据；新颖感与复杂度不能代替资源、权限和工作量检查。"},"rubric":["问题含明确对象、条件和结果指标","资源状态将已确认与未知分开","写出范围、备选路径及停止条件"],"pitfalls":["先定技术工具，再为工具寻找问题","把没有找到资料直接写成确定空白"],"resourceIds":[]},{"id":"m4-l2","title":"选择方法：变量、定性研究与工程评估","minutes":90,"level":"必修","goal":"能判断问题适合描述、关系分析、因果评估、定性探索或工程性能验证中的哪一种，避免将一种方法的结论夸大为另一种。","prereq":["完成 m4-l1"],"concepts":[{"term":"自变量与因变量","plain":"自变量是研究者操纵或用来比较的条件；因变量是观察结果。两者只是变量角色名称，不自动证明因果。","example":"纸翼长是操纵条件，下落时间是结果。"},{"term":"定性研究","plain":"用访谈、观察或文本等材料，系统理解经验、意义、过程与情境；要交代如何选取材料、分析主题和处理研究者影响。","example":"访谈不同使用者，了解他们何时会忽略设备警报。"},{"term":"工程评估与因果评价","plain":"工程评估常检验系统是否满足预定性能或约束；因果评价还要可信地判断观察改变是否由处理造成。前者的合格本身不等同普遍因果结论。","example":"在台架测试通过精度要求，不证明它在所有现场都提升效率。"}],"tutorial":[{"title":"从问句识别答案类型","body":"问“有何经验或过程”时，考虑访谈、观察或文本分析；问“多大、多久、多少误差”时，考虑定量测量；问“系统能否满足要求”时，制定工程测试。问题可混合，但要说出每种材料回答哪一部分。"},{"title":"画一个变量图","body":"写出条件或处理、结果、可能共同影响两者的因素及数据来源，用箭头连接。区分操纵条件、测量结果和背景变量；不清楚的箭头画问号，留待查文献或指导者讨论。"},{"title":"为定性路径取样","body":"若探索体验，定义需要什么经验的人或材料、如何邀请、如何保护隐私、访谈何时结束；准备开放问题并小范围试访谈。涉及真实参与者时先向机构确认伦理审查要求，不要先收集敏感材料。"},{"title":"为工程测试写验收矩阵","body":"列预定任务、操作条件、参考值、测量指标、容差、失败情形和重复计划。说明阈值的依据来自需求、标准或实际决策成本；没有依据时把阈值标为待确定，而非随结果挑选。"},{"title":"对照方法与结论","body":"用一行连接“问题—所需材料—分析—能够支持的结论”。如果访谈只支持理解过程，就不要写成效果更大；若工程测试仅覆盖一种设置，就限定到该设置。记录这个限制和下一步需要的设计。"}],"worked":{"title":"教学示范：同一主题两种不同问题","body":"定性问句：“操作者如何理解一次意外报警？”可以访谈或观察，并分析主题与反例。工程问句：“系统能否在预设测试集达到漏报率要求？”需要定义样本、判定真值与验收规则。两种方法回答不同问题，示例没有进行真实访谈或设备测试。"},"exercise":{"prompt":"针对同一主题各写一个定性问题和一个工程评估问题，分别制定最小可行方案。","template":"主题：\n定性问题与资料：\n招募/取样/伦理考虑：\n分析步骤：\n能够支持的结论：\n工程问题与验收指标：\n参考真值和测试条件：\n通过阈值依据：\n不能支持的结论：","hint":"用户体验与系统性能可以互补，但必须分别说明各自证据和分析。","exampleAnswer":"教学示范：研究模拟操作界面；定性问操作者怎样解释通知，以匿名任务后的访谈探索；工程问规则能否在带标签离线记录中达到预设识别率。离线标签来自模拟，不能推断真实现场人类体验或系统有效性。"},"quiz":{"question":"访谈参与者表示新界面更容易理解，可以支持哪种说法？","options":["新界面已被证明缩短所有用户任务时间","受访者表达了相应体验，可在研究的取样与情境范围内分析","界面已通过所有工程验收"],"correct":1,"explanation":"访谈材料能支持有关体验和解释的分析；任务时间和工程验收需要相应的测量与比较。"},"rubric":["针对问题选择匹配的方法和资料","定性和工程评价方案各自写明分析依据","结论不越过材料所能支持的范围"],"pitfalls":["把方便的指标误当作研究问题本身","用少数访谈得出总体性能或普遍因果结论"],"resourceIds":[]},{"id":"m4-l3","title":"抽样、混杂因素与因果边界","minutes":90,"level":"必修","goal":"能画出初步因果图，区分独立单位、测量次数和潜在混杂，并规划采样与反例检查。","prereq":["完成 m4-l2；了解平均值和数据表的基本概念"],"concepts":[{"term":"抽样与代表性","plain":"从目标对象中取得研究单位的方法会影响结果适用范围；便利样本未必代表目标总体。","example":"只招募同一团队的熟练操作者，结果可能不适用于新手。"},{"term":"混杂因素","plain":"共同影响条件与结果的因素，可能使两者看起来相关。识别和控制需依靠设计与领域知识。","example":"第二组纸飞机材料更厚，翼长效果与材料差异混在一起。"},{"term":"反例与边界条件","plain":"主动寻找不符合预期的对象、批次、场景和解释，帮助限制结论或发现机制。","example":"有些翼长下落更慢，但折线不对称的样品例外。"}],"tutorial":[{"title":"先定义目标对象与研究单位","body":"写清你希望描述的对象，以及数据中独立产生信息的单位，例如独立纸直升机、独立参与者或独立批次。重复对同一对象读数通常不是新增一个独立对象。"},{"title":"描述抽样入口","body":"列出谁或什么能被纳入、从何处取得、谁可能被遗漏，以及参与或排除条件。为方便取样所带来的偏差写备注。涉及参与者要确认伦理与同意流程。"},{"title":"找出可能的混杂","body":"画条件和结果的箭头，并列出能同时影响它们的因素。纸翼长研究至少考虑纸张、折法、释放高度与计时人；不必一开始穷举，但要指出依据和可控方式。"},{"title":"制定一致操作流程","body":"写设备、校准、操作者、条件顺序和记录规则；用试运行找出含糊步骤。若不同组按不同流程操作，流程差异本身就可能造成结果差异。"},{"title":"为反例预留检查","body":"先写一种你预期不会出现但仍须保留的结果；规定如何记录失败试次、缺失值和异常。分析时同时展示整体模式与个体或批次差异，说明结论是否只在特定条件下成立。"}],"worked":{"title":"教学示范：相关不能自动等于因果","body":"观察中发现较长翼与较长下落时间相伴，仍可能是不同操作者折法或释放高度造成的。若要说翼长导致差异，需要通过随机分配制作条件、标准化释放和合适比较设计减轻其他解释。教学相关数据不表示实际测量，更不证明因果。"},"exercise":{"prompt":"为一个两条件比较列采样框架、混杂图和反例计划。","template":"目标对象：\n独立研究单位：\n取样入口：\n可能漏掉谁/什么：\n条件和主要结果：\n潜在混杂及控制方式：\n流程一致化：\n异常、缺失与反例记录：\n结论可推广到：","hint":"先区分研究单位与一次读数，再谈样本量；由研究问题、设计和资源共同确定计划。","exampleAnswer":"教学示范：目标是纸直升机；单位为独立制作的样品；每个样品多次释放是重复测量；统一纸张、制作者培训和释放高度；若更换操作者或纸批次则需单列或在设计中平衡。只概括被测试材料和条件。"},"quiz":{"question":"连续测量同一个样品10次，通常最不应直接说什么？","options":["获得10次读数","记录重复读数的波动","有10个独立样品"],"correct":2,"explanation":"读数次数不是独立研究单位数量；将重复测量当作独立样品会夸大信息量。"},"rubric":["写清目标对象、独立单位和抽样入口","至少列出两个混杂及对应处理策略","预先规定反例、失败和缺失值的记录方式"],"pitfalls":["用重复读数冒充独立样本","观察到相关便把改变归因于单个因素"],"resourceIds":[]}]},{"id":"m5","title":"数学、数据与概率直觉","stage":"取证","summary":"用单位、可视化和简单计算检查测量与不确定性。公式按需要补齐，不假设任何人的数学基础；重点是数量含义与研究单位。","deliverable":"一张带单位的数据表、一份描述统计和一份独立性/概率练习","lessons":[{"id":"m5-l1","title":"单位、比例和量纲检查","minutes":60,"level":"必修","goal":"能为变量标单位，计算比例或变化量，并用单位一致性发现常见录入和推理错误。","prereq":["完成 m4-l1；只需基本四则运算"],"concepts":[{"term":"量与单位","plain":"数值要和量纲、单位一起读，单位转换需要依据换算关系。","example":"0.75小时等于45分钟，不能在没有转换时把0.75与45直接比较。"},{"term":"比例与百分比","plain":"比值表示两个数量的相对关系；百分比是乘以100后的比例，须明确分母。","example":"合格件数除以检查总件数才是合格率，不能只报合格数。"},{"term":"变化量与基线","plain":"绝对变化是后值减前值；相对变化还依赖基线。基线不同，百分比变化可能误导。","example":"从2分钟减到1分钟与从20分钟减到19分钟，绝对变化相同但相对变化不同。"}],"tutorial":[{"title":"为变量写单位","body":"取一份练习数据，给每一列写“测量量（单位）”，类别列则注明允许的类别。百分比也写清分母定义，时间统一选秒或分钟，不留只有裸数字的列。"},{"title":"统一数据类型和小数","body":"检查本列是否混用“1.2秒”“1200毫秒”和文本。选一种储存单位，把换算规则记录在数据字典；保留原始文件，并将转换后文件另存。"},{"title":"计算一次比例","body":"用模拟的5次任务中4次成功，计算成功率4/5=0.8=80%。同时记录分母为任务数。若只对成功样本统计耗时，不要把该耗时说成所有任务的总效率。"},{"title":"比较绝对与相对变化","body":"使用试算表做前后差值和差值除以前值。在前值为0时相对变化无法按此公式计算，应另选有意义的比较方式；结果须显示单位和基线。"},{"title":"做量纲合理性检查","body":"对每条公式写出输入和输出单位。速度=距离/时间，单位应是长度/时间；如果算出秒的平方或把重量直接当体积，就停下来检查关系与单位转换。"}],"worked":{"title":"教学示范：变化百分比的分母","body":"模拟任务从10秒变8秒，绝对变化为−2秒，相对变化相对原来的10秒是−20%。若基线换成不同任务，百分比解释也会变。数字是教学演算，不是实际系统测量。"},"exercise":{"prompt":"为五列模拟数据建立数据字典，并计算一次比例、绝对变化和相对变化。","template":"变量 | 含义 | 类型 | 单位/类别 | 允许范围\n\n分母定义：\n基线：\n绝对变化及单位：\n相对变化：\n公式的输出单位：","hint":"数值、单位、分母和基线一起记录；可使用纸笔或任意试算表。","exampleAnswer":"教学示范：完成4/5任务，成功率80%；耗时从10秒到8秒，变化−2秒，相对基线变化−20%。只用于练习计算，不推断方法优劣。"},"quiz":{"question":"一项比例最少必须同时说明什么，才能正确解释？","options":["分子和分母分别代表什么","小数保留位数","图表使用了什么颜色"],"correct":0,"explanation":"比例意义取决于分子、分母及其对象定义；单有百分比无法判断口径。"},"rubric":["变量均有类型、单位或类别定义","比例和变化量显示分母、基线和单位","至少用一次量纲检查发现或排除不一致"],"pitfalls":["不同单位的数字直接运算","只报告百分比而隐藏分母或基线"],"resourceIds":[]},{"id":"m5-l2","title":"均值、中位数、标准差和分布","minutes":90,"level":"必修","goal":"能从一组简单数据计算或解释均值、中位数和标准差，说明离群值的影响，并区分SD与SEM。","prereq":["完成 m5-l1；会做加减、平均和平方根计算可用计算器"],"concepts":[{"term":"均值与中位数","plain":"均值是总和除以数量，常能概括中心但易受极端值影响；中位数是排序后中间位置，更稳健但不描述全体分散程度。","example":"1、2、3、4、30的均值高于中位数。"},{"term":"标准差SD","plain":"描述观察值围绕均值的离散程度，单位与原数据相同；其具体计算需区分总体或样本公式。","example":"任务时间的SD也用秒表示。"},{"term":"标准误SEM","plain":"通常用样本标准差除以样本量平方根估计均值的不确定性；不是个体观察值的离散程度，也不是测量仪器精度。","example":"SD回答单个读数如何分散；SEM回答均值估计的精确程度。"}],"tutorial":[{"title":"先排序并画点","body":"用教学数据2、3、3、4、8（单位：秒），从小到大列出，画一条数轴标每个点。查看分布是否集中、偏斜或有远离点群的观察；不要急着仅报一个数字。"},{"title":"手算均值和中位数","body":"总和20除以5，均值为4秒。排序后中间值为3秒，因此中位数为3秒。再将8替换为40，重新计算；比较两个中心统计量对极端值的反应。"},{"title":"理解离差和标准差","body":"对原数据各自减去均值，查看偏差正负与大小；平方后避免正负相消，求平均量级并开平方。样本SD常使用n−1分母，计算器定义需核对，手算目的在理解离差，而非替代软件。"},{"title":"SD与SEM放在不同问题下读","body":"若关心单个任务时间的变动，看原始分布和SD；若关心样本均值估计精度，可按研究设计计算SEM或区间估计。只写“误差条”而不说明是SD还是SEM，信息不足。"},{"title":"报告离群值处理原则","body":"发现极端值时回查原始记录、单位、预先制定的排除规则和可能原因。数据真实且合法时不要因为影响预期就删除；可透明呈现包含/不包含的敏感性分析。"}],"worked":{"title":"教学示范：离群值为何改变均值","body":"数据2、3、3、4、8秒的均值4秒，中位数3秒；换成2、3、3、4、40秒，均值10.4秒而中位数仍3秒。样本标准差也会受离散值影响。以上数字是特意构造的教学数据，不代表真实实验。"},"exercise":{"prompt":"为两组教学数据计算中心与离散摘要，并口头解释SD和SEM回答的不同问题。","template":"数据A（秒）：\n均值：\n中位数：\n样本SD（工具与公式）：\n数据B替换极端值后：\n哪种中心变化较大：\nSD描述：\nSEM描述：\n数据处理决定：","hint":"先点图；使用计算器时记录函数为样本SD还是总体SD，不把SEM误称为单次误差。","exampleAnswer":"教学示范：A=2、3、3、4、8；B=2、3、3、4、40。均值明显变化而中位数不变；离群记录需核对来源并按事先规则处理。这里没有提供真实收集的数据。"},"quiz":{"question":"SD与SEM通常哪个描述个体观测的离散程度？","options":["SEM","SD","两者可以互换"],"correct":1,"explanation":"SD描述观测值的变异；SEM描述样本均值估计的不确定性，不是同一个量。"},"rubric":["能解释均值与中位数在极端值下的差异","SD使用原始单位且说明样本/总体约定","明确区分观测离散、均值不确定性和仪器误差"],"pitfalls":["看到平均值就忽略分布与原始点","把SEM当作观测值SD或精度指标"],"resourceIds":[]},{"id":"m5-l3","title":"独立单位、伪重复与条件概率","minutes":90,"level":"必修","goal":"识别重复读数与独立研究单位的区别，并能用简单频数表计算条件概率及解释分母。","prereq":["完成 m5-l2；会计算比例"],"concepts":[{"term":"实验单位","plain":"被独立分配条件、并承载处理或比较的最小单位，具体定义取决于设计。","example":"若整批材料一起处理，独立单位可能是批次而不是每个测量点。"},{"term":"伪重复","plain":"将同一单位内相关的多个读数当成彼此独立单位分析，导致信息量被夸大。","example":"同一个样品测20次，不能直接当作20个独立样品。"},{"term":"条件概率","plain":"在已知条件B发生的子群体中，A发生的比例；它的分母是满足B的数量。","example":"报警样本中的真实异常比例，与异常样本中的报警比例分母不同。"}],"tutorial":[{"title":"为数据画层级","body":"写出批次、对象和读数的层级。例如3批材料，每批4件，每件测2次。画树状结构并注明条件分配在哪一层；同一对象的多次读数通常有关联。"},{"title":"数清独立单位","body":"先根据谁被独立分配条件确定单位，再记录各单位的重复读数。避免用总点数直接替代样本量；复杂设计可能需要混合模型或层级分析，先向导师核实。"},{"title":"建2×2频数表","body":"使用完全模拟的筛查例子：100个记录中，实际异常20个；报警的记录里有15个异常，也有10个非异常。表格同时列异常/非异常与报警/未报警，并核对总数是否为100。"},{"title":"根据问题选分母","body":"算“异常时有报警吗”就用异常总数作分母；算“出现报警时有异常吗”则用报警总数作分母。用表格直接相除，不从“准确率”三个字猜口径。"},{"title":"写清概率语境","body":"给条件概率加完整文字，例如“在已报警记录中，异常的比例=15/25=60%（模拟数据）”。更换基线发生率后这个值会改变，因此不能把样本中的比例自动当作所有场景的真实概率。"}],"worked":{"title":"教学示范：有报警不等于异常概率固定","body":"模拟表：异常20条，不异常80条；异常中15条报警，不异常中10条报警。异常样本报警比例为15/20=75%；报警样本异常比例为15/25=60%。条件与分母不同，答案不同。数字是教学模拟，不表示真实设备性能。"},"exercise":{"prompt":"画一张层级结构图，并为模拟的2×2表计算两个相反方向的条件概率。","template":"批次数/对象数/每对象读数：\n实验单位：\n可能相关的重复读数：\n表格四格计数：\nP(报警|异常)及分母：\nP(异常|报警)及分母：\n数据来源与模拟说明：","hint":"条件概率P(A|B)的分母是B组；先把这个子群圈出来再计算。","exampleAnswer":"教学示范使用15异常报警、5异常未报警、10非异常报警、70非异常未报警；P(报警|异常)=15/20=75%，P(异常|报警)=15/25=60%。这只是构造数据，不能作为真实诊断指标。"},"quiz":{"question":"P(异常|报警)的分母应是什么？","options":["所有异常记录数","所有报警记录数","所有未报警记录数"],"correct":1,"explanation":"竖线右侧“报警”是已知条件，所以分母是报警子群；分子是其中异常数量。"},"rubric":["图示能区分批次、对象与重复读数","说明分析单位与条件分配层级","两个条件概率使用不同且正确的分母"],"pitfalls":["把独立单位内的重复读数当作独立样本","只报条件概率数字，不写它的条件与分母"],"resourceIds":[]}]},{"id":"m6","title":"统计推断与比较","stage":"取证","summary":"从“差异有多大、精度如何、设计允许我说什么”理解比较结果。学习检验前先明确研究问题、主要结果与分析规则。","deliverable":"一份分析前计划、效果量与区间的解释练习、包含反例和多重比较说明的结果稿","lessons":[{"id":"m6-l1","title":"效果量、置信区间与p值","minutes":90,"level":"必修","goal":"能分别解释效果方向与大小、估计不确定性和p值，并避免把p值说成假设为真的概率。","prereq":["完成 m5-l2、m5-l3；尚未学过检验可从直觉和模拟开始"],"concepts":[{"term":"效果量","plain":"描述比较的方向与幅度，选何种表达取决于问题和单位。需要同时考虑实际意义，不只看是否越过统计阈值。","example":"平均耗时少2秒的效果，应用价值取决于任务与代价。"},{"term":"置信区间","plain":"在所用设计和模型假设下，由数据形成的估计范围；重复抽样的覆盖性质有特定解释，不等于参数有某个概率落在这一次算出的固定区间中。","example":"宽区间提示当前估计不够精确，具体解释仍要看抽样设计。"},{"term":"p值","plain":"在指定零假设及模型条件成立时，得到当前或更极端数据的概率；不是零假设为真的概率，也不是结果重要性的量度。","example":"较小p值表示数据与指定零假设下的模型较不相容，但不能独自给出因果或实际价值。"}],"tutorial":[{"title":"先说比较对象与单位","body":"写清比较的是谁、什么条件、主要结果和单位。没有这些信息，单独报p值无法说明发生了什么。优先画分布和原始数据摘要，先理解方向和变异。"},{"title":"选择有意义的效果量","body":"如果结果本身有直观单位，先计算两组均值差或比例差并注明单位、方向和基准。需要标准化效果量时，核实公式与适用设计，不因看似方便而忽略可解释的原始单位。"},{"title":"把区间和点估计一起读","body":"记录点估计与区间端点，再问区间覆盖哪些小到无意义、实际重要或可能有害的差别。宽区间通常意味着估计不精确；更精确需要有根据的样本规划和可靠测量。"},{"title":"用语言描述p值","body":"练习完整句：“若零假设与模型条件成立，得到这类或更极端数据的概率为……”。不要改写成“零假设有……概率成立”或“结果有……概率是假阳性”。"},{"title":"综合设计、精度与价值","body":"将估计方向、效果量、区间、预先确定的重要差异和设计限制合并解释。p值小但效果极小不自动重要；区间宽且跨越正负影响时，应报告不确定，而不只写显著或不显著。"}],"worked":{"title":"教学示范：为什么小p值不是结论的概率","body":"假设某教学模拟比较得到组间平均差−2秒，区间为−3到−1秒且p值为教学假设的一个小数。可解释为该模型下数据与零差异假设不相容程度较高；不能解释成“零差异只有该概率是真的”，也不能单凭它证明实用价值或因果。数值仅为虚构演示。"},"exercise":{"prompt":"解读一组给定教学模拟的效果量、区间与p值，写一段受设计限制的结果。","template":"研究问题和设计：\n比较单位及结果单位：\n效果量/方向：\n区间包含的实质可能性：\np值条件性解释：\n不代表什么：\n设计限制：\n一句谨慎结论：","hint":"先画原始数据分布，再看区间；若不能确认区间构造方法，先写待核实。","exampleAnswer":"教学示范：随机模拟的两条件耗时差为−2秒，给定区间−3至−1秒；只能说明该模拟设定下估计方向和精度。数据非实测，不能当作实际实验结论。"},"quiz":{"question":"p值最接近哪项解释？","options":["观察到的数据条件下，零假设为真的概率","指定零假设及模型成立时，得到当前或更极端数据的概率","研究结果在现实中重要的概率"],"correct":1,"explanation":"p值以指定假设和模型为条件，不能反向作为假设概率或重要性分数。"},"rubric":["报告有单位和方向的效果量","正确表述区间估计的精度含义","用条件性语言解释p值而不作因果或重要性夸大"],"pitfalls":["把p值读成假设正确概率","只比较显著标签而不看差异大小、区间和设计"],"resourceIds":[]},{"id":"m6-l2","title":"根据设计做比较：配对、独立与样本规划","minutes":90,"level":"必修","goal":"能依据数据采集结构区分配对和独立比较，理解没有通用的30例规则，并为后续方法选择准备关键问题。","prereq":["完成 m5-l3 和 m6-l1"],"concepts":[{"term":"独立组","plain":"两组由不同研究单位组成，单位间的组别归属不配对；仍要检查各单位是否存在批次或团队聚类。","example":"随机分到A或B组的不同纸样属于不同单位。"},{"term":"配对设计","plain":"同一单位在两种条件下被测，或事先匹配成对；分析通常利用每对内差值，而不是把全部读数当作两组互不相关。","example":"同一设备在维护前后各测试一次，构成设备内配对。"},{"term":"样本量规划","plain":"所需规模依赖研究问题、设计、结果变异、重要差异、错误风险和可用资源等；不能用固定的30替代规划。","example":"同样的样本数，在配对相关强弱不同或结果变异不同的设计中提供的信息不同。"}],"tutorial":[{"title":"确定是谁接受条件","body":"画出每个单位与条件的关系。如果同一单位接受A和B，把两次观察连在一起；若不同单位分到不同组，按独立组理解；若先匹配再分配，记录配对依据。"},{"title":"先检查配对是否真实完整","body":"每对需要可识别的共同单位或预设匹配标识。缺少一边的记录应按方案处理，不能把剩余读数随意改成独立组而不说明。"},{"title":"选择需咨询的方法","body":"列结果类型、分布、独立单位、配对关系、批次和缺失情况。连续近似正态、类别结果或重复测量可能需要不同方法；本练习只选咨询路径，不凭口诀自动跑检验。"},{"title":"解释样本规划的输入","body":"与导师一起确定重要效果阈值、结果变异估计、可接受的误报风险、设计效率和可取得单位数。参数需来自领域依据、先导数据或透明假设，不能为保证显著而反复调换。"},{"title":"写出选择理由和局限","body":"用一段话交代单位如何分组、为什么考虑配对或独立分析、缺失值如何处置、主要方法由谁核实。若规模只是可行性试点，明确目标是验证流程或估计变异，不承诺检出特定效果。"}],"worked":{"title":"教学示范：前后测不等于两组独立","body":"四台设备维护前后各有读数，比较重点是四台设备内的前后变化；不应当直接把维护前的四点和维护后的四点当作八台互不相关设备。此例样本极少，只用于识别结构，不支持有效性检验。"},"exercise":{"prompt":"为三个情境分别标注独立单位、配对结构和待确认的分析方法。","template":"情境A单位与分组：\n配对或独立：\n情境B单位与条件：\n配对或独立：\n情境C单位与批次：\n聚类/重复关系：\n规划需要的参数：\n还需请教：","hint":"情境可用不同参与者两组、同一对象前后测、多个样本来自同一批次；判断设计而非背口诀。","exampleAnswer":"教学示范：两组不同纸样为独立；同一设备前后为配对；同一张纸上取多个测点则嵌套在纸样内。需要的统计模型依结果与分配方式决定。例子没有真实抽样。"},"quiz":{"question":"同一对象在A、B条件下各测一次，最重要的第一步是什么？","options":["根据观察值数量直接选择独立组检验","确认两条记录对应同一对象并考虑配对结构","先假定每组至少30个对象"],"correct":1,"explanation":"样本来源关系决定数据依赖结构；固定样本数规则不能替代设计检查。"},"rubric":["每个情境标出真正独立单位","正确区分独立组、配对和单位内重复","样本规划说明所需参数并否定通用30规则"],"pitfalls":["按表格行数直接认定样本量","看到配对数少就改称独立，而不说明缺失或结构"],"resourceIds":[]},{"id":"m6-l3","title":"多重比较、分析前计划与透明报告","minutes":90,"level":"必修","goal":"能在看结果前写下主要问题、主要指标、排除和缺失规则，并理解多重比较与事后挑结果的风险。","prereq":["完成 m6-l2；有一个可演练的简单设计"],"concepts":[{"term":"主要与次要结果","plain":"预先指定主要问题和结果有助于聚焦证据；次要结果可探索，但须清楚标识探索属性。","example":"将误检率设为主要指标，处理时间列为探索性次要指标。"},{"term":"多重比较","plain":"检验或挑选的比较越多，至少出现一个看似异常结果的机会通常会增加；应按研究目标选择适当控制或明确探索性质。","example":"尝试许多阈值后只报告最漂亮的一个会产生选择偏差。"},{"term":"分析前计划与偏离记录","plain":"先写关键决策、分析对象和停止规则，减少被结果引导的改动；探索过程中可以调整，但要记明何时、为什么调整。","example":"发现测量故障后补充分析，同时保留原计划与修订时间。"}],"tutorial":[{"title":"在模拟数据前写计划","body":"先定主要研究问题、主要结果及单位、核心比较和期望方向（也可不设方向）。说明其他指标属于次要还是探索，不通过反复试验选择最有利结果。"},{"title":"写数据质量与排除规则","body":"说明记录错误、缺失、失败试次、设备异常如何发现和处理；区分技术故障与真实极端观察。规则若无法预先确定，就写判断程序和谁负责，不因结果好坏随意排除。"},{"title":"盘点比较数量","body":"列出要比较的组、时间点、结果指标和子群。指出哪些是核心推断，哪些是探索。与导师讨论是否需要调整显著性、使用层级策略或降低结论力度；方法应匹配领域和设计。"},{"title":"练习冻结与偏离记录","body":"将计划保存为带日期版本。模拟分析时不看结果先完成清理规则；若后来发现计划缺陷，新增版本并记更改、原因和发生时间，原版保留。"},{"title":"按透明结构报告","body":"报告对象与单位、流程、预先计划的主要结果、所有主要比较、效果量及不确定性、偏离和局限。未预注册不等于不能研究，但不能把事后决定伪装为事前计划。"}],"worked":{"title":"教学示范：事后找到显著不等于确认假设","body":"教学情境中，分析者尝试8个指标和多种阈值，只报告其中一个效果最强的结果。这个结果受选择过程影响，需明确标为探索并在新的独立材料上验证；不能从单一事后结果宣称预先假设已确认。数字仅为虚构例子。"},"exercise":{"prompt":"给一个两条件小研究写一页分析前计划，并列出哪些分析属于探索。","template":"问题与设计：\n独立单位：\n主要结果和单位：\n主要比较：\n排除和缺失规则：\n次要/探索指标：\n比较总数：\n多重比较处理或解释限制：\n计划版本/日期：\n预定报告内容：","hint":"计划不是保证不改，而是让改变有时间、理由和版本记录。真实预注册要求需按项目和期刊政策核实。","exampleAnswer":"教学示范：先比较两种折法对单件纸样下落时间的差异；只设该结果为主要，颜色观察为探索；计划不因结果调整排除规则。此表是假设练习，不是实际研究协议。"},"quiz":{"question":"看到数据后才试了多种指标，最终只报告一个最理想结果，最应该怎样处理？","options":["写成唯一预先指定的主要结果","透明标出这是探索性选择并考虑独立验证","隐藏其他指标以免困惑"],"correct":1,"explanation":"诚实记录选择过程，才能正确评估多重比较和结果稳定性；探索发现可作为后续检验线索。"},"rubric":["在模拟查看结果前指定主要指标与比较","规则覆盖缺失、失败和异常并保留版本","区分计划内与事后探索，报告比较范围和限制"],"pitfalls":["显著才报告，不显著就删除","将事后探索包装成事前假设"],"resourceIds":[]}]},{"id":"m7","title":"数据与可复现工作流","stage":"实作","summary":"先用 Excel 或其他表格工具建立清楚、可追溯的数据工作流；再按需要了解 CSV、Python 与 Git。目标是让别人看懂你做过什么、依据什么数据得出结果，而非先学一套工具再找问题。","deliverable":"一份带说明、变量字典、原始数据副本和分析记录的微型项目文件夹。","lessons":[{"id":"m7-l1","title":"把项目资料放进可理解的文件结构","minutes":60,"level":"必修","goal":"建立一个陌生合作者也能从入口文件找到数据、方法、结果和版本的研究项目结构。","prereq":[],"concepts":[{"term":"原始资料","plain":"未经清理或改写的最初记录，应保留只读副本。","example":"从秒表抄录的落地时间表先另存一份原始版。"},{"term":"派生资料","plain":"经过筛选、换算或整理、由原始资料产生的文件。","example":"把厘米转换成米后另存为清理版，并记下换算规则。"},{"term":"可复现","plain":"读者可依资料、规则和步骤重建你报告的结果。","example":"README 写明工作表、过滤条件、公式与图表位置。"}],"tutorial":[{"title":"建立入口","body":"新建项目主文件夹，例如 paper-helicopter-study。避免把文件散落在桌面、聊天记录和下载目录。"},{"title":"分开内容","body":"建 data/raw、data/processed、analysis、figures、notes 五个子目录；没有用到的目录可以暂不创建，目录名表达用途即可。"},{"title":"保护原始记录","body":"把原始记录保存为单独副本，设为只读或另存备份。所有清理在副本中做，发现输入错误时可以回查。"},{"title":"统一命名","body":"文件名用日期、主题、状态和版本表达信息，例如 2026-11-05_drop-times_raw_v01.xlsx；不要用 final-final-new。"},{"title":"写入口说明","body":"建 README，写研究题目、各目录用途、数据来源、打开顺序、关键处理和图表路径；让未来的自己不必猜。"},{"title":"验证可读性","body":"关掉项目后重新打开，只看 README 找到要重做图表所需的工作簿和步骤。记录还缺哪些指引并补上。"}],"worked":{"title":"虚构教学示例：纸直升机目录","body":"项目有 README.md、data/raw/trials.xlsx、data/processed/trials_clean.xlsx、analysis/calculations.xlsx、figures/drop-time.png 和 notes/decisions.md。README 指明 raw 不改，clean 中排除规则只作用于预先定义的设备故障记录；analysis 的计算公式可见，图表来源于该表。此结构是教学示范，不代表任何实际研究数据。"},"exercise":{"prompt":"为你熟悉的本科毕设或一个安全微型练习设计文件夹结构，并指出原始资料应保存在哪里。","template":"项目名：____；入口说明：____；原始资料：____；处理后资料：____；计算步骤：____；图表：____；决定记录：____","hint":"想象合作者需要重做一张图，哪些文件和说明是必需的？","exampleAnswer":"教学示例：paper-helicopter-study 下建 README、data/raw、data/processed、analysis、figures、notes；秒表原始记录只放 raw，清洗副本放 processed。"},"quiz":{"question":"发现原始表中有一个疑似输错的数字，最合适的第一步是什么？","options":["直接改原始单元格，避免留下错误","保留原始文件，在副本中修正并记录原因","删掉整行且不留记录"],"correct":1,"explanation":"保留原貌才能核对来源，修正应可追踪并注明证据。"},"rubric":["原始与派生资料分开放置且关系清楚","文件名能区分内容和版本","README 足以帮助读者找到并复做一项结果"],"pitfalls":["把 clean 或 final 当作足够的文件说明","清理时覆盖唯一原始副本"],"resourceIds":[]},{"id":"m7-l2","title":"用表格管理整洁数据与变量字典","minutes":90,"level":"必修","goal":"把观测记录整理成一行一条记录、一列一个变量的表，并为变量定义单位、取值和缺失含义。","prereq":["m7-l1 项目文件结构"],"concepts":[{"term":"观测单位","plain":"每一行代表的独立对象或一次观测，必须说清楚。","example":"一行是一次投放，而非一只纸直升机。"},{"term":"变量","plain":"每列记录某个可区分的属性或测量值。","example":"翼长_cm、落地时间_s、模型编号。"},{"term":"数据字典","plain":"逐列解释变量名称、定义、单位、合法值和缺失代码。","example":"fall_time_s 为从释放至落地秒数，数值越大代表落得越慢。"}],"tutorial":[{"title":"先定一行是什么","body":"在表头上方的说明或字典写清楚观测单位。若同一个模型会多次投放，就明确每行是一轮投放，并另设模型编号。"},{"title":"设计列名","body":"一列只含一种信息；列名用稳定、可读且无歧义的名称。将单位写进列名或字典，例如 mass_g，不把数值和单位文字混在一个单元格。"},{"title":"保持表格整洁","body":"首行只放字段名，后续每行一条记录，不合并单元格，不用颜色代替数据，不在表中插入小计或空白分区。"},{"title":"定义编码","body":"为组别、批次、缺失或设备状态设明确定义。缺失值可空着并在字典说明；不要把 0、NA、未测和不适用混为一类。"},{"title":"做基本检查","body":"筛选每列检查取值范围和单位，查重复编号，核对日期格式；利用表格的数据验证限制分类取值，但保留原始记录以便审计。"},{"title":"导出 CSV","body":"将干净矩形数据另存 UTF-8 CSV 作为通用交换格式，打开后检查中文、分隔符、小数点、日期和前导零是否保持正确；原工作簿也留存。"}],"worked":{"title":"虚构教学示例：变量字典","body":"模型编号是唯一标识，批次记录制作日，翼长_cm 用直尺测得，投放序号记录同一模型尝试次数，落地时间_s 记录秒表值，设备故障记录是否发生预设的明显计时失误。示例并未给出或暗示实验结果；定义的价值在于他人可理解字段而不靠猜。"},"exercise":{"prompt":"为四列自选练习数据起名，并写出每列单位、合法值范围及缺失值的处理约定。","template":"观测单位：____；变量字典：字段｜定义｜单位｜值/范围｜缺失含义；行唯一标识：____","hint":"把每个问题想象成别人必须不看你也能回答的问题。","exampleAnswer":"教学示例：一行一次投放；model_id 为模型唯一编号，drop_no 为轮次，wing_cm 是厘米数，fall_time_s 是秒数，空白表示未计时而不是 0。"},"quiz":{"question":"数据表中每一行最理想的表达方式是什么？","options":["某项观察单位的一条记录","整张表的一个小计","不同单位混合的叙述段落"],"correct":0,"explanation":"明确且一致的观测单位是后续汇总和分析的基础。"},"rubric":["明确每行对应的观测单位","变量字典包含定义和单位","缺失值与分类码有一致解释"],"pitfalls":["把模型编号、批次和重复轮次混成同一列","用数字 0 代替未测但不作说明"],"resourceIds":[]},{"id":"m7-l3","title":"备份、版本与图表追溯","minutes":60,"level":"必修","goal":"能保存多个可回退版本、记录分析决策，并从图表追溯到输入数据与计算步骤。","prereq":["m7-l1 项目文件结构","m7-l2 变量字典"],"concepts":[{"term":"版本","plain":"带有时间或修改意义的一份文件状态。","example":"v01 是第一次采集格式，v02 增加校验字段。"},{"term":"备份","plain":"单独保留的恢复副本，需能验证且不只存在同一设备。","example":"项目文件夹定期复制至另一受控位置并检查可打开。"},{"term":"计算链","plain":"从输入数据经过处理到表格或图形的可说明路径。","example":"原始时间记录→排除规则→每个模型的均值→点图。"}],"tutorial":[{"title":"建立版本规则","body":"采纳 v01、v02 递增方式，或用 ISO 日期加内容说明。每次较大结构变更记下修改内容和原因，不用覆盖同名文件。"},{"title":"写变更日志","body":"在 README 或 notes/log.md 用日期、文件、修改、理由、影响四列记录关键变化；数据清理决策也需写入。"},{"title":"备份并抽查","body":"按数据敏感性和机构要求选受控存储位置，保留独立备份；定期抽取一个文件恢复，确认权限、格式和内容完整。"},{"title":"记录分析选择","body":"开始汇总前写预定指标、分组、纳入规则和图表选择；后来更改时写日期与理由，并区分计划与探索性结果。"},{"title":"保存图表源","body":"图表文件使用可检索文件名，同时保留生成它的工作簿、公式或脚本。图题写测量单位、点代表什么、误差线含义。"},{"title":"尝试重做","body":"从 README 的输入文件开始重算一项结果，比较图形和摘要值。若得到不同结果，逐步查找版本、过滤和公式差异。"}],"worked":{"title":"虚构教学示例：修改规则","body":"研究者先计划报告每个独立模型的平均落地时间；后来发现秒表在某一段失灵。日志记录影响时段、根据原始记录判定的排除规则、修改日期，并保留未排除的副本。结果图保留来源工作簿和公式。所有数字都仅为教学情境，不是研究发现。"},"exercise":{"prompt":"写一条将来可以使用的变更日志，并说明如何确认一张图对应的源数据版本。","template":"日期｜文件｜改动｜理由｜可能影响：____；图表来源：____；恢复检查：____","hint":"若读者只看到 PNG，能否知道它源自哪组数据？","exampleAnswer":"教学示例：2026-11-05｜clean.xlsx｜新增模型编号校验｜发现重复编号风险｜重新核验分组图；图表来自 clean_v02 的 analysis 表，并注明可重做步骤。"},"quiz":{"question":"分析后发现排除规则应调整，怎样做最有追溯性？","options":["覆盖旧数据，不解释变化","修改后保留旧版并记录理由与受影响结果","只在图注加一个星号"],"correct":1,"explanation":"保留版本并记录变化，才能判断结论是否受分析决策影响。"},"rubric":["能恢复上一可用版本","变更记录包含理由与影响","图表可关联到源文件、规则和单位"],"pitfalls":["把云端同步误认为历史版本与备份","只保存最终图片而不保留源数据和公式"],"resourceIds":[]}]},{"id":"m8","title":"学术英语与论文写作","stage":"表达","summary":"写作的核心是让主张、证据和推理关系可检查。英语或中文都先练清楚的段落逻辑；通过阅读原文、带来源的笔记和多轮修订，避免把摘要或翻译拼贴成文章。","deliverable":"一个有论点、准确引用、清晰结构并经过修订的短研究摘要或引言草稿。","lessons":[{"id":"m8-l1","title":"一段话只承担一个论证任务","minutes":60,"level":"必修","goal":"把主题句、证据、推理和限定写进段落，能中英文分别先讲清逻辑而非先堆术语。","prereq":[],"concepts":[{"term":"主张","plain":"读者应该接受的具体判断。","example":"某种测量流程可能降低操作遗漏。"},{"term":"证据","plain":"支持或限制主张的观察、数据或来源。","example":"一个虚构研究在模拟任务中统计了遗漏次数。"},{"term":"推理","plain":"解释为何证据支持主张，并界定适用范围。","example":"遗漏减少支持流程可靠性，但不自动证明所有实验更准确。"}],"tutorial":[{"title":"标记段落功能","body":"选一篇你已阅读且可合法使用的短文段落，用不同颜色或边注标出主题句、证据、解释和局限；没有来源时可用下面的虚构例句练习。"},{"title":"提炼一句主张","body":"用一句话写出段落要证明的判断，避免同时塞进背景、方法和结论。如果写不出，先补读来源或缩小主题。"},{"title":"记录证据出处","body":"为每项证据记作者、年份、原文页码或章节、研究对象与限制。把自己概括和作者原话分开，先不要写入论文。"},{"title":"补上逻辑桥梁","body":"写清楚观察与主张的关系；使用因此、仅在此条件下、不能据此推出等关系词，避免从相关现象直接跳到因果。"},{"title":"设置边界","body":"说明证据支持到哪里：在哪些样本、设备、任务或场景中观察到；没有覆盖的范围不要用普遍词概括。"},{"title":"中英文分别重写","body":"中文先写清论证，再写一版英文。英文以每句一个主要动作、明确主语、动词为准；语言润色不能修补缺失证据。"}],"worked":{"title":"虚构教学示例：段落拆解与重写","body":"原句：研究证实自动记录能改善所有实验，因为操作人员容易忘记步骤。问题：未指来源和任务范围；因果过强；所有实验无法由示例支持。拆解：主张是自动记录有帮助；证据是某教学模拟任务中的漏记次数；推理是留痕可能减少遗漏；限定是该任务与条件。重写：在一项虚构的教学模拟任务中，自动记录组出现的步骤漏记较少。这提示记录机制可能改善该流程的完整性，但效果是否适用于其他任务仍需验证。"},"exercise":{"prompt":"挑选一个已读文献中的具体结论，写出论证段落，并标明每个事实的出处和推理。也可用一个明确标注为虚构的练习命题。","template":"主题句/主张：____。证据（来源与定位）：____。这支持主张的理由：____。适用边界：____。下一句过渡：____。","hint":"每个有事实含义的句子都要能回答来源在哪里，证据为什么相关。","exampleAnswer":"教学示例：本段只练习结构，假设一篇虚构模拟研究观察到自动提醒任务中的漏记次数较少；不能写成真实结论。提醒可能帮助维持该流程的记录完整性，但其他环境需进一步检验。"},"quiz":{"question":"最有效的段落修订检查是什么？","options":["检查每个主张是否有证据、推理和范围限定","加入尽可能多的连接词","把一句拆成很多短句就算清晰"],"correct":0,"explanation":"段落清楚度来自论证关系明确，而不是表面句式技巧。"},"rubric":["主题句表达单一、可判断的主张","证据能追溯到具体来源或明确标记为练习假设","解释与限定没有超过证据支持范围"],"pitfalls":["把相关性、观察或小样本结果写成普遍因果","先直译中文再用复杂英语掩盖逻辑断层"],"resourceIds":[]},{"id":"m8-l2","title":"转述、综合与引文卫生","minutes":90,"level":"必修","goal":"准确转述来源观点，区分直接引文与自己解释，综合多来源而非把原文逐句翻译或拼贴。","prereq":["m8-l1 段落论证"],"concepts":[{"term":"直接引文","plain":"逐字引用原文，按所属规范标注并准确呈现。","example":"保留作者原句并加引号和定位。"},{"term":"转述","plain":"先理解后用自己的表达重构来源观点，仍需给出处。","example":"换句法与组织方式，同时保持原意与限定。"},{"term":"综合","plain":"比较多篇来源的共同点、差异和边界，形成自己的论述。","example":"两个虚构研究采用不同任务，结论仅在一个条件上一致。"}],"tutorial":[{"title":"先完整读来源","body":"读原文相关章节，记录观点、证据类型、样本/对象、方法和局限。不要只读搜索摘要或另一篇文章的转引。"},{"title":"合上原文复述","body":"离开原文窗口，用自己的语言写两句意思，避免边看边逐词替换。此步骤能暴露是否真正理解。"},{"title":"回对原意","body":"重新打开原文检查复述是否遗漏限制、误换因果方向或扩张范围；逐字借用的独特短语要标作引文。"},{"title":"保存出处线索","body":"在笔记中同时留原文摘录、页码、自己的转述和个人问题，并用清晰标记分栏；投稿前按所在机构和目标期刊格式整理。"},{"title":"建立来源对比","body":"把每篇来源的研究问题、方法、主要发现和限制并列，再写这些差异对你的问题意味着什么，不逐篇堆摘要。"},{"title":"做反向审计","body":"从草稿选一句事实陈述反查文献，并确认引文确实支持这句话。核对失配时先改主张或找正确来源。"}],"worked":{"title":"虚构教学示例：转述不等于替词","body":"假设虚构来源写道：A checklist reduced missed steps in a simulated task; performance in field conditions was not tested. 不合格转述：清单减少了模拟任务漏步，而且改善了实际工作表现。第二部分超出来源。较好中文转述：该模拟任务显示清单可能减少漏步；作者没有检验真实现场效果（虚构作者，年份与页码仅为占位，不可当真实引用）。写作时必须换成实际读过的来源和准确书目信息。"},"exercise":{"prompt":"用一篇你确实读过的来源写两句转述，再写与另一篇来源的一个比较；若没有来源，使用本课虚构例句做结构演练并标为假设。","template":"来源A原意/定位：____；我的转述/引用：____；适用限定：____；来源B不同点：____；综合判断：____","hint":"不能只问措辞是否不同，还要核对限定、因果与实际数据是否一致。","exampleAnswer":"教学示例：虚构研究A仅测过模拟任务，研究B测了现场任务但设备不同。二者都提示流程设计值得评估，但并不能直接比较效果大小。"},"quiz":{"question":"把来源观点翻译并替换一部分同义词后，是否仍需引用？","options":["需要，观点来自来源仍须归属","不需要，词语变了就是原创","只在整句完全相同时需要"],"correct":0,"explanation":"转述不会改变观点和证据的来源归属，且仍需核对原意。"},"rubric":["转述保持原来源的限定与证据含义","引文或转述能定位到实际来源","综合指出来源差异及其意义"],"pitfalls":["将多篇摘要或机器翻译拼成未核对的段落","错误沿用二手文献的引文当作亲自读过原文"],"resourceIds":[]},{"id":"m8-l3","title":"摘要与引言：从研究缺口到问题","minutes":90,"level":"必修","goal":"为小研究写结构完整的摘要和引言草稿，并用证据界定研究问题、方法和贡献边界。","prereq":["m8-l1 段落论证","m8-l2 转述与综合"],"concepts":[{"term":"摘要","plain":"高度浓缩地交代问题、方法、结果和结论；未有结果时不要伪造结果。","example":"方案阶段可写研究计划摘要，并明确是计划。"},{"term":"引言","plain":"从问题背景逐步引向已知与未知，再说明研究问题和做法。","example":"从自动记录的重要性过渡到特定流程中的记录遗漏。"},{"term":"研究缺口","plain":"可用证据显示知识尚未回答的具体部分，不等于我没搜到。","example":"已有工作测了结果准确性，尚未评估异常时的恢复流程。"}],"tutorial":[{"title":"先定读者问题","body":"用一句话说明读者为什么应该关心这个具体任务或现象，删去与研究问题无关的背景科普。"},{"title":"画引言漏斗","body":"列背景、相关证据、证据的边界、具体未答问题、本研究目标五步；每步至少有一条真实来源或明确标记为待补证据。"},{"title":"描述方法边界","body":"只写实际执行或计划要执行的对象、测量、比较与分析；计划稿使用将检验，不写成已发现。"},{"title":"写研究问题","body":"用可回答的一句问句说明对象、比较条件和主要结果；确认现有材料、工具和时间足以回答。"},{"title":"写摘要骨架","body":"依次写背景一句、目的、方法、结果、结论。尚未做研究时，结果位置明确待开展，不得用预期替代观察。"},{"title":"压缩与核对","body":"每句问它承担什么功能；检查每个事实是否有来源、缺口是否被证据证明、结论是否越界，并按目标期刊格式复核字数和栏目要求。"}],"worked":{"title":"虚构教学示例：把泛化缺口改成可检验缺口","body":"泛化写法：目前还没有人研究机器人实验流程。它无法核验且范围夸大。假设已读到两篇虚构论文分别关注操作准确率和任务时长，可写：现有两项虚构研究评估了自动化流程的准确率与耗时，但没有比较传感器异常后记录恢复是否完整。本小研究将以离线模拟条件比较两种记录策略。此处来源及结论都是教学假设，真实写作必须先系统检索并准确引证。"},"exercise":{"prompt":"为一个你真实可做的小问题写引言五句骨架和计划版摘要；若没有数据，显式标出结果待测。","template":"背景：____。已有证据及出处：____。尚未回答的具体问题：____。本研究问题/目标：____。计划方法：____。摘要结果（若未开展，写待测）：____。","hint":"缺口是一条有边界、可查证的事实判断；先检索再声称前人未做。","exampleAnswer":"教学示例：练习只讨论安全模拟纸模型的落地计时方案，不代表文献查新结论；结果留空并标注待收集，不编造比较发现。"},"quiz":{"question":"研究还没实施时，摘要中怎样处理结果部分？","options":["写团队预期会看到的方向","明确标注计划稿且结果尚未获得","引用相似文章的数字当作本研究结果"],"correct":1,"explanation":"预期、他人成果和实测结果必须严格区分。"},"rubric":["引言从背景收敛到具体且可查的研究问题","方法描述对应问题且能实际执行","结果只报告已有实测结果或明确标为未取得"],"pitfalls":["用没有人研究过等无法支持的绝对表述","把预期结果写成已观察到的事实"],"resourceIds":[]}]},{"id":"m9","title":"科研诚信、伦理与 AI 边界","stage":"实作","summary":"以可追溯记录、准确归属与负责任的数据处理为底线。不同机构、学科、期刊的具体规则并不完全相同；使用前需核对当前实际要求，伦理审批由所属机构或有权审查方作判断。","deliverable":"一份针对微型研究的诚信自查表，含贡献说明、数据记录习惯、隐私与 AI 使用检查。","lessons":[{"id":"m9-l1","title":"识别抄袭、伪造与篡改","minutes":60,"level":"必修","goal":"辨别三类严重不端行为和常见边界情形，知道如何记录与上报疑问。","prereq":["m8-l2 引用与转述"],"concepts":[{"term":"抄袭","plain":"把他人文字、想法、图表或成果误作自己的，未充分归属。","example":"复制一段定义并删掉来源署名。"},{"term":"伪造","plain":"虚构没有发生或没有测得的数据、记录或结果。","example":"为计划实验填入看似合理但未测的数值。"},{"term":"篡改","plain":"不当改动资料、过程或图像，造成记录或结果失真。","example":"只删除不符合预期的观测且隐瞒处理规则。"}],"tutorial":[{"title":"追踪每一项内容","body":"写作时标注段落来自自己的观察、某个来源、合作者意见还是模型建议；定稿前逐项补足出处或说明。"},{"title":"保存真实记录","body":"实验或分析过程及时记录日期、操作者、设备、设置、原始文件名和异常；不要凭记忆补造过去记录。"},{"title":"区分错误与更改","body":"发现录入错误时保留原值、修订值、依据和时间。研究过程中改变纳入条件时说明原因和后果。"},{"title":"检查图像和图表","body":"图像处理保留未处理原件，按领域与投稿规范披露允许的调整；图表不得选择性裁掉与主张相关的数据而不解释。"},{"title":"核实表达规范","body":"查看所在院校关于学术诚信、课程作业、研究记录与申诉的现行文件；学科惯例或期刊规则不能取代校规。"},{"title":"遇疑问先求助","body":"暂停传播有争议的结果，保留原始材料和沟通记录；向导师、系里研究诚信负责人或机构指定渠道询问处理方式。"}],"worked":{"title":"虚构教学示例：合理修订还是篡改","body":"假设一次练习中发现秒表数字从 1.8 键成 18。若原始视频显示落地时间约 1.8 秒，保留原始表与视频，将更正值、证据、操作者和日期记在日志中，属于透明纠错。若只因 18 秒让结论不好看便改成 1.8，且无证据或记录，属于结果失真的严重风险。示例不裁定任何实际事件。"},"exercise":{"prompt":"设计一份记录错误和纠正的最小模板，并用一个明确虚构的情境演练何时需要保留旧值。","template":"记录ID：____；原始值：____；修订值：____；修订依据：____；修订人/日期：____；影响分析：____","hint":"任何修改都要让后来者看见改前改后以及为什么改。","exampleAnswer":"教学示例：表格示例编号 D001；原始录入 18 s，视频复核 1.8 s；保留旧值，登记复核证据、日期和受影响汇总。"},"quiz":{"question":"真实测量没有支持预期，为维持假设而编写一组替代数字，属于什么？","options":["正常修订","伪造数据","规范的统计变换"],"correct":1,"explanation":"未实际测得的数据被当成观察值报告属于伪造。"},"rubric":["能区分抄袭、伪造和篡改","提供有据可查且可见改前改后的纠错方案","知道遇到重大诚信疑问应咨询机构渠道"],"pitfalls":["因数据看起来异常便静默删除","把格式相似检测结果视为是否抄袭的唯一判据"],"resourceIds":[]},{"id":"m9-l2","title":"作者身份、贡献与协作记录","minutes":60,"level":"必修","goal":"区分署名、致谢和贡献责任，尽早记录合作分工，减少署名和责任争议。","prereq":[],"concepts":[{"term":"作者资格","plain":"通常按领域、机构和期刊定义综合判断，不能仅凭职位或人情决定。","example":"提供关键实验设计并负责起草与最终负责，和只提供一般行政协助不同。"},{"term":"贡献记录","plain":"说明各合作者实际参与了哪些研究工作。","example":"某成员负责方法设计、数据核验和论文修订。"},{"term":"责任","plain":"署名者对自己贡献和整篇成果的适当责任按适用规范界定。","example":"作者逐步确认数据与版本，不能只在最后挂名。"}],"tutorial":[{"title":"开始前谈职责","body":"项目启动时逐人记录研究问题、设计、采集、分析、写作、资源和监督分工；说明谁维护数据、谁确认投稿版本。"},{"title":"用工作事实讨论","body":"讨论作者顺序时先核对实际贡献与目标期刊作者政策，不用职位、资助或身份自动推定作者顺序。"},{"title":"定期复核变化","body":"贡献可能随项目改变，会议纪要记录新增或取消的工作，并在投稿前重新与全体成员确认。"},{"title":"区分致谢与署名","body":"一般支持、材料、设备或行政协助可能适合致谢，但仍要先征得当事人同意，并按机构与刊物规则处理。"},{"title":"确认投稿文本","body":"提交前给所有作者足够时间审阅整稿、图表、作者信息和利益披露；保存明确的审核与同意记录。"},{"title":"处理争议","body":"出现分歧时回到已记录工作、适用作者政策和机构程序，先暂停将争议写成事实或向期刊单方面声明。"}],"worked":{"title":"虚构教学示例：分工表","body":"假设项目三人：A 设计测量并分析；B 执行采集、核对原始记录并参与解释；C 提供设备并解决技术问题。此表只是促成讨论，不替任何期刊或学科规则认定谁必然有作者资格；投稿时还要确认各人是否满足实际规则，并同意相应责任和顺序。"},"exercise":{"prompt":"为一个两到三人的小项目制定一张贡献表，并写出投稿前要怎样确认作者顺序和版本。","template":"成员｜问题/设计｜数据｜分析｜写作/修订｜资源/监督｜待确认规则；最终审核方式：____","hint":"记录已经发生的工作，未来预期的工作单列，完成后再更新。","exampleAnswer":"教学示例：A 设计；B 采集及原始记录；C 设备支持，贡献待随项目确认；投稿前依期刊政策复核作者资格，并由所有拟署名者审阅最终稿。"},"quiz":{"question":"作者顺序最合理的依据是什么？","options":["按资历自动从高到低","按实际贡献、商议约定和适用政策确认","谁提供设备谁必定第一作者"],"correct":1,"explanation":"具体标准需依学科和期刊政策执行，职位或单项资源不自动决定顺序。"},"rubric":["表格将已完成贡献与计划贡献分开","明确需要复核的期刊作者规则","有投稿前共同核阅与同意的安排"],"pitfalls":["项目最后才临时讨论署名","把致谢视为可以不征求同意的个人名单"],"resourceIds":[]},{"id":"m9-l3","title":"研究伦理与生成式 AI 的边界","minutes":90,"level":"必修","goal":"识别涉及人的资料、隐私、许可和 AI 误导风险，知道何时应向机构或目标期刊核实现行要求。","prereq":["m9-l1 学术诚信","m9-l2 协作与贡献"],"concepts":[{"term":"伦理审查","plain":"由所属机构或有权审查方根据研究内容、风险与规定作出判断。","example":"有无受试者、可识别信息和招募互动都可能影响评估。"},{"term":"最小必要数据","plain":"只收集完成研究所需且经批准可处理的数据，并按访问权限保存。","example":"课堂模拟可用匿名纸模型数据，不收集旁观者姓名。"},{"term":"AI 输出核验","plain":"模型可能编造来源、错误概述文献或泄露输入内容，研究者需独立检查并遵守政策。","example":"打开 DOI 或原始期刊页面核实引用是否真实且内容相符。"}],"tutorial":[{"title":"列出资料与参与者","body":"研究前画出资料流：从谁或哪里取得、是否能识别人、包含何种敏感信息、谁能访问、何时删除或归档。"},{"title":"查适用伦理路径","body":"在招募、访问受限数据或正式采集前，向项目所属院校/机构的伦理委员会、数据保护或指定负责人说明方案并询问所需审查。个人不能自行宣布豁免。"},{"title":"限制数据暴露","body":"不把身份信息、未公开数据、受限材料或敏感个人信息输入未获批准的外部 AI 服务；确认账户设置和机构规则。"},{"title":"核验模型产物","body":"对 AI 生成的事实、引文、统计、代码与总结分别回到权威原始来源或实际运行结果验证；找不到来源就不引用。"},{"title":"记录 AI 参与","body":"记录工具名称、使用日期、执行任务、人工核对和修改；是否披露以及怎样署名，按当前学校、资助方和投稿期刊要求决定。"},{"title":"再查规则版本","body":"准备作业、申请或投稿前，访问当前官方制度页面核对要求与版本；不能仅凭旧经验、搜索摘要或工具默认说法。"}],"worked":{"title":"虚构教学示例：AI 文献草稿","body":"学生请 AI 推荐关于纸直升机的论文，获得了一个带看似真实 DOI 的引文。正确动作是逐条搜索题名和 DOI、确认作者、发表信息及正文是否支持论点。找不到真实记录就丢弃并记录错误。若输入含未公开受试者资料，还要先核实服务是否获机构许可；不可用匿名化猜测代替伦理和数据治理审查。情境为虚构。"},"exercise":{"prompt":"针对你设想的小研究画资料流程图文字版，并制定 AI 使用、核验和隐私规则；列出需向机构确认的问题。","template":"资料来源：____；是否涉及人或可识别资料：____；审查联系人/问题：____；AI用途：____；不输入内容：____；人工核验：____；规则链接/日期：____","hint":"把伦理分类和豁免决定留给有权限的机构，自己提供完整准确的信息。","exampleAnswer":"教学示例：匿名纸模型测试数据仅在获准环境存储；不向外部模型上传个人记录。AI 仅协助改写非敏感句子；引文逐条查原文；开始采集前询问机构审查路径。是否需要正式审查待机构决定。"},"quiz":{"question":"计划使用公开但可能可识别的个人数据，研究者如何处理伦理审查？","options":["因公开可见就自行宣布免审","先向机构有权部门披露数据特点并确认适用流程","只要不发表就无需考虑"],"correct":1,"explanation":"公开可见不自动排除隐私风险或机构要求；应由有权部门判断适用审查。"},"rubric":["资料流图标出来源、识别风险和访问权限","AI 使用声明包含用途并安排独立事实核验","明确由机构决定所需伦理审查而非自行豁免"],"pitfalls":["把 AI 生成的引文或实验数字当成已核实事实","认为去掉姓名就必然匿名或免伦理审查"],"resourceIds":[]}]},{"id":"m10","title":"图表、汇报与合作","stage":"表达","summary":"把研究问题、方法、结果和不确定性讲给不同听众听，并建立导师能快速回应的工作节奏。汇报不是包装结果，而是让别人看清你做了什么、证据支持什么、下一步需要什么。","deliverable":"一份三分钟研究汇报、一封导师周报，以及一份反馈处理记录","lessons":[{"id":"m10-l1","title":"三分钟讲清一项小研究","minutes":60,"level":"必修","goal":"用三分钟说明研究问题、理由、方法、证据状态和限制，不把计划讲成已完成结果。","prereq":["选一个自己熟悉的小问题；没有真实数据时明确按研究计划汇报"],"concepts":[{"term":"研究主线","plain":"听众只需沿着问题、方法、证据、结论边界走完一条线。","example":"翼长是否影响纸直升机下落时间？用两种翼长、同一释放高度比较。"},{"term":"证据状态","plain":"把已完成观察、正在收集的数据和未来计划分别说清楚。","example":"“我计划测量”不能改说成“结果显示”。"},{"term":"图表信息层级","plain":"图题先给出要回答的问题，轴标给出变量与单位，图注补充比较条件。","example":"纵轴写“下落时间（秒）”，比只写“时间”更可解释。"}],"tutorial":[{"title":"先写一句问题","body":"限制为一句话，写清对象、条件、改变因素和主要结果。删掉背景口号、缩写和暂时回答不了的支线。"},{"title":"说明为什么值得问","body":"用两句交代实际问题和现有不确定性。若还没查文献，就说这是待检验的动机，不宣称领域空白或首创。"},{"title":"交代比较与测量","body":"说出比较组、主要指标、单位、关键控制条件，以及如何获得数据。方法需具体到别人能指出哪里可能产生偏差。"},{"title":"把结果位置说准确","body":"有数据时只呈现实际测量并说明样本量；没有数据时展示计划中的分析图或空白模板，并在口头明确“这是计划，不是结果”。"},{"title":"用限制和请求结束","body":"讲一个目前最重要的限制，再提出一个具体请求，例如请导师确认主要指标是否合适。录音计时，三分钟超时就删除次要背景，而不是加快到听不清。"}],"worked":{"title":"教学虚构脚本：计划阶段三分钟版","body":"“我想检验在纸张、释放高度和折法相同的条件下，翼长较长是否改变纸直升机的下落时间。这个问题适合作为低成本方法练习，但实验室装置的结果不能直接代表真实旋翼。我的计划是制作两种翼长的模型，以独立纸模型作为实验单位，随机化测试顺序，并用固定机位录像计时。目前还没有收集数据，所以这里没有结果。主要风险是人工制作差异与释放姿态。我准备先做小规模方法测试，并请导师确认样本单位和计时规则。”这只是教学示范，没有真实实验结果。"},"exercise":{"prompt":"准备一次三分钟口头汇报，并写一页配套图表草图。","template":"问题（1句）：\n为何要问（2句）：\n比较与方法（3句）：\n证据状态（已完成/进行中/计划）：\n主要结果或计划图：\n限制：\n希望导师回答的具体问题：","hint":"在手机上录音并计时；听一遍，标记任何把假设说成事实的句子。","exampleAnswer":"教学示范：计划比较两种翼长的纸直升机下落时间，控制纸张和释放高度；尚未测量，因此不报告结果；请求导师确认以纸模型为独立单位是否适合。"},"quiz":{"question":"尚未开始实验时，三分钟汇报应如何呈现预期图？","options":["画出符合预期的趋势并标为实验结果","展示空白分析模板并标为计划，明确没有实测数据","不说明数据状态，只说研究证明了假设"],"correct":1,"explanation":"明确区分计划、预期和观察是研究诚信与听众判断的基础。"},"rubric":["三分钟内按问题—方法—证据状态—限制组织内容","所有图轴有变量与单位，计划数据没有冒充实测","结尾提出一个导师可以直接回答的具体问题"],"pitfalls":["把背景讲得很长，却没说研究问题","预期图或示意数据被听众误认为真实发现"],"resourceIds":[]},{"id":"m10-l2","title":"写一封导师看得懂的周报","minutes":45,"level":"必修","goal":"以简短、可回应的格式汇报本周目标、证据、障碍和下周安排，并把请求指向明确决定。","prereq":["准备一项课程项目或练习任务；若暂无导师，先写给假想的项目指导者"],"concepts":[{"term":"周报","plain":"用于同步进度和暴露风险的工作记录，不是自我评价作文。","example":"列出完成的检索式和筛选数量，避免只写“看了一些文献”。"},{"term":"可核查产物","plain":"别人能打开或复现的文件、记录或明确结果。","example":"附上版本化的表格、图、脚本或会议纪要链接。"},{"term":"决策请求","plain":"把需要指导者决定的事项写成有限选项和影响。","example":"请确认先做计时重复性测试还是先制作更多模型。"}],"tutorial":[{"title":"用目标开头","body":"第一行写本周原定目标及是否完成。若目标改变，说明何时、为何改变，不要悄悄把计划重写成已完成。"},{"title":"列出完成项和证据","body":"每项写动作、产物位置和状态，例如“整理了12篇候选文献，筛选表在……；其中3篇待全文确认”。对数字给出来源。"},{"title":"标记未完成与风险","body":"区分技术问题、时间不足和待决定事项，并写已尝试的步骤。不要用“遇到困难”代替具体描述。"},{"title":"写下周计划","body":"控制在一至三项，每项可验收且有日期或条件。计划应依赖已经确认的设备、权限和数据，不把未经批准的工作排成既定任务。"},{"title":"一次只提关键问题","body":"用A/B选项、背景和建议截止时间提出最重要的决定。发送前检查链接权限、文件命名和是否包含不应外发的敏感信息。"}],"worked":{"title":"教学虚构周报示范","body":"本周目标：建立纸直升机计时流程；完成：拟定两种翼长和空白记录表（链接为教学示意），尚未开展测量；发现：释放姿态可能造成额外波动；已做：写出固定释放高度和录像机位方案；阻碍：尚未确认测试场地；下周：先用无数据录制测试镜头视野与计时定义；需要导师决定：是否把计时重复性测试作为正式收数前的验收门槛。这里没有真实数据或导师回复。"},"exercise":{"prompt":"为一周的自学或研究练习写一份不超过250字的周报。","template":"主题/日期：\n本周目标与状态：\n完成项及证据链接：\n未完成/风险：\n下周1-3项：\n需要指导者决定的问题：","hint":"每个完成项都问自己：对方能否看到产物或判断它是否完成？","exampleAnswer":"教学示范：本周计划拆解一篇方法论文，已完成摘要、方法和局限笔记，笔记在本地文件；尚未核对结果图；下周补看图表并比较第二篇研究；请指导者决定要不要把样本纳入阅读表。"},"quiz":{"question":"周报中最有帮助的阻碍描述是哪一种？","options":["实验很难，进展不太好","由于释放高度无法重复，已尝试标尺定位；下一步需确认是否有固定支架","我下周会努力"],"correct":1,"explanation":"它说明具体问题、已做尝试和下一项决定，因此指导者能有效回应。"},"rubric":["完成项与计划项分开并附可核查产物","阻碍描述包含现象、已尝试步骤或影响","最多提出一个优先决策请求并给出清晰上下文"],"pitfalls":["只报忙碌程度，不报产物","为了显得顺利而隐瞒延迟、改动或不确定性"],"resourceIds":[]},{"id":"m10-l3","title":"把反馈变成下一轮修改","minutes":60,"level":"必修","goal":"区分反馈中的事实、解释与偏好，记录回应决定，并在不确定时向反馈者确认意图。","prereq":["准备一段导师、同学或课程评阅意见；没有现成意见时使用课程示范句"],"concepts":[{"term":"可定位反馈","plain":"指出具体文本、图表或方法环节以及需要解决的问题。","example":"“图2缺少单位，无法判断差异量级”比“图不清楚”更可操作。"},{"term":"修改决策","plain":"作者负责判断反馈与研究问题及证据是否相符，采纳也要记录依据。","example":"增加单位是修正事实；更换主要指标则需检查设计与预注册。"},{"term":"反馈日志","plain":"逐条记录意见、行动、位置和状态，让修改可追溯。","example":"评论ID、原意见、决定、修改位置、未采纳理由。"}],"tutorial":[{"title":"先完整听完","body":"讨论时记录原话和出现位置，不急着解释或承诺。若不清楚，就请对方给一个例子或说明该意见针对哪个读者问题。"},{"title":"将意见拆成问题","body":"判断它指向事实错误、方法风险、逻辑缺口、表达困难还是个人偏好。一个长评论可能含多个需分别处理的动作。"},{"title":"标注优先级和依赖","body":"先处理影响研究结论、方法有效性或读者理解的问题；纯格式问题可后置。检查修改是否会改变分析计划、伦理许可或已定定义。"},{"title":"选择并说明行动","body":"在日志里写采纳、部分采纳、暂缓或不采纳，并写依据。无法判断时列出具体选项并再询问，不要默默忽略。"},{"title":"回报修改","body":"提交修订稿时附简短回应，标注页面/段落或文件位置。检查评论是否逐条有状态，并对意见分歧保持尊重、基于证据讨论。"}],"worked":{"title":"教学示范：处理一个模糊意见","body":"反馈：“方法部分不够清楚。”拆解：读者无法复现哪一步尚不明确。行动：询问对方不清楚的是模型制作、释放操作还是计时定义；假定其指出释放操作后，补写释放高度和手部离开方式，并请另一位同学按文字复述。记录采纳范围和位置。该情境为教学虚构。"},"exercise":{"prompt":"选三条真实或课程示范反馈，建立反馈日志并完成至少一项修改。","template":"ID | 反馈原文 | 指向位置 | 类型/优先级 | 决定与依据 | 修改位置/状态","hint":"把“我觉得他不懂”从记录里去掉，改写成可以核对的意见内容和证据。","exampleAnswer":"教学示范：F1“图轴没单位”→事实/高优先→采纳，纵轴补“秒”，更新图1；F2“背景写得太长”→可读性/中优先→缩短两句，保留与问题直接相关的动机；F3“换成另一种理论”→需讨论→暂缓并询问其预测如何改变。"},"quiz":{"question":"导师意见可能改变主要结论，但理由不清楚时，最合适的第一步是什么？","options":["马上改掉，不保留记录","忽略意见，以维护原创性","定位意见涉及的假设并询问具体理由，再评估证据与分析影响"],"correct":2,"explanation":"重大修改需要理解反馈所针对的问题，并检查它对研究设计和结论的影响。"},"rubric":["反馈原文、位置与自己的判断分开记录","每条意见都有决定及理由或澄清问题","修改后可通过位置/版本确认实际变化"],"pitfalls":["把修改意见当作对个人能力的评价而停止讨论","改了结论或分析却没有检查设计及计划的影响"],"resourceIds":[]}]},{"id":"m11","title":"投稿、评审与学术生态","stage":"走完闭环","summary":"了解成果如何分享、评审和归档，并用可复核的行为评估投稿渠道。论文被公开、取得DOI或通过某种评审，都不能替代对方法和证据质量的判断。","deliverable":"一份投稿渠道核查表和一份模拟审稿意见回应","lessons":[{"id":"m11-l1","title":"预印本、同行评审与DOI各代表什么","minutes":60,"level":"必修","goal":"区分研究稿件的传播状态、评审机制和持久标识符，并检查版本与证据的对应关系。","prereq":["不要求有投稿经历；准备两篇论文或公开稿件的页面信息"],"concepts":[{"term":"预印本","plain":"正式期刊评审前公开分享的稿件版本，便于交流，但其评审状态需另外查看。","example":"页面标有preprint，不能仅凭下载页认为已同行评审。"},{"term":"同行评审","plain":"编辑邀请领域评审者评估稿件并提供意见的过程；不同期刊的流程和深度会不同。","example":"接受决定表示满足该刊决定流程，不意味着结论永远正确。"},{"term":"DOI","plain":"为数字对象提供可解析的持久标识符，主要帮助定位与引用，不是质量认证。","example":"出版页面有DOI不能证明样本设计充分。"}],"tutorial":[{"title":"识别你正在看的版本","body":"查看页面注明的是预印本、已接收稿、出版社版本还是修订版本，并记录发布日期或版本号。"},{"title":"核对评审状态","body":"去期刊官网或文章出版记录检查是否已正式发表、是否有更正或撤稿通知。不能由标题、DOI或搜索排名推断评审经过。"},{"title":"沿着版本关系追踪","body":"用标题、作者和DOI/预印本编号确认是否为同一作品；逐项比对摘要、方法和结论是否在版本间变化。"},{"title":"阅读声明与限制","body":"检查作者披露、数据/代码声明、利益冲突和文章限制。若资料缺失，记为未找到，不自动推断作者违规。"},{"title":"写一段克制的描述","body":"用事实描述“这是某平台的预印本”或“该文发表于某刊”，再独立评估研究方法和证据，不把出版状态代替质量判断。"}],"worked":{"title":"教学示范：描述一篇公开稿","body":"“我找到一份题为X的预印本，当前页面显示版本日期为某日；另有一篇标题相近的期刊论文，需要比对作者和内容确认是否为后续版本。DOI只能用于定位出版记录，本身不能说明研究质量。我尚未核对全文方法，因此暂不引用其结果作为强证据。”这是检查方式示范，不对应真实论文。"},"exercise":{"prompt":"选择一个公开学术稿件页面，记录其版本、评审状态证据、标识符及局限。","template":"题名/作者：\n当前版本与日期：\n页面明确说明的评审状态：\nDOI/其他标识符：\n更正/撤稿状态核查处：\n我能据此说什么：\n仍不能据此说什么：","hint":"优先使用出版者或预印本平台页面；区分“没有找到说明”与“确定没有”。","exampleAnswer":"教学示范：页面标记preprint并列出版本日期，尚未在出版者页面找到正式发表记录；可说稿件以预印本公开，不能说已同行评审或质量可靠；下一步核对作者主页及题名匹配的正式版本。"},"quiz":{"question":"一个页面提供了DOI，最稳妥的推断是什么？","options":["稿件一定经过严格同行评审","该对象有可解析的持久标识符，质量仍需单独判断","结论已经被领域普遍接受"],"correct":1,"explanation":"DOI帮助识别和定位对象，不是质量或共识的认证。"},"rubric":["能区分文稿版本与传播状态","评审状态由明确页面证据支持或标为未查明","没有把DOI、发表或接受等同于研究质量"],"pitfalls":["把预印本当作经过期刊审查的最终版本","只引用DOI而不核对更正、版本或方法"],"resourceIds":[]},{"id":"m11-l2","title":"期刊与会议：先看学科，再看目标","minutes":60,"level":"必修","goal":"根据研究领域、成果形式、时间安排和读者群筛选合适的期刊或会议，不把一种发表形式当成普遍标准。","prereq":["完成一项研究问题练习；不要求已有论文"],"concepts":[{"term":"传播渠道","plain":"期刊、会议论文集、预印本、报告等面向不同学科生态和交流需要。","example":"有些工程领域的会议论文是主要研究交流形式，有些领域主要读期刊。"},{"term":"适配度","plain":"研究主题、方法、读者与渠道范围相互匹配的程度。","example":"主题相关但读者群完全不匹配，稿件仍可能不适合。"},{"term":"投稿要求","plain":"渠道对稿件类型、伦理声明、篇幅、匿名、数据可用性和费用等的明确规定。","example":"需核对当年官方作者指南，而非转述帖。"}],"tutorial":[{"title":"从读者需求出发","body":"写下谁最可能使用研究结果、研究属于哪个领域、需要完整期刊稿还是及时会议交流。不要先追逐声望或排行榜。"},{"title":"用已有文献找候选","body":"查看与你研究问题和方法接近的近期论文在哪里发表。把候选列表控制在少量，并记录每个候选与你工作的关系。"},{"title":"查官方范围和文章类型","body":"打开渠道官网的 aims/scope、作者指南或会议征稿说明，核对是否接收该类稿件、方法或学科。记录访问日期和原文。"},{"title":"核实流程、费用和时间","body":"查同行评审政策、开放获取选项、费用、撤稿/更正政策、预计时间及会议日程。不能保证的审稿周期不要当承诺。"},{"title":"做出可解释的选择","body":"按主题适配、受众、质量与诚信政策、成本和时程逐项比较，写明哪些事实已核实、哪些尚待询问，并准备一个备选渠道。"}],"worked":{"title":"教学虚构候选比较","body":"候选A是领域内经常发表相关工作的期刊，但作者指南不接受短方法说明；候选B是相关年度会议，征稿范围接受实验方法稿，但截稿时间可能赶不上当前进度。先核对官网的类型、日期和费用，再按目标选择；不能仅因A的名字更知名就默认更合适。"},"exercise":{"prompt":"为一个假设中的小型工程实验列出两个传播渠道候选并核对。","template":"研究类型与读者：\n候选A及官方范围证据：\n候选B及官方范围证据：\n评审/费用/日期：\n最合适者及理由：\n仍待确认：","hint":"先挑你读过其相关论文或会议文集的渠道，不要只用影响因子作决定。","exampleAnswer":"教学示范：若贡献是可复现的工程测量方法，可比较刊载实验方法的期刊与收录相近工作的工程会议；目前只完成范围初筛，需再查当年稿件类型、费用和截稿日。"},"quiz":{"question":"期刊和会议怎样比较才合适？","options":["所有学科都应优先投期刊","会议一定比期刊审查弱","结合本领域交流惯例、文章类型、读者、审查方式和时程检查"],"correct":2,"explanation":"发表惯例因学科和渠道而异，应依据具体规则与研究目标判断。"},"rubric":["候选来源包含官方范围或投稿要求证据","比较维度至少涵盖受众、稿件类型和实际流程成本","把已确认事实与待确认信息分开记录"],"pitfalls":["用影响因子或熟人经验替代渠道适配核查","不看投稿类别和实际截止日就定下目标"],"resourceIds":[]},{"id":"m11-l3","title":"核实出版渠道并回应审稿意见","minutes":75,"level":"必修","goal":"使用可复核行为评估出版者的可信度，并逐条、基于证据地回应模拟审稿意见。","prereq":["完成 m10-l3 的反馈日志练习"],"concepts":[{"term":"可验证出版实践","plain":"编辑、评审、费用、伦理、更正和撤稿等信息是否清楚且能从官方记录核对。","example":"确认编辑团队及其真实机构资料，不只看网站自我宣传。"},{"term":"异常承诺信号","plain":"保证录用、极短审稿承诺、范围异常宽泛或费用不透明等需要进一步核实的迹象。单一信号不是自动定罪，但应暂停并查证。","example":"收到陌生邀请后先去出版者官网核对期刊和编辑。"},{"term":"审稿回复","plain":"逐条说明采纳、部分采纳或不采纳的内容、依据与修改位置。","example":"对不同意见保持礼貌，也可基于方法理由解释不能照做。"}],"tutorial":[{"title":"查出版者与编辑身份","body":"通过期刊官网核对出版者名称、编辑团队、机构任职和联系方式；交叉确认至少一个独立学术机构页面。"},{"title":"追问审查和伦理政策","body":"查同行评审类型、作者责任、处理投诉、更正、撤稿和利益冲突的公开政策。政策链接打不开或描述空泛时记录为待核实。"},{"title":"核实费用与索引声明","body":"查看投稿前是否能明确得知费用和收费节点；若声称被数据库收录，去数据库自身目录核查，而非只信期刊网站标志。"},{"title":"识别压力式邀请","body":"对保证录用、催促付款、范围与编辑专长不符或大量拼写错误等迹象暂停操作，独立检索并请图书馆或导师一起核查。不要仅凭一封邮件判断。"},{"title":"模拟逐条回复","body":"为每条意见建立编号，先致谢并复述理解，再给出修改、位置和依据；若无法采纳，简短解释证据与限制，并提出能解决读者问题的替代处理。"}],"worked":{"title":"教学示范：回应一条评审意见","body":"意见R2：“请把每次投放都当成独立样本以扩大样本量。”回复示范：“感谢指出重复结构的问题。相同纸模型的多次投放共享制作特征，不能简单视为彼此独立的纸模型。修订稿现把模型数量与每个模型的重复投放次数分别报告，并将模型作为分组因素讨论；相关限制见方法第X段。”具体分析需依研究设计调整，不能照抄示范。"},"exercise":{"prompt":"核查一个真实期刊或会议，并回应两条课程示范审稿意见。","template":"渠道/官网：\n编辑/出版者核验：\n评审与伦理政策：\n费用/索引核验来源：\n尚未确认/风险信号：\nR1意见、决定、依据、修改位置：\nR2意见、决定、依据、修改位置：","hint":"核对的是可见行为和外部记录；没有公开信息应写未确认，不靠臆测填空。","exampleAnswer":"教学示范：候选渠道公开投稿指南与费用页，索引声明尚未在数据库目录核实；因此暂缓投稿选择。对R1缺少单位，补入图轴；对R2增加样本独立性讨论，拒绝把重复测量直接计作新模型。"},"quiz":{"question":"收到保证几天录用并要求立即支付费用的邮件，最稳妥的行动是什么？","options":["马上付款以免错过名额","暂停，通过期刊官网和独立目录核实身份、政策与收费","只看邮件里的影响因子"],"correct":1,"explanation":"压力式承诺需要独立核验；通过行为证据评估渠道，避免仅凭宣传信息作决定。"},"rubric":["渠道信息通过官网和至少一项独立来源交叉核查","不把单一迹象直接当成确凿判断，能标明未知项","模拟回复逐条说明决定、理由和修改位置"],"pitfalls":["把“快速发表”宣传当录用保证或质量证据","对审稿意见只说同意或不同意，不说明依据和修改位置"],"resourceIds":[]}]},{"id":"m12","title":"第一个微型研究","stage":"走完闭环","summary":"用安全、便宜、可重复的纸直升机实验，把问题、预案、数据记录、分析、局限和口头报告串成一次完整研究练习。重点是诚实回答一个窄问题，而不是得到漂亮结果。","deliverable":"一份带预设计划、原始记录、分析图、短报告和复现说明的微型研究包","lessons":[{"id":"m12-l1","title":"把纸直升机问题变成可执行方案","minutes":75,"level":"必修","goal":"在收集数据之前规定翼长条件、实验单位、重复、顺序、主要指标、停止规则和结论边界。","prereq":["准备纸、剪刀、尺和纸质/电子记录表；不需要高处投放或任何危险实验"],"concepts":[{"term":"主要指标","plain":"用于回答核心问题的首要测量值；单位与测量规则应预先说明。","example":"从释放到落地的时间，单位为秒。"},{"term":"独立实验单位","plain":"被独立制作或分配条件的对象。多次对同一对象测量通常不等同于增加新的对象。","example":"不同纸模型是独立单位；同一个模型重复投放是重复测量。"},{"term":"顺序随机化","plain":"预先用随机方式安排实验顺序，以降低时间、疲劳或操作变化与条件重合的机会。","example":"每个模型的三次投放次序写在纸条上抽取。"}],"tutorial":[{"title":"写出窄问题和两种条件","body":"问题限定为同一种纸、同一折法、翼长A与翼长B的纸直升机下落时间是否不同。先选定两种翼长并记下毫米数；除翼长外尽量保持尺寸、材料和制作步骤一致。"},{"title":"制作多个独立模型","body":"每种翼长都制作多个新模型并编号。可先计划每组至少数个模型，再按可用时间决定具体数量并说明理由；不要把同一个模型的多次投放伪装成许多个独立模型。"},{"title":"确定重复投放与顺序","body":"为每个模型计划相同次数的重复投放，用来观察该模型自身的波动。将各条件或模型的测试顺序随机打乱，并在记录表保存实际顺序。"},{"title":"固定环境和计时定义","body":"选安全的室内低矮释放位置，标记相同高度；避开风扇和人员走动。用固定机位录像，预先定义从手部释放帧到模型首次接触地面的时间点，并说明如何读取。"},{"title":"预先规定处理规则","body":"写明模型损坏、碰撞、录像失败的记录方式；不能只因为时间不符合预期就重做或删除。预设主要比较方式和数据排除规则，正式测试后不随意改动。"}],"worked":{"title":"教学示范：预注册式一页方案","body":"教学示范方案：问题为两种翼长（数值由操作者在制作前填写）是否影响低矮室内释放时的落地时间。每组预制若干独立编号模型，每个模型重复投放固定次数；主要指标为视频逐帧测得的秒数。环境、释放高度、纸张、折法、摄像机位置尽量一致；测试顺序随机；模型编号为分析分组单位；损坏和碰撞照实记录并按预写规则处理。现在不填结果，也不宣称哪种翼长更慢。"},"exercise":{"prompt":"在第一次投放前完成一页实验预案，并请同学检查能否照做。","template":"问题：\n翼长A/B（毫米）：\n独立模型数量与编号：\n每个模型重复次数：\n随机顺序方法：\n释放高度/机位/计时定义：\n主要指标与单位：\n损坏/碰撞/失败处理：\n停止规则：\n不能推广到：","hint":"如果别人拿到方案仍不知道如何判定落地时刻，就继续补定义，不要先收数据。","exampleAnswer":"教学示范：两组翼长先填写实际测量值；每种条件制作多个新模型，模型为独立单位，每个模型固定重复投放；顺序抽签；用录像帧数换算秒；碰撞记录为无效事件但保留记录，不以结果方向决定排除。此示范未提供任何实测值。"},"quiz":{"question":"同一纸模型重复投放10次，最准确的描述是什么？","options":["获得10个独立纸模型","获得同一模型的10次重复测量","一定比制作多个模型更有代表性"],"correct":1,"explanation":"重复投放可以描述该模型的测量波动，但共享模型特征，不能直接当作10个独立实验单位。"},"rubric":["在收数前规定条件、主要指标、单位和计时定义","独立模型与同一模型重复投放明确分开","随机顺序、异常记录和排除规则可由他人复现"],"pitfalls":["只用一个模型并把重复投放数当成独立样本数","观察到趋势后再改条件、主要指标或删除规则"],"resourceIds":[]},{"id":"m12-l2","title":"诚实收数、检查与展示","minutes":90,"level":"必修","goal":"保存未经覆盖的原始记录，执行预定检查，并用同时显示模型间与模型内变异的图表总结观测。","prereq":["完成 m12-l1 方案；在真实练习中先确认场地安全并获得所需许可"],"concepts":[{"term":"原始数据","plain":"第一次记录的观测和异常信息，应保留原样并以副本做整理。","example":"逐次投放的帧数、转换秒数和碰撞标记分列保存。"},{"term":"数据字典","plain":"解释每个字段的名称、单位、允许值和缺失原因。","example":"condition=A/B；drop_time_s=秒；event=正常/碰撞/损坏。"},{"term":"模型内与模型间变异","plain":"同一模型重复投放的波动和不同模型之间的差异是不同层次。","example":"可先画每个模型的点，再叠加组别分布，而非只报全部投放的平均值。"}],"tutorial":[{"title":"建立不会覆盖原始值的表","body":"每行对应一次投放；记录模型编号、条件、顺序、原始帧数、换算秒数、事件代码和备注。保留原文件，只复制后再清理。"},{"title":"边收集边记录异常","body":"模型碰墙、释放失败、录像遮挡都用预先设定代码标记，写下发生时间和理由；不要事后静默删除。"},{"title":"做基础质量检查","body":"检查字段是否缺失、单位是否一致、条件标签是否正确、秒数是否非负；抽几行从视频重新换算，核对录入过程。发现错误时保留原值、在修订列说明。"},{"title":"按独立模型汇总","body":"先计算每个模型的重复投放摘要，再呈现模型间比较。可以用表格或电子表格公式；样本少时逐点展示，避免只给一个均值掩盖波动。"},{"title":"画标注完整的图","body":"横轴为翼长条件，纵轴为下落时间（秒），显示每个模型的点和重复测量信息，图注明确模型数、投放次数及异常处理。图旁写实际数据版本和生成步骤。"}],"worked":{"title":"教学示范：从单次记录到数据表","body":"一行示例（格式演示，数值不代表实验结果）：model_id=M01；condition=A；run_order=1；frame_count=NA；drop_time_s=留空；event=录像遮挡；note=起始帧不可判定。该条保留在原始表中，再按预案判断是否不进入时间比较；不能为了图表整齐把它从记录中消失。"},"exercise":{"prompt":"为一次小型实际练习建立空数据表与数据字典，完成后对照视频抽查至少两次。","template":"字段 | 含义 | 单位/允许值 | 缺失如何表示\nmodel_id |\ncondition |\nrun_order |\nframe_count |\ndrop_time_s |\nevent |\nnote |","hint":"不要在JSON教材里预填看似真实的组均值；只把教学示例标作格式演示。真实数据须由学习者亲自记录。","exampleAnswer":"教学示范：model_id为独立纸模型编号（M01…）；condition为预先定义的A或B；run_order为实际顺序整数；frame_count为录像帧差；drop_time_s按事先确定的帧率换算，单位秒；event为正常/碰撞/损坏/录像失败；缺失用空值并解释原因。"},"quiz":{"question":"发现一条投放记录可能录错，最可追溯的做法是什么？","options":["覆盖原值，不留下痕迹","保留原始文件，在处理副本标出修订值与依据","删掉整行，因为数据不完美"],"correct":1,"explanation":"保留原始数据并记录修订原因，才能重查与复现处理过程。"},"rubric":["原始记录未被处理值覆盖，异常事件有记录","数据字典定义字段、单位和缺失方式","图表显示模型层级、单位、样本与重复结构"],"pitfalls":["把同一模型的重复投放当独立模型合并统计","只呈现均值或删除不合预期记录而不留理由"],"resourceIds":[]},{"id":"m12-l3","title":"写出可复核的微型研究报告","minutes":90,"level":"必修","goal":"按问题、方法、结果和讨论组织实际报告，给出不确定性、限制、可复现材料和下一步。","prereq":["完成实验并检查数据；若尚无真实观测，完成计划书版本并将结果部分明确标注为未收集"],"concepts":[{"term":"结果与解释","plain":"结果描述观察到什么，讨论解释可能原因；两者不能混写成因果证明。","example":"记录两组观察值后，再讨论翼长与时间的关系及其他可能原因。"},{"term":"限制","plain":"可能影响测量、推断或推广范围的具体条件。","example":"手工折叠带来模型差异，低矮室内实验不能代表不同尺寸旋翼。"},{"term":"可复现交付包","plain":"让他人能理解版本、数据结构、步骤和分析的材料集合。","example":"方案、空白/原始数据、数据字典、分析文件、图表和说明。"}],"tutorial":[{"title":"写标题和摘要骨架","body":"标题描述对象与比较，不宣称超出证据的发现。摘要依次写问题、设计、真实观测状态、主要结果或“尚未收集”、限制和结论。"},{"title":"写方法到可复现程度","body":"给出材料、翼长、模型数量、每模型重复次数、随机顺序、释放高度、计时规则、异常处理和分析单位。任何实际偏离预案都如实列出。"},{"title":"只在结果节报告观察","body":"给出实际样本数量、单位、描述性统计和逐点图；不要因为两个组看起来不同就写因果结论。若未收数，改交研究计划，结果节写明尚无观测。"},{"title":"讨论证据强弱与边界","body":"先回答研究问题，再谈变异、替代解释、制作差异、计时误差和外部适用范围。结论采用与设计匹配的表述，例如“在本次条件下观察到……”，不写成普遍定律。"},{"title":"打包并让同学复现","body":"整理方案、原始数据、数据字典、处理记录、图表和简短README；检查文件名、单位和版本。请同学仅凭包复述分析步骤，修补不清楚处，并写一个下一步验证计划。"}],"worked":{"title":"教学虚构报告结构","body":"标题：两种纸直升机翼长条件下的室内下落计时练习。摘要：本研究计划比较……；样本与方法……；实际数据为学习者收集后填写（此示范不含虚构结果）；可能限制为……。结果图应从实际记录生成，不能引用本教材编造的均值。讨论解释需与观察分开，明确模型数量和重复投放层级。"},"exercise":{"prompt":"完成一个短报告或计划报告，并交给同学按README尝试复核。","template":"题目：\n摘要（问题/方法/证据/限制）：\n1 问题与动机：\n2 方法：\n3 结果（真实观测；若尚无则注明）：\n4 讨论与局限：\n5 结论边界与下一步：\n文件清单/版本：","hint":"空数据也能形成合格的计划报告；不能用虚构结果填补尚未完成的实验。","exampleAnswer":"教学示范（计划版）：提出翼长比较问题；说明拟制作独立模型、固定释放与录像计时、随机顺序；结果栏写“尚未进行实验，无观测数据”；局限包括手工制作差异与有限室内条件；下一步先确认计时可重复性。"},"quiz":{"question":"若两组的样本平均值不同，报告中最稳妥的做法是什么？","options":["直接声称翼长导致了差异","呈现设计、模型层级、实际变异，并用与证据相称的措辞解释","只展示支持预期的几次投放"],"correct":1,"explanation":"组均值差异本身不能排除模型差异、顺序或测量误差；需要完整设计信息和谨慎解释。"},"rubric":["报告清楚区分方法、观测结果与解释","局限和结论范围由真实设计及记录支撑","交付包足以定位原始数据、版本和分析步骤"],"pitfalls":["用虚构或预期数字填进结果部分","把一次低风险练习的结论推广到其他装置、尺度或环境"],"resourceIds":[]}]}],"resources":[{"id":"read-paper","title":"Ten simple rules for reading a scientific paper","organization":"NIH / PLOS Computational Biology","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC7392212/","language":"英语","free":true,"why":"一篇开放获取的阅读策略论文，帮助建立先看全貌、再深入方法与证据的顺序。","readingTask":"先浏览摘要和图表，再选一条建议应用到最近读的论文。","modules":["m1","m3"],"checked":"2026-11-05"},{"id":"scholarly-articles","title":"Reading Scholarly Articles","organization":"Purdue University Libraries","url":"https://guides.lib.purdue.edu/research_approaches/scholarlyarticles","language":"英语","free":true,"why":"大学图书馆整理的学术文章结构与阅读方法入门。","readingTask":"选一篇论文，按页面提供的框架写出研究问题、方法和结论。","modules":["m2","m3","m8"],"checked":"2026-11-05"},{"id":"zotero","title":"The Basics: Zotero Quick Start Guide","organization":"Zotero","url":"https://www.zotero.org/support/quick_start_guide","language":"英语","free":true,"why":"Zotero 官方快速入门，覆盖收集、整理、引用与同步的基本流程。","readingTask":"装好 Zotero 后建立一个练习资料夹，导入三条可公开访问的文献。","modules":["m2","m7"],"checked":"2026-11-05"},{"id":"paraphrasing","title":"Paraphrase: Write It in Your Own Words","organization":"Purdue Online Writing Lab","url":"https://owl.purdue.edu/owl/research_and_citation/using_research/quoting_paraphrasing_and_summarizing/paraphrasing.html","language":"英语","free":true,"why":"练习准确转述、保持来源可追溯，避免把替换几个词误当成自己的表达。","readingTask":"将一段文献先脱离原文改述，再对照原意与引用完整性。","modules":["m2","m8"],"checked":"2026-11-05"},{"id":"ai-in-research","title":"AI Tools for Research","organization":"Purdue University Libraries","url":"https://guides.lib.purdue.edu/c.php?g=1371380&p=10592801","language":"英语","free":true,"why":"图书馆整理的研究场景 AI 工具入口，仅供了解方法；不取代个人所在机构或期刊的规则。","readingTask":"记录一项可用法和一项核验/隐私风险，再回自己机构页面核实适用规则。","modules":["m9"],"checked":"2026-11-05"},{"id":"nist-statistics","title":"NIST/SEMATECH e-Handbook of Statistical Methods","organization":"National Institute of Standards and Technology","url":"https://www.itl.nist.gov/div898/handbook/","language":"英语","free":true,"why":"公开的统计方法手册，供按主题查阅试验设计、测量、建模和统计方法。","readingTask":"找一个与你当前问题有关的小节；把假设和适用条件写下来，方法选择再与导师核对。","modules":["m4","m5","m6","m12"],"checked":"2026-11-05"},{"id":"ori-misconduct","title":"Definition of Research Misconduct","organization":"U.S. Office of Research Integrity","url":"https://ori.hhs.gov/definition-research-misconduct","language":"英语","free":true,"why":"美国 ORI 对其适用范围内科研不端术语的说明，可作为概念入口；各地制度和适用边界需另核实。","readingTask":"区分 fabrication、falsification 与 plagiarism 的含义；不要把一地法规当成所有学校的规则。","modules":["m9","m11"],"checked":"2026-11-05"},{"id":"osf-preregistration","title":"Welcome to Registrations & Preregistrations","organization":"Open Science Framework","url":"https://help.osf.io/article/330-welcome-to-registrations","language":"英语","free":true,"why":"OSF 官方注册与预注册帮助文档，说明如何记录带时间戳的研究计划。","readingTask":"先用纸面模板写出主要问题、结果指标和偏离规则，再查看此页如何保存。","modules":["m6","m12"],"checked":"2026-11-05"},{"id":"cope-ai","title":"Authorship and AI tools","organization":"Committee on Publication Ethics (COPE)","url":"https://publicationethics.org/guidance/cope-position/authorship-and-ai-tools","language":"英语","free":true,"why":"出版伦理委员会关于 AI 工具与作者身份的立场；属于伦理组织建议，具体投稿规则仍以目标期刊为准。","readingTask":"对照所在机构和目标期刊的最新指南，记录 AI 使用、披露与保密要求的差异。","modules":["m9","m11"],"checked":"2026-11-05"}]}</script>
+  <script>
+    (function () {
+      "use strict";
+      var payload = JSON.parse(document.getElementById("course-data").textContent);
+      var modules = payload.modules;
+      var resources = payload.resources;
+      var stages = [
+        { id: "起步", label: "理解研究" },
+        { id: "取证", label: "判断证据" },
+        { id: "实作", label: "落实与保护" },
+        { id: "表达", label: "交流合作" },
+        { id: "走完闭环", label: "完成研究" }
+      ];
+      var key = "academic-starter-progress-v1";
+      var state = readState();
+      var selectedStage = "全部";
+      var searchTerm = "";
+      var activeModule = null;
+
+      function freshState() {
+        return { completed: [], drafts: {}, rubrics: {}, answers: {}, lastLesson: "" };
+      }
+
+      function readState() {
+        try {
+          var parsed = JSON.parse(localStorage.getItem(key) || "null");
+          if (!parsed || typeof parsed !== "object") return freshState();
+          return {
+            completed: Array.isArray(parsed.completed) ? parsed.completed : [],
+            drafts: parsed.drafts && typeof parsed.drafts === "object" ? parsed.drafts : {},
+            rubrics: parsed.rubrics && typeof parsed.rubrics === "object" ? parsed.rubrics : {},
+            answers: parsed.answers && typeof parsed.answers === "object" ? parsed.answers : {},
+            lastLesson: typeof parsed.lastLesson === "string" ? parsed.lastLesson : ""
+          };
+        } catch (error) {
+          return freshState();
+        }
+      }
+
+      function persist() {
+        try {
+          localStorage.setItem(key, JSON.stringify(state));
+          document.getElementById("storageNote").hidden = true;
+          return true;
+        } catch (error) {
+          var note = document.getElementById("storageNote");
+          note.hidden = false;
+          note.textContent = "浏览器拒绝本机存储。当前页面仍可使用；关闭页面后，学习进度和草稿可能不会保留。";
+          return false;
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value == null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function say(message) {
+        document.getElementById("liveMessage").textContent = message;
+        var visible = document.getElementById("actionFeedback");
+        if (visible) {
+          visible.hidden = !message;
+          visible.textContent = message;
+        }
+      }
+
+      function getModule(id) {
+        return modules.find(function (item) { return item.id === id; }) || null;
+      }
+
+      function getLesson(id) {
+        for (var i = 0; i < modules.length; i += 1) {
+          var found = modules[i].lessons.find(function (lesson) { return lesson.id === id; });
+          if (found) return { module: modules[i], lesson: found, index: i };
+        }
+        return null;
+      }
+
+      function completedCount() {
+        return state.completed.filter(function (id) { return !!getLesson(id); }).length;
+      }
+
+      function moduleCompleteCount(module) {
+        return module.lessons.filter(function (lesson) { return state.completed.indexOf(lesson.id) !== -1; }).length;
+      }
+
+      function routeProgress() {
+        return Math.round((completedCount() / 36) * 100);
+      }
+
+      function safeHash(id) {
+        var next = id ? "#" + id : "#home";
+        if (window.location.hash !== next) window.location.hash = next;
+        else renderRoute();
+      }
+
+      function navGroups() {
+        return stages.map(function (stage) {
+          var peers = modules.filter(function (item) { return item.stage === stage.id; });
+          if (!peers.length) return "";
+          return '<section class="navigation-group"><p class="navigation-label">' +
+            escapeHtml(stage.label) + '</p><ol class="navigation-list">' +
+            peers.map(function (module) {
+              var active = activeModule === module.id;
+              return '<li><button class="module-nav-link" type="button" data-module="' +
+                escapeHtml(module.id) + '"' + (active ? ' aria-current="page"' : "") + '>' +
+                '<span class="module-index">' + escapeHtml(module.id.slice(1)) + '</span>' +
+                '<span class="nav-title">' + escapeHtml(module.title) + '</span>' +
+                '<span class="nav-progress">' + moduleCompleteCount(module) + '/' + module.lessons.length + '</span>' +
+                '</button></li>';
+            }).join("") + "</ol></section>";
+        }).join("");
+      }
+
+      function updateNavigation() {
+        var html = navGroups();
+        document.getElementById("desktopNavigation").innerHTML = html;
+        document.getElementById("mobileNavigationContent").innerHTML = html;
+      }
+
+      function completedMinutes() {
+        return modules.reduce(function (total, module) {
+          return total + module.lessons.reduce(function (sum, lesson) {
+            return sum + (state.completed.indexOf(lesson.id) !== -1 ? lesson.minutes : 0);
+          }, 0);
+        }, 0);
+      }
+
+      function formatMinutes(value) {
+        var hours = Math.floor(value / 60);
+        var minutes = value % 60;
+        if (!value) return "0 分钟";
+        if (!minutes) return hours + " 小时";
+        if (!hours) return minutes + " 分钟";
+        return hours + " 小时 " + minutes + " 分钟";
+      }
+
+      function updateProgress() {
+        var amount = completedCount();
+        var bar = document.getElementById("globalProgress");
+        if (bar) {
+          bar.style.width = ((amount / 36) * 100) + "%";
+          bar.setAttribute("aria-valuenow", String(amount));
+        }
+        var copy = document.getElementById("progressCount");
+        if (copy) copy.textContent = amount + " / 36 课完成";
+        var time = document.getElementById("progressTime");
+        if (time) time.textContent = "已完成约 " + formatMinutes(completedMinutes());
+      }
+
+      function moduleSearchText(module) {
+        var text = [module.title, module.summary, module.deliverable];
+        module.lessons.forEach(function (lesson) {
+          text.push(lesson.title, lesson.goal, lesson.level);
+          (lesson.concepts || []).forEach(function (concept) {
+            text.push(concept.term, concept.plain, concept.example);
+          });
+          (lesson.tutorial || []).forEach(function (step) { text.push(step.title, step.body); });
+        });
+        return text.join(" ").toLocaleLowerCase();
+      }
+
+      function matches(module) {
+        if (selectedStage !== "全部" && module.stage !== selectedStage) return false;
+        if (searchTerm && moduleSearchText(module).indexOf(searchTerm) === -1) return false;
+        return true;
+      }
+
+      function progressHeader() {
+        return '<div class="progress-line" role="progressbar" aria-label="课程完成进度" aria-valuemin="0" aria-valuemax="36" aria-valuenow="' +
+          completedCount() + '"><div class="progress-fill" id="globalProgress" style="width:' +
+          ((completedCount() / 36) * 100) + '%"></div></div>' +
+          '<div class="progress-copy"><span id="progressCount">' + completedCount() + ' / 36 课完成</span>' +
+          '<span id="progressTime">已完成约 ' + formatMinutes(completedMinutes()) + '</span>' +
+          '<span>自定进度 · 每课约 45–90 分钟</span></div>';
+      }
+
+      function renderRouteDiagram() {
+        return '<section class="route-section" aria-labelledby="routeTitle">' +
+          '<p class="route-heading" id="routeTitle">从问题到可复核的成果</p>' +
+          '<ol class="route-list">' + stages.map(function (stage) {
+            var phaseModules = modules.filter(function (item) { return item.stage === stage.id; });
+            var count = phaseModules.reduce(function (sum, item) { return sum + moduleCompleteCount(item); }, 0);
+            var max = phaseModules.reduce(function (sum, item) { return sum + item.lessons.length; }, 0);
+            return '<li class="route-step' + (max > 0 && count === max ? ' is-done' : '') +
+              '" data-stage="' + escapeHtml(stage.id) + '"><strong>' + escapeHtml(stage.label) +
+              '</strong><span>' + escapeHtml(phaseModules.map(function (item) { return item.id.slice(1); }).join(" · ")) +
+              ' · ' + count + '/' + max + ' 课</span></li>';
+          }).join("") + '</ol></section>';
+      }
+
+      function moduleRow(module) {
+        var done = moduleCompleteCount(module);
+        return '<article class="module-row"><span class="module-row-index">' +
+          escapeHtml(module.id.slice(1).padStart(2, "0")) + '</span><div><h3 class="module-row-title">' +
+          '<button type="button" data-module="' + escapeHtml(module.id) + '">' + escapeHtml(module.title) +
+          '</button></h3><p class="module-row-copy">' + escapeHtml(module.summary) +
+          '</p><p class="module-row-outcome">完成时带走：' + escapeHtml(module.deliverable) +
+          '</p></div><div class="module-row-action"><span>' + done + ' / ' + module.lessons.length +
+          ' 课完成</span><button class="text-link-button" type="button" data-module="' +
+          escapeHtml(module.id) + '">打开模块</button></div></article>';
+      }
+
+      function renderHome() {
+        activeModule = null;
+        var groups = stages.map(function (stage) {
+          var peers = modules.filter(function (item) { return item.stage === stage.id && matches(item); });
+          if (!peers.length) return "";
+          return '<section class="module-group"><div class="group-heading"><h2>' +
+            escapeHtml(stage.label) + '</h2><span>' + peers.length + ' 个模块</span></div>' +
+            peers.map(moduleRow).join("") + '</section>';
+        }).join("");
+        var found = modules.filter(matches).length;
+        var filters = [{ id: "全部", text: "全部" }].concat(stages.map(function (stage) {
+          return { id: stage.id, text: stage.label };
+        }));
+        var actionText = completedCount() === 0 ? "开始第一课" : "继续上一课";
+        var last = getLesson(state.lastLesson);
+        var actionId = completedCount() === 0 ? "m1-l1" : last ? last.lesson.id : "m1-l1";
+        var home = '<section class="intro"><p class="overline">研究训练工作台 · 自定进度</p>' +
+          '<h1>学术不是论文格式，是一套可复核的判断方法。</h1>' +
+          '<p class="intro-copy">从问题、文献、研究设计和数据开始，逐步练到写作、伦理、交流，再用一个低风险微型研究走完整个闭环。</p>' +
+          '<p class="profile-note">机械毕业设计已经训练了项目执行和工程设计经验。接下来补上的，是怎样把问题变得可研究、证据变得可追溯，以及结论的边界说得准确。</p>' +
+          progressHeader() + '</section>' + renderRouteDiagram() +
+          '<section aria-label="模块目录"><div class="overview-tools"><div class="filter-list" role="group" aria-label="按学习阶段筛选">' +
+          filters.map(function (filter) {
+            return '<button class="filter-button" type="button" data-stage-filter="' +
+              escapeHtml(filter.id) + '" aria-pressed="' + (selectedStage === filter.id ? "true" : "false") +
+              '">' + escapeHtml(filter.text) + '</button>';
+          }).join("") + '</div><span class="overview-meta" id="searchCount">显示 ' + found + ' / 12 个模块</span></div>' +
+          '<div id="moduleGroups">' + (groups || '<p class="empty-state">没有找到匹配内容。试试更短的关键词，或清除阶段筛选。</p>') + '</div></section>' +
+          '<section class="notice"><strong>毕业设计经验可以迁移。</strong> 本路线不预设你的英语、数学或编程水平；已熟悉的部分可快速复习，真正薄弱的能力再按需补齐。</section>' +
+          '<div class="lesson-actions"><button type="button" class="action-button primary" data-lesson="' +
+          escapeHtml(actionId) + '">' + actionText + '</button><button type="button" class="action-button danger" data-action="reset">清空本机进度</button></div>' +
+          '<p class="quiet-copy">内容从通用研究能力出发。不同学科的具体做法、伦理审查和投稿规则仍需按项目与机构核对。</p>';
+        document.getElementById("main").innerHTML = home;
+        updateNavigation();
+        updateProgress();
+      }
+
+      function renderModule(module) {
+        activeModule = module.id;
+        var lessons = module.lessons.map(function (lesson, index) {
+          var done = state.completed.indexOf(lesson.id) !== -1;
+          var resume = state.lastLesson === lesson.id;
+          return '<li class="lesson-row"><span class="lesson-number">' + String(index + 1).padStart(2, "0") +
+            '</span><div><h3><button type="button" class="module-row-title" data-lesson="' +
+            escapeHtml(lesson.id) + '">' + escapeHtml(lesson.title) + '</button></h3><p>' +
+            escapeHtml(lesson.goal) + '</p><div class="lesson-meta"><span>' + escapeHtml(String(lesson.minutes)) +
+            ' 分钟</span><span>' + escapeHtml(lesson.level) + '</span></div></div><span class="lesson-state">' +
+            (done ? "已完成" : resume ? "上次学习" : "未开始") + '</span></li>';
+        }).join("");
+        document.getElementById("main").innerHTML =
+          '<nav class="breadcrumb" aria-label="当前位置"><button type="button" data-home>学习路径</button><span aria-hidden="true">/</span><span>' +
+          escapeHtml(module.title) + '</span></nav><section class="page-head"><p class="overline">' +
+          escapeHtml(module.stage) + ' · ' + escapeHtml(module.id.slice(1).padStart(2, "0")) +
+          '</p><h1>' + escapeHtml(module.title) + '</h1><p>' + escapeHtml(module.summary) +
+          '</p><p class="outcome-line"><strong>模块交付物：</strong>' + escapeHtml(module.deliverable) +
+          '</p>' + progressHeader() + '</section><ol class="lesson-list" aria-label="本模块课程">' +
+          lessons + '</ol><div class="lesson-actions"><button class="action-button primary" type="button" data-lesson="' +
+          escapeHtml(module.lessons.find(function (lesson) { return state.completed.indexOf(lesson.id) === -1; })?.id || module.lessons[0].id) +
+          '">' + (moduleCompleteCount(module) ? "继续本模块" : "开始本模块") + '</button><button type="button" class="action-button" data-home>返回全部模块</button></div>';
+        updateNavigation();
+        updateProgress();
+      }
+
+      function relatedResources(module) {
+        var ids = {
+          m1: ["read-paper"], m2: ["zotero", "scholarly-articles"], m3: ["read-paper", "scholarly-articles"],
+          m4: ["nist-statistics"], m5: ["nist-statistics"], m6: ["nist-statistics", "osf-preregistration"],
+          m7: ["zotero"], m8: ["paraphrasing", "scholarly-articles"], m9: ["ori-misconduct", "ai-in-research", "cope-ai"],
+          m10: ["paraphrasing"], m11: ["ori-misconduct", "cope-ai"], m12: ["osf-preregistration", "nist-statistics"]
+        };
+        return (ids[module.id] || []).map(function (id) {
+          return resources.find(function (resource) { return resource.id === id; });
+        }).filter(Boolean);
+      }
+
+      function resourceMarkup(module) {
+        var items = relatedResources(module);
+        if (!items.length) return "";
+        return '<section aria-labelledby="resourceTitle"><h2 id="resourceTitle">延伸资料</h2><ul class="resource-list">' +
+          items.map(function (resource) {
+            return '<li class="resource-row"><div><a href="' + escapeHtml(resource.url) +
+              '" target="_blank" rel="noopener noreferrer">' + escapeHtml(resource.title) +
+              '</a><div class="resource-meta">' + escapeHtml(resource.organization) + ' · ' +
+              escapeHtml(resource.language) + ' · 免费 · 核对于 ' + escapeHtml(resource.checked) +
+              '</div></div><span class="resource-meta">外部来源</span><p class="resource-why">' +
+              escapeHtml(resource.why) + '</p><p class="resource-task"><strong>建议任务：</strong>' +
+              escapeHtml(resource.readingTask) + '</p></li>';
+          }).join("") + '</ul><p class="quiet-copy">外部页面可能更新。教材只选用入门路径；引用、统计或政策的最终解释以原文和所属机构要求为准。</p></section>';
+      }
+
+      function renderLesson(module, lesson) {
+        activeModule = module.id;
+        state.lastLesson = lesson.id;
+        var saved = persist();
+        var location = getLesson(lesson.id);
+        var flat = modules.reduce(function (all, item) {
+          return all.concat(item.lessons.map(function (entry) { return { module: item, lesson: entry }; }));
+        }, []);
+        var index = flat.findIndex(function (item) { return item.lesson.id === lesson.id; });
+        var previous = index > 0 ? flat[index - 1].lesson : null;
+        var next = index < flat.length - 1 ? flat[index + 1].lesson : null;
+        var completed = state.completed.indexOf(lesson.id) !== -1;
+        var concepts = (lesson.concepts || []).map(function (concept) {
+          return '<div class="concept-row"><dt>' + escapeHtml(concept.term) +
+            '</dt><dd>' + escapeHtml(concept.plain) +
+            (concept.example ? '<div class="concept-example"><strong>例：</strong>' + escapeHtml(concept.example) + '</div>' : "") +
+            '</dd></div>';
+        }).join("");
+        var tutorial = (lesson.tutorial || []).map(function (step, stepIndex) {
+          return '<li class="tutorial-step"><span class="step-index" aria-hidden="true">' +
+            String(stepIndex + 1).padStart(2, "0") + '</span><div><h3>' + escapeHtml(step.title) +
+            '</h3><p>' + escapeHtml(step.body) + '</p></div></li>';
+        }).join("");
+        var options = lesson.quiz.options.map(function (option, optionIndex) {
+          return '<label class="quiz-option"><input type="radio" name="quizAnswer" value="' +
+            optionIndex + '"' + (state.answers[lesson.id + ":choice"] === optionIndex ? " checked" : "") +
+            '><span>' + escapeHtml(option) + '</span></label>';
+        }).join("");
+        var rubrics = lesson.rubric.map(function (item, rubricIndex) {
+          var checked = Array.isArray(state.rubrics[lesson.id]) && state.rubrics[lesson.id].indexOf(rubricIndex) !== -1;
+          return '<li><label class="rubric-check"><input type="checkbox" data-rubric="' +
+            rubricIndex + '"' + (checked ? " checked" : "") + '><span>' +
+            escapeHtml(item) + '</span></label></li>';
+        }).join("");
+        document.getElementById("main").innerHTML =
+          '<nav class="breadcrumb" aria-label="当前位置"><button type="button" data-home>学习路径</button><span aria-hidden="true">/</span><button type="button" data-module="' +
+          escapeHtml(module.id) + '">' + escapeHtml(module.title) + '</button><span aria-hidden="true">/</span><span>' +
+          escapeHtml(lesson.title) + '</span></nav><section class="page-head"><p class="overline">' +
+          escapeHtml(module.stage) + ' · ' + escapeHtml(module.id.slice(1).padStart(2, "0")) +
+          '</p><h1>' + escapeHtml(lesson.title) + '</h1><p>' + escapeHtml(lesson.goal) +
+          '</p><div class="lesson-meta"><span>' + escapeHtml(String(lesson.minutes)) +
+          ' 分钟</span><span>' + escapeHtml(lesson.level) + '</span><span>第 ' + String(index + 1) +
+          ' / 36 课</span></div>' + progressHeader() + '</section>' +
+          '<div class="lesson-body"><p class="lesson-goal"><strong>本课目标：</strong>' +
+          escapeHtml(lesson.goal) + '</p>' +
+          (lesson.prereq && lesson.prereq.length ? '<p class="prerequisite"><strong>先修：</strong>' +
+            escapeHtml(lesson.prereq.join("；")) + '</p>' : "") +
+          '<section aria-labelledby="conceptTitle"><h2 id="conceptTitle">先掌握这些概念</h2><dl class="concept-list">' +
+          concepts + '</dl></section><section aria-labelledby="tutorialTitle"><h2 id="tutorialTitle">跟着做</h2>' +
+          '<ol class="tutorial-list">' + tutorial + '</ol></section>' +
+          '<section aria-labelledby="workedTitle"><h2 id="workedTitle">示范一次</h2><div class="example-panel"><p class="example-label">教学示范 · 不是你的真实结果</p><h3>' +
+          escapeHtml(lesson.worked.title) + '</h3><p>' + escapeHtml(lesson.worked.body) +
+          '</p></div></section><section aria-labelledby="exerciseTitle"><h2 id="exerciseTitle">动手练习</h2><p class="prompt">' +
+          escapeHtml(lesson.exercise.prompt) + '</p><div class="template-box" aria-label="练习模板">' +
+          escapeHtml(lesson.exercise.template) + '</div><p><strong>提示：</strong>' +
+          escapeHtml(lesson.exercise.hint) + '</p><form class="exercise-form" id="exerciseForm"><label class="form-label" for="lessonDraft">写下你的做法、证据或问题</label>' +
+          '<textarea id="lessonDraft" name="draft" placeholder="这是个人学习草稿，会保存在本机浏览器。不要在此输入敏感或未公开的研究资料。">' +
+          escapeHtml(state.drafts[lesson.id] || "") + '</textarea><p class="draft-status" id="draftStatus" aria-live="polite">' +
+          (saved ? "草稿自动保存到本机浏览器。" : "本机保存不可用，请导出进度备份草稿。") + '</p></form>' +
+          '<details class="disclosure"><summary>查看示范答案</summary><p>' +
+          escapeHtml(lesson.exercise.exampleAnswer) + '</p></details></section>' +
+          '<section aria-labelledby="quizTitle"><h2 id="quizTitle">检查理解</h2><form class="quiz-form" id="quizForm"><fieldset><legend>' +
+          escapeHtml(lesson.quiz.question) + '</legend>' + options + '</fieldset><p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>' +
+          '<button class="action-button" type="submit">提交选择</button></form></section>' +
+          '<section aria-labelledby="rubricTitle"><h2 id="rubricTitle">完成前自检</h2><ul class="rubric-list">' + rubrics +
+          '</ul><ul class="pitfall-list">' + lesson.pitfalls.map(function (pitfall) { return '<li>' + escapeHtml(pitfall) + '</li>'; }).join("") +
+          '</ul></section>' + resourceMarkup(module) +
+          '<p class="quiet-copy">可直接标记本课完成；练习、自测与自检可以稍后补做。</p>' +
+          '<div class="lesson-actions"><button type="button" class="action-button primary" data-action="complete"' +
+          (completed ? ' aria-pressed="true"' : ' aria-pressed="false"') + '>' +
+          (completed ? "取消本课完成" : "标记本课完成") + '</button>' +
+          '<button type="button" class="action-button" data-module="' + escapeHtml(module.id) + '">查看本模块</button>' +
+          (previous ? '<button type="button" class="action-button" data-lesson="' + escapeHtml(previous.id) + '">上一课</button>' : "") +
+          (next ? '<button type="button" class="action-button push-right" data-lesson="' + escapeHtml(next.id) + '">下一课</button>' :
+            '<button type="button" class="action-button push-right" data-home>完成</button>') +
+          '</div><p class="action-feedback quiet-copy" id="actionFeedback" role="status" aria-live="polite" hidden></p>' +
+          '<p class="quiet-copy">不必一次完成全部练习。每课草稿会按课程分别保存在本机；如需换设备，可从顶部导出再导入进度。</p></div>';
+        var feedback = document.getElementById("quizFeedback");
+        if (state.answers[lesson.id + ":result"] === true) {
+          feedback.className = "quiz-feedback is-correct";
+          feedback.textContent = "回答正确。 " + lesson.quiz.explanation;
+        } else if (state.answers[lesson.id + ":result"] === false) {
+          feedback.className = "quiz-feedback is-wrong";
+          feedback.textContent = "再读一次题目后重试。 " + lesson.quiz.explanation;
+        }
+        updateNavigation();
+        updateProgress();
+        if (location) document.title = lesson.title + " | 学术起步";
+        return saved;
+      }
+
+      function renderRoute() {
+        var route = window.location.hash.replace(/^#/, "");
+        if (route && route !== "home") {
+          var lessonLocation = getLesson(route);
+          if (lessonLocation) {
+            renderLesson(lessonLocation.module, lessonLocation.lesson);
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            return;
+          }
+          var module = getModule(route);
+          if (module) {
+            renderModule(module);
+            return;
+          }
+        }
+        document.title = "学术起步 | 研究训练工作台";
+        renderHome();
+      }
+
+      function setRubricState(lessonId, input) {
+        var itemIndex = Number(input.getAttribute("data-rubric"));
+        var marks = Array.isArray(state.rubrics[lessonId]) ? state.rubrics[lessonId].slice() : [];
+        var position = marks.indexOf(itemIndex);
+        if (input.checked && position === -1) marks.push(itemIndex);
+        if (!input.checked && position !== -1) marks.splice(position, 1);
+        state.rubrics[lessonId] = marks.sort(function (a, b) { return a - b; });
+        persist();
+      }
+
+      function closeMobileNavigation() {
+        var navigation = document.querySelector(".mobile-navigation");
+        if (navigation && window.matchMedia("(max-width: 900px)").matches) navigation.open = false;
+      }
+
+      function handleQuiz(form) {
+        var location = getLesson(window.location.hash.replace(/^#/, ""));
+        if (!location) return;
+        var picked = form.querySelector('input[name="quizAnswer"]:checked');
+        var feedback = document.getElementById("quizFeedback");
+        if (!picked) {
+          feedback.className = "quiz-feedback is-wrong";
+          feedback.textContent = "先选择一项，再提交。";
+          return;
+        }
+        var choice = Number(picked.value);
+        var right = choice === Number(location.lesson.quiz.correct);
+        state.answers[location.lesson.id + ":choice"] = choice;
+        state.answers[location.lesson.id + ":result"] = right;
+        persist();
+        feedback.className = right ? "quiz-feedback is-correct" : "quiz-feedback is-wrong";
+        feedback.textContent = (right ? "回答正确。 " : "这次没有通过。 ") + location.lesson.quiz.explanation;
+        say(right ? "自测通过。" : "请根据解释再试一次。");
+      }
+
+      function completeCurrentLesson() {
+        var location = getLesson(window.location.hash.replace(/^#/, ""));
+        if (!location) return;
+        var id = location.lesson.id;
+        var at = state.completed.indexOf(id);
+        if (at === -1) state.completed.push(id);
+        else state.completed.splice(at, 1);
+        var saved = renderLesson(location.module, location.lesson);
+        say((at === -1 ? "本课已标记完成。" : "已取消本课完成。") +
+          (saved ? "进度已保存到本机浏览器。" : "本机保存不可用；更改仅在当前页面有效，请导出进度备份。"));
+      }
+
+      function serializeProgress() {
+        return JSON.stringify({
+          format: "academic-starter-progress-v1",
+          exportedAt: new Date().toISOString(),
+          completed: state.completed,
+          drafts: state.drafts,
+          rubrics: state.rubrics,
+          answers: state.answers,
+          lastLesson: state.lastLesson
+        }, null, 2);
+      }
+
+      function importProgress(file) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var data = JSON.parse(String(reader.result));
+            if (!data || data.format !== "academic-starter-progress-v1" ||
+                !Array.isArray(data.completed) || typeof data.drafts !== "object") {
+              throw new Error("format");
+            }
+            var validIds = new Set(modules.reduce(function (all, module) {
+              return all.concat(module.lessons.map(function (lesson) { return lesson.id; }));
+            }, []));
+            state = {
+              completed: data.completed.filter(function (id) { return validIds.has(id); }),
+              drafts: data.drafts || {},
+              rubrics: data.rubrics || {},
+              answers: data.answers || {},
+              lastLesson: validIds.has(data.lastLesson) ? data.lastLesson : ""
+            };
+            persist();
+            renderRoute();
+            say("进度与草稿已导入。");
+          } catch (error) {
+            window.alert("无法读取此进度备份。请使用本页面导出的 JSON 文件。");
+          }
+        };
+        reader.onerror = function () { window.alert("文件读取失败。请重试。"); };
+        reader.readAsText(file, "utf-8");
+      }
+
+      document.getElementById("courseSearch").addEventListener("input", function (event) {
+        searchTerm = event.target.value.trim().toLocaleLowerCase();
+        if (window.location.hash && window.location.hash !== "#home") window.location.hash = "home";
+        else renderHome();
+      });
+
+      document.addEventListener("click", function (event) {
+        var button = event.target.closest("button");
+        if (!button) return;
+        if (button.hasAttribute("data-home")) { closeMobileNavigation(); safeHash("home"); return; }
+        if (button.hasAttribute("data-module")) { closeMobileNavigation(); safeHash(button.getAttribute("data-module")); return; }
+        if (button.hasAttribute("data-lesson")) {
+          var lesson = getLesson(button.getAttribute("data-lesson"));
+          if (lesson) {
+            closeMobileNavigation();
+            state.lastLesson = lesson.lesson.id;
+            persist();
+            safeHash(lesson.lesson.id);
+          }
+          return;
+        }
+        if (button.hasAttribute("data-stage-filter")) {
+          selectedStage = button.getAttribute("data-stage-filter");
+          if (window.location.hash && window.location.hash !== "#home") window.location.hash = "home";
+          else renderHome();
+          return;
+        }
+        var action = button.getAttribute("data-action");
+        if (action === "complete") { completeCurrentLesson(); return; }
+        if (action === "export") {
+          var blob = new Blob([serializeProgress()], { type: "application/json;charset=utf-8" });
+          var url = URL.createObjectURL(blob);
+          var link = document.createElement("a");
+          link.href = url;
+          link.download = "academic-learning-progress.json";
+          link.click();
+          URL.revokeObjectURL(url);
+          say("进度备份已导出。");
+          return;
+        }
+        if (action === "import") { document.getElementById("importFile").click(); return; }
+        if (action === "reset") {
+          if (window.confirm("这会清除本浏览器保存的课程打卡、练习草稿和测验答案。无法撤销。要继续吗？")) {
+            state = freshState();
+            persist();
+            selectedStage = "全部";
+            searchTerm = "";
+            document.getElementById("courseSearch").value = "";
+            safeHash("home");
+            say("本机学习进度已清除。");
+          }
+        }
+      });
+
+      document.addEventListener("input", function (event) {
+        if (event.target.id !== "lessonDraft") return;
+        var id = window.location.hash.replace(/^#/, "");
+        if (!getLesson(id)) return;
+        state.drafts[id] = event.target.value;
+        var saved = persist();
+        var status = document.getElementById("draftStatus");
+        if (status) status.textContent = saved ? "草稿已保存到本机浏览器。" :
+          "本机保存不可用；草稿仅在当前页面有效，请导出进度备份。";
+      });
+
+      document.addEventListener("change", function (event) {
+        var lessonId = window.location.hash.replace(/^#/, "");
+        if (event.target.matches("[data-rubric]")) setRubricState(lessonId, event.target);
+        if (event.target.id === "importFile" && event.target.files && event.target.files[0]) {
+          importProgress(event.target.files[0]);
+          event.target.value = "";
+        }
+      });
+
+      document.addEventListener("submit", function (event) {
+        if (event.target.id !== "quizForm") return;
+        event.preventDefault();
+        handleQuiz(event.target);
+      });
+
+      window.addEventListener("hashchange", renderRoute);
+      renderRoute();
+      persist();
+    }());
+  </script>
+</body>
+</html>
