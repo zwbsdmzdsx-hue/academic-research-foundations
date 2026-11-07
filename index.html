@@ -271,9 +271,9 @@ footer {font-size:12px;line-height:1.9;color:var(--muted);border-top:1px solid v
 .legacy-draft {white-space:pre-wrap;padding:16px;background:var(--sand);border-radius:9px;font-size:14px;line-height:1.9}
 .copy-status {font-size:12px;color:var(--green)}
 .target-flash {animation:target-mark 1450ms var(--ease)}
-button.confirmed {animation:confirm-mark 650ms var(--ease);color:var(--ink)}
+button.confirmed {animation:confirm-mark 650ms var(--ease)}
 @keyframes target-mark {0%,25%{background-color:#f1dfbd}100%{background-color:transparent}}
-@keyframes confirm-mark {0%,35%{background-color:#d0e6dc;border-color:#608e7e}100%{background-color:var(--soft);border-color:var(--green)}}
+@keyframes confirm-mark {0%,35%{background-color:#d0e6dc;border-color:#608e7e;color:var(--ink)}100%{background-color:var(--soft);border-color:var(--green);color:var(--ink)}}
 @keyframes disclose {from{opacity:.6}to{opacity:1}}
 @media (min-width:1600px) {
   .workspace {grid-template-columns:246px minmax(0,1fr);gap:54px;padding-left:48px;padding-right:48px}
