@@ -119,7 +119,7 @@ progress::-moz-progress-bar {background:var(--progress-fill);border-radius:1px}
 .chapter-nav[open]>summary {font-weight:600;color:var(--ink)}
 .chapter-nav ol {padding:0;margin:1px 0 10px;list-style:none}
 .chapter-nav li {margin:0}
-.chapter-nav a {display:flex;align-items:flex-start;gap:8px;min-height:44px;padding:10px 10px 10px 14px;text-decoration:none;color:var(--muted);font-size:12px;line-height:1.75;border-radius:9px;transition:background-color 140ms var(--ease),color 140ms var(--ease)}
+.chapter-nav a {display:flex;align-items:flex-start;gap:8px;min-height:44px;padding:10px 10px 10px 14px;text-decoration:none;color:var(--muted);font-size:12px;line-height:1.75;border-radius:9px}
 .chapter-nav a:hover {background:var(--sand);color:var(--ink)}
 .sidebar .chapter-nav a[aria-current=page] {color:var(--surface);background:var(--green);font-weight:600}
 .nav-status {width:6px;height:6px;flex:none;margin-top:7px;border:1px solid #8d9f9b;border-radius:50%}
@@ -231,7 +231,7 @@ p {margin:0 0 17px;overflow-wrap:anywhere}
 #readingPosition {display:block;font-size:12px;font-weight:400;color:var(--muted);line-height:1.8;margin-top:4px;font-variant-numeric:tabular-nums}
 .page-toc ol {list-style:none;columns:1;margin:0;padding:0!important}
 .page-toc li {margin:0}
-.page-toc a {display:block;min-height:44px;padding:10px 10px 10px 13px;border-left:1px solid var(--nav-line);font-size:12px;line-height:1.75;color:var(--muted);text-decoration:none;transition:color 150ms var(--ease),background-color 150ms var(--ease),border-color 150ms var(--ease)}
+.page-toc a {display:block;min-height:44px;padding:10px 10px 10px 13px;border-left:1px solid var(--nav-line);font-size:12px;line-height:1.75;color:var(--muted);text-decoration:none}
 .page-toc a:hover {color:var(--green);background:var(--sand)}
 .page-toc a[aria-current=location] {color:var(--surface);background:var(--green);border-left-color:var(--green);font-weight:600;border-radius:0 8px 8px 0}
 .page-toc p {font-size:12px;margin:13px 0 0;color:var(--muted)}
@@ -271,7 +271,7 @@ code {font-family:Consolas,"Liberation Mono",monospace}
 .disclosure>summary {cursor:pointer;min-height:50px;padding:12px 0;font-weight:600;font-size:14px;line-height:1.8;list-style-position:inside}
 .disclosure[open] {padding-bottom:2px}
 .disclosure[open]>summary {margin-bottom:10px;border-bottom:1px solid var(--line)}
-details[open]>.stage-chapters,details[open]>.terms,.disclosure[open]>p,.week[open]>p {animation:disclose 170ms var(--ease)}
+details[open]>.terms,.disclosure[open]>p,.week[open]>p {animation:disclose 170ms var(--ease)}
 .annotation {margin:18px 0}
 .annotation .sentence {margin:0;padding:11px 0}
 .annotation .note {font-size:13px;line-height:1.85;padding:13px 16px;background:var(--lilac);border-radius:9px;margin:0 0 15px;color:#51435b}
@@ -1016,7 +1016,9 @@ SOFTWARE.
     if (!(detail instanceof HTMLDetailsElement) || !userDisclosures.has(detail)) return;
     userDisclosures.delete(detail);
     if (!detail.open || !allowed()) return;
-    if (!detail.matches('.disclosure,.term-guide,.nav-stage,.week,.chapter-nav')) return;
+    // Navigation states stay opaque; fading a selected white-on-ink item
+    // creates a low-contrast intermediate state against the outer paper.
+    if (!detail.matches('.disclosure,.term-guide,.week')) return;
     [...detail.children].filter(child => child.tagName !== 'SUMMARY').forEach(child => {
       animate(child, [{opacity:.65}, {opacity:1}], 220);
     });
