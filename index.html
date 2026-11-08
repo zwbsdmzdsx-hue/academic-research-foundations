@@ -5,25 +5,27 @@
 <meta name="description" content="从零研究经验到PhD申请准备：八阶段、二十四章的科研通用教材，包含完整案例、逐句批注和可复现分析。">
 <title>科研通用底座 · 从零到研究实践</title>
 <style>:root {
-  --paper:#f8f4e9;
-  --surface:#fffdf7;
+  --paper:#fffcf3;
+  --surface:#ffffff;
   --ink:#263a46;
   --muted:#59656b;
   --green:#246368;
   --line:#c9ccbd;
-  --soft:#e8f0e7;
-  --sand:#eee6d3;
-  --peach:#f2d5bd;
-  --lilac:#e5dced;
-  --sky:#dcecef;
-  --canvas:#eae5d8;
-  --nav-surface:#dce6da;
+  --soft:#eff9ef;
+  --sand:#fff7e1;
+  --peach:#ffe1bf;
+  --lilac:#f1e7ff;
+  --sky:#e7f7ff;
+  --canvas:#fffdf7;
+  --nav-surface:#edfaf1;
   --nav-line:#b7c8bb;
-  --hero-surface:#f2d7ba;
-  --stage-warm:#f3e3cf;
-  --practice-surface:#e7efdf;
-  --note-surface:#e7e0ef;
-  --shadow-paper:0 8px 24px #263a4610;
+  --hero-surface:#fff0c9;
+  --stage-warm:#fff4dd;
+  --practice-surface:#effbe9;
+  --note-surface:#f3edff;
+  --comic-dot:#b99b6559;
+  --comic-line:#a3b9b6;
+  --shadow-paper:0 6px 20px #263a460b;
   --aqua:var(--soft);
   --lavender:var(--lilac);
   --red:#963e46;
@@ -34,7 +36,7 @@
 }
 * {box-sizing:border-box}
 html {scroll-behavior:auto;scrollbar-color:#9eada6 var(--paper)}
-body {margin:0;background:var(--canvas);color:var(--ink);font-family:"Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;font-size:17px;line-height:1.95;-webkit-text-size-adjust:100%}
+body {margin:0;background:var(--canvas);background-image:radial-gradient(#aac7c538 .6px,transparent .8px);background-size:12px 12px;color:var(--ink);font-family:"Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;font-size:17px;line-height:1.95;-webkit-text-size-adjust:100%}
 ::selection {background:var(--peach);color:var(--ink)}
 a {color:var(--green);text-underline-offset:.24em;text-decoration-thickness:1px}
 a:hover {text-decoration-color:var(--ink)}
@@ -84,7 +86,7 @@ progress::-webkit-progress-bar {background:var(--sand)}
 progress::-webkit-progress-value {background:var(--green)}
 progress::-moz-progress-bar {background:var(--green)}
 .nav-stage {margin:0;border-bottom:1px solid var(--nav-line)}
-.nav-stage[open] {margin:5px -6px;padding:0 6px;background:#f0f4e9;border-radius:10px;border-bottom-color:transparent}
+.nav-stage[open] {margin:5px -6px;padding:0 6px;background:#ffffff;border-radius:10px;border-bottom-color:transparent}
 .nav-stage>summary {display:flex;align-items:center;gap:6px;min-height:48px;padding:9px 0;cursor:pointer;list-style:none;color:var(--ink);font-size:13px;font-weight:600;line-height:1.55}
 .nav-stage>summary>span:nth-child(2) {text-wrap:balance}
 .nav-stage>summary::-webkit-details-marker {display:none}
@@ -127,21 +129,23 @@ p {margin:0 0 17px;overflow-wrap:anywhere}
 .rule {border:0;border-top:1px solid var(--line);margin:32px 0}
 .notice {background:var(--soft);padding:16px 19px;border:1px solid var(--line);border-radius:12px;margin:18px 0;font-size:14px;line-height:1.9}
 .notice.error {border-color:#c3a2a1;color:#7e333a;background:#f8e9e3}
-.home-intro {position:relative;display:grid;grid-template-columns:minmax(0,1fr) 210px;column-gap:26px;align-items:center;margin:0 0 20px;padding:28px 30px 24px;background:var(--hero-surface);border-radius:20px 20px 48px 20px;box-shadow:var(--shadow-paper)}
+.home-intro {position:relative;display:grid;grid-template-columns:minmax(0,1fr) 210px;column-gap:26px;align-items:center;margin:0 0 20px;padding:28px 30px 24px;background:var(--hero-surface);border:1px solid #c4b98d;border-radius:20px 20px 48px 20px}
+.home-intro::after,.article-header::after,.stage-row::after {content:"";position:absolute;right:0;bottom:0;width:150px;height:54px;background-image:radial-gradient(var(--comic-dot) 1px,transparent 1.3px);background-size:6px 6px;border-radius:0 0 16px 0;pointer-events:none}
+.home-intro::after {width:22%;height:78px;border-bottom-right-radius:48px}
+.article-header::after {width:88px;height:24px;opacity:.7}
+.stage-row::after {width:58px;height:24px;opacity:.6}
 .home-intro .small {color:#635343;margin:16px 0 0}
 .home-intro .lead {color:#4d4c42}
 .home-intro h1 {font-size:clamp(30px,3.15vw,44px);line-height:1.5;margin:0 0 15px;max-width:20em}
 .home-intro .lead {font-size:17px;line-height:1.95;margin:0;max-width:39em}
 .home-intro>div {min-width:0}
-.research-orbit {display:block;width:100%;height:auto;max-width:240px;max-height:250px;overflow:visible;margin:0;padding:14px 8px;background:#f9ead6;border-radius:46% 54% 48% 52%}
+.research-orbit {display:block;width:100%;height:auto;max-width:240px;max-height:250px;overflow:visible;margin:0;padding:14px 8px;background:#fffaf0;border:1px solid #d2c7a3;border-radius:46% 54% 48% 52%}
 .research-orbit>svg {display:block;width:100%;height:auto;color:var(--ink)}
 .research-orbit figcaption {font-size:12px;line-height:1.7;text-align:center;color:#635343;margin-top:5px}
 .orbit-keywords {display:none}
-.continue-study {display:flex;align-items:center;justify-content:space-between;gap:22px;margin:20px 0 12px;padding:20px 24px;background:var(--green);color:var(--surface);border-radius:16px;box-shadow:var(--shadow-paper)}
-.continue-study button.primary {background:var(--surface);color:var(--green);border-color:var(--surface)}
-.continue-study button.primary:hover {background:var(--sky);border-color:var(--sky);color:#194e55}
-.continue-study .continue-info>h2>a,.continue-study .continue-info strong,.continue-study .continue-info .continue-title {color:var(--surface)}
-.continue-study .continue-info>h2>a:hover {color:var(--surface)}
+.continue-study {display:flex;align-items:center;justify-content:space-between;gap:22px;margin:20px 0 12px;padding:20px 24px;background:var(--sky);color:var(--ink);border:1px solid var(--comic-line);border-radius:16px}
+.continue-study .continue-info>h2>a,.continue-study .continue-info strong,.continue-study .continue-info .continue-title {color:var(--ink)}
+.continue-study .continue-info>h2>a:hover {color:var(--green)}
 .continue-info {min-width:0}
 .continue-info>.small {display:block;color:#456268;font-size:12px;line-height:1.7;margin-bottom:4px}
 .continue-info>h2 {font-family:var(--reading-face);font-size:21px;line-height:1.6;font-weight:600;margin:0}
@@ -186,7 +190,7 @@ p {margin:0 0 17px;overflow-wrap:anywhere}
 .reader li {margin:7px 0}
 .reading-layout {display:grid;grid-template-columns:minmax(0,760px) 178px;column-gap:40px;align-items:start;max-width:1010px}
 .article-header,.article-body,.article-end {grid-column:1;min-width:0}
-.article-header {grid-row:1;margin-bottom:14px;padding:24px 28px 20px;background:var(--hero-surface);border-radius:16px}
+.article-header {position:relative;grid-row:1;margin-bottom:14px;padding:24px 28px 20px;background:var(--hero-surface);border:1px solid #c4b98d;border-radius:16px}
 .article-header .muted,.article-header .small,.article-header .crumb,.article-header .crumb a,.article-header .meta,.article-header .reading-context {color:#615346}
 .article-header .lead {color:#4d4c42}
 .article-header h1 {font-size:32px;margin-bottom:10px;line-height:1.55}
@@ -412,6 +416,7 @@ button.confirmed {animation:confirm-mark 650ms var(--ease)}
   .article-section h2 {font-size:23px;margin-top:31px;padding-bottom:9px}
   .lead {font-size:17px}
   .home-intro {display:block;position:relative;margin-top:0;margin-bottom:18px;padding:20px 18px 18px;border-radius:16px 16px 32px 16px}
+  .home-intro::after {width:64px;height:14px;border-bottom-right-radius:32px}
   .home-intro h1 {font-size:27px;line-height:1.6;margin-bottom:14px;padding-right:98px;min-height:88px}
   .home-intro .lead {font-size:15px;line-height:1.95;max-width:none}
   .home-intro .small {font-size:12px;margin-top:13px;margin-bottom:0}
@@ -492,6 +497,7 @@ button.confirmed {animation:confirm-mark 650ms var(--ease)}
   .target-flash {outline:1px solid #ae8c59;outline-offset:5px}
 }
 @media print {
+  .home-intro::after,.article-header::after,.stage-row::after {display:none}
   body {background:white;color:black;font-size:11pt;line-height:1.65}
   .topbar,.sidebar,.actions,.filters,.page-toc,.toast,.exercise-input,.quiz-form,.rubric-controls,.lesson-nav,footer,#storageNotice {display:none!important}
   .workspace {display:block;padding:0}
