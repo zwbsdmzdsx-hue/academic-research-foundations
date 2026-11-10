@@ -581,6 +581,7 @@ button.confirmed {animation:confirm-mark 650ms var(--ease)}
 }
 :root[data-theme=night] {
   color-scheme:dark;
+  scrollbar-color:var(--neutral-600) var(--canvas);
   --neutral-0:#38445b;
   --neutral-50:#242b42;
   --neutral-100:#3d3c54;
@@ -717,8 +718,9 @@ pre {background:var(--code-surface)}
 :root[data-theme=night] .nav-stage[open] {background:var(--neutral-100)}
 :root[data-theme=night] :is(.home-intro,.article-header,.research-orbit) {border-color:var(--comic-line)}
 /* Reuse the comic line geometry as a mask, printing it in the night palette. */
-:root[data-theme=night] :is(.home-intro::after,.article-header::after,.stage-row::after,.nav-inner::after) {background:var(--comic-line);mask:var(--ink-hatching) right bottom / contain no-repeat}
-:root[data-theme=night] :is(.home-intro::before,.article-header::before,.article-section h2::after) {background:var(--comic-line);mask:var(--ink-rule) center / contain no-repeat}
+:root[data-theme=night] :is(.home-intro,.article-header,.stage-row,.nav-inner)::after {background:var(--comic-line);mask:var(--ink-hatching) right bottom / contain no-repeat}
+:root[data-theme=night] :is(.home-intro,.article-header)::before,
+:root[data-theme=night] .article-section h2::after {background:var(--comic-line);mask:var(--ink-rule) center / contain no-repeat}
 :root[data-theme=night] .stage-number {color:var(--on-accent);background:var(--ochre-300);border-color:var(--ochre-300)}
 :root[data-theme=night] ::selection {background:var(--ochre-300);color:var(--on-accent)}
 @keyframes confirm-mark {0%,35%,100%{background-color:var(--soft);border-color:var(--green);color:var(--ink)}}
