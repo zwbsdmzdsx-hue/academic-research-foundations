@@ -581,40 +581,42 @@ button.confirmed {animation:confirm-mark 650ms var(--ease)}
 }
 :root[data-theme=night] {
   color-scheme:dark;
-  --neutral-0:#202b30;
-  --neutral-50:#151e23;
-  --neutral-100:#29373c;
-  --neutral-200:#25352f;
-  --neutral-400:#596f6b;
-  --neutral-600:#91a79c;
-  --teal-100:#2c443f;
-  --teal-700:#a2d8c4;
-  --ochre-100:#403a2e;
-  --ochre-200:#493d2d;
-  --ochre-300:#efce91;
-  --ink:#ece9dd;
-  --muted:#b8c5bd;
-  --nav-line:#60786a;
-  --practice-surface:#2b3e32;
-  --lilac:#3c3549;
-  --on-accent:#152d27;
-  --action-hover:#bfe6d6;
-  --pressed-ink:#d4e9dd;
-  --hero-ink:#e2cfae;
-  --hero-lead:#ece0c6;
-  --nav-ink:#c4d3c7;
-  --code-surface:#19262a;
-  --disclosure-surface:#2a3c34;
-  --annotation-ink:#e0cfee;
-  --error-ink:#ffcbba;
-  --error-surface:#4b3033;
-  --red:#ffc1b9;
-  --focus:#a6cfff;
-  --progress-track:#91a79c;
-  --progress-fill:#152d27;
-  --progress-outline:#bacbbd;
-  --comic-line:#91a79c;
-  --shadow-paper:0 6px 20px #00000020;
+  --neutral-0:#38445b;
+  --neutral-50:#242b42;
+  --neutral-100:#3d3c54;
+  --neutral-200:#2c3550;
+  --neutral-400:#74798e;
+  --neutral-600:#a7b0c2;
+  --teal-100:#3c4d5f;
+  --teal-700:#f1c99f;
+  --ochre-100:#4b4253;
+  --ochre-200:#68505a;
+  --ochre-300:#f1c99f;
+  --ink:#e9e3d9;
+  --muted:#c7c6d2;
+  --nav-line:#838ba1;
+  --practice-surface:#344d47;
+  --toc-surface:#413c55;
+  --note-surface:#4b4253;
+  --lilac:#4d405e;
+  --on-accent:#343345;
+  --action-hover:#f7d5b3;
+  --pressed-ink:#e7dbce;
+  --hero-ink:#e6cdd0;
+  --hero-lead:#f3e4d8;
+  --nav-ink:#c5cee1;
+  --code-surface:#2b344b;
+  --disclosure-surface:#3b4b54;
+  --annotation-ink:#e5d3ef;
+  --error-ink:#f2bfb6;
+  --error-surface:#633f4c;
+  --red:#f2bfb6;
+  --focus:#c2d7f3;
+  --progress-track:#a8a6af;
+  --progress-fill:#31344c;
+  --progress-outline:#d1c3b7;
+  --comic-line:#b69d9d;
+  --shadow-paper:0 7px 22px #151a2b30;
 }
 :root[data-reading-font=serif] {--reader-face:var(--reading-face)}
 :root[data-reading-font=system] {--reader-face:system-ui,sans-serif}
@@ -710,8 +712,15 @@ pre {background:var(--code-surface)}
 .annotation .note {color:var(--annotation-ink)}
 .notice.error,.feedback.wrong {color:var(--error-ink);background:var(--error-surface)}
 .toast {background:var(--ink);color:var(--surface)}
-:root[data-theme=night] :is(.home-intro,.article-header,.research-orbit) {border-color:#9c835e}
-:root[data-theme=night] :is(.home-intro::after,.article-header::after,.stage-row::after,.home-intro::before,.article-header::before,.article-section h2::after,.nav-inner::after) {filter:brightness(2.8)}
+:root[data-theme=night] .topbar {background:var(--nav-surface)}
+:root[data-theme=night] .preferences-panel {background:var(--toc-surface)}
+:root[data-theme=night] .nav-stage[open] {background:var(--neutral-100)}
+:root[data-theme=night] :is(.home-intro,.article-header,.research-orbit) {border-color:var(--comic-line)}
+/* Reuse the comic line geometry as a mask, printing it in the night palette. */
+:root[data-theme=night] :is(.home-intro::after,.article-header::after,.stage-row::after,.nav-inner::after) {background:var(--comic-line);mask:var(--ink-hatching) right bottom / contain no-repeat}
+:root[data-theme=night] :is(.home-intro::before,.article-header::before,.article-section h2::after) {background:var(--comic-line);mask:var(--ink-rule) center / contain no-repeat}
+:root[data-theme=night] .stage-number {color:var(--on-accent);background:var(--ochre-300);border-color:var(--ochre-300)}
+:root[data-theme=night] ::selection {background:var(--ochre-300);color:var(--on-accent)}
 @keyframes confirm-mark {0%,35%,100%{background-color:var(--soft);border-color:var(--green);color:var(--ink)}}
 @keyframes target-mark {0%,25%{background-color:var(--sand)}100%{background-color:transparent}}
 @media(forced-colors:active) {
