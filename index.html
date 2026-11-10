@@ -744,7 +744,7 @@ pre {background:var(--code-surface)}
     <label><input type="radio" name="readingTheme" value="night"><span>夜间</span></label>
   </div><p class="settings-hint">护眼纸色降低亮白感，请按环境光与自己的舒适度选择。</p></fieldset>
   <label class="settings-field" for="readingFont">正文字体<select id="readingFont"><option value="sans">清晰黑体</option><option value="serif">书页宋体</option><option value="system">系统默认</option></select></label>
-  <label class="settings-field" for="readingSize">正文字号 <output id="readingSizeValue" for="readingSize"></output><input id="readingSize" type="range" min="16" max="24" step="1"></label>
+  <label class="settings-field" for="readingSize">正文字号 <output id="readingSizeValue" for="readingSize"></output><input id="readingSize" type="range" min="8" max="24" step="1"></label>
   <label class="settings-field" for="readingLeading">正文行距 <output id="readingLeadingValue" for="readingLeading"></output><input id="readingLeading" type="range" min="1.6" max="2.3" step="0.05"></label>
   <label class="settings-field" for="readingWidth">中间正文宽度 <output id="readingWidthValue" for="readingWidth"></output><input id="readingWidth" type="range" min="600" max="1100" step="20"></label>
   <p class="settings-hint">设定正文的最大宽度；空间不足时自动收窄，保留页边目录。</p>
@@ -767,7 +767,7 @@ pre {background:var(--code-surface)}
     return {
       theme:['light','eye','night'].includes(v.theme) ? v.theme : defaults.theme,
       font:['sans','serif','system'].includes(v.font) ? v.font : defaults.font,
-      size:v.size === null ? null : clamp(v.size,16,24,null),
+      size:v.size === null ? null : clamp(v.size,8,24,null),
       leading:clamp(v.leading,1.6,2.3,defaults.leading),
       width:clamp(v.width,600,1100,defaults.width),
       sidebar:v.sidebar === null ? null : clamp(v.sidebar,200,360,null),
