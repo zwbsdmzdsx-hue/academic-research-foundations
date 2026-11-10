@@ -621,7 +621,10 @@ button.confirmed {animation:confirm-mark 650ms var(--ease)}
 .topbar-tools {display:flex;align-items:center;gap:20px;min-width:0}
 .settings-trigger {display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;flex:none;font-size:13px}
 .settings-trigger svg {width:18px;height:18px;flex:none}
-.preferences-panel {position:fixed;top:94px;right:24px;z-index:45;width:370px;max-width:calc(100vw - 28px);max-height:calc(100dvh - 116px);overflow:auto;padding:22px 24px;background:var(--surface);border:1px solid var(--border-control);border-radius:12px;overscroll-behavior:contain;font-size:14px;line-height:1.7}
+/* Theme foregrounds and fills switch together; an interpolated inversion loses contrast. */
+button {transition:transform 100ms var(--ease)}
+.topbar nav a {transition:none}
+.preferences-panel {position:fixed;top:94px;right:24px;z-index:45;width:370px;max-width:calc(100% - 28px);max-height:calc(100dvh - 116px);overflow:auto;padding:22px 24px;background:var(--surface);border:1px solid var(--border-control);border-radius:12px;overscroll-behavior:contain;font-size:14px;line-height:1.7}
 .preferences-heading {display:flex;align-items:center;justify-content:space-between;gap:16px}
 .preferences-heading h2 {font:600 23px/1.5 var(--reading-face);margin:0}
 .preferences-heading button {padding:6px 10px;font-size:12px}
@@ -716,7 +719,7 @@ pre {background:var(--code-surface)}
   .sidebar-resize::after {border-color:ButtonText}
 }
 @media print {
-  :root[data-theme] {--surface:#ffffff;--ink:#000000;--muted:#333333;--green:#000000;--line:#aaaaaa;--paper:#ffffff;--reader-face:serif}
+  :root[data-theme] {--surface:#ffffff;--ink:#000000;--muted:#333333;--green:#000000;--line:#aaaaaa;--paper:#ffffff;--reader-face:serif;--hero-ink:#333333;--hero-lead:#000000;--nav-ink:#333333;--annotation-ink:#333333;--code-surface:#ffffff;--disclosure-surface:#ffffff;--lilac:#ffffff;--soft:#ffffff;--sand:#ffffff;--on-accent:#000000;--error-ink:#000000;--error-surface:#ffffff}
   .topbar-tools,.preferences-panel,.sidebar-shell {display:none!important}
   .content {container-type:normal}
   .reader {font-size:11pt;line-height:1.65;max-width:none}
